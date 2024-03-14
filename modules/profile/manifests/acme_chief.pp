@@ -5,7 +5,9 @@
 #        puppet_svc => 'nginx'
 #    }
 
-# and if you want to support http-01 challenges, some nginx config like this:
+# if you want to support http-01 challenges, set:
+#   profile::acme_chief::http_challenge_support: present
+# and on the internet-facing server use a config like this:
 # server {
 #        listen [::]:443 default_server deferred backlog=16384 reuseport ssl http2;
 #        listen 443 default_server deferred backlog=16384 reuseport ssl http2;
@@ -38,6 +40,7 @@ class profile::acme_chief (
     Hash[String, Acme_chief::Certificate] $shared_acme_certificates = lookup('certificates::acme_chief', {default_value => {}}),
     Hash[String, Hash[String, Any]] $challenges = lookup('profile::acme_chief::challenges'),
     Optional[Stdlib::HTTPUrl] $http_proxy = lookup('http_proxy', {default_value => undef}),
+    Wmflib::Ensure $http_challenge_support = lookup('profile::acme_chief::http_challenge_support', {default_value => 'absent'}),
     Stdlib::Fqdn $active_host = lookup('profile::acme_chief::active'),
     Variant[String, Array[Stdlib::Fqdn]] $passive_host = lookup('profile::acme_chief::passive'),
     Hash[Stdlib::Fqdn, Stdlib::IP::Address::Nosubnet] $authdns_servers = lookup('authdns_servers'),
@@ -77,6 +80,7 @@ class profile::acme_chief (
         certificates           => $acme_chief_certificates,
         challenges             => $challenges,
         http_proxy             => $http_proxy,
+        http_challenge_support => $http_challenge_support,
         active_host            => $active_host,
         passive_host           => $passive_host,
         authdns_hosts          => $authdns_servers.keys(),

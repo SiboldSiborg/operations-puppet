@@ -6,7 +6,7 @@ server {
     error_log /var/log/nginx/acme-chief.insecure.error.log;
     access_log off;
     location /.well-known/acme-challenge/ {
-        alias /etc/acme-chief/http_challenges/;
+        alias /var/lib/acme-chief/http_challenges/;
         autoindex off;
     }
 }
