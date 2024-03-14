@@ -26,6 +26,7 @@ class profile::wmcs::novaproxy (
     String[1]                         $mariadb_password         = lookup('profile::wmcs::novaproxy::mariadb_password'),
     Array[Stdlib::IP::Address]        $keepalived_vips          = lookup('profile::wmcs::novaproxy::keepalived_vips',     {default_value => []}),
     String[1]                         $keepalived_password      = lookup('profile::wmcs::novaproxy::keepalived_password', {default_value => 'notarealpassword'}),
+    Stdlib::Host                      $acmechief_host           = lookup('acmechief_host'),
 ) {
     $proxy_nodes = join($all_proxies, ' ')
     # Open up redis to all proxies!
