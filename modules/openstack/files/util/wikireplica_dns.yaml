@@ -17,9 +17,6 @@
 #
 # This file is managed by Puppet
 zones:
-  db.svc.eqiad.wmflabs.:
-    tools:
-      - 172.16.6.37
   analytics.db.svc.wikimedia.cloud.: &analytics
     s1: [172.20.255.2]
     s2: [172.20.255.3]
@@ -62,9 +59,3 @@ cnames:
     - centralauth.web.db.svc.wikimedia.cloud.
     # [[wikitech:Help:Toolforge/Database#Metadata_database]]
     - meta.web.db.svc.wikimedia.cloud.
-  redis.svc.tools.eqiad1.wikimedia.cloud.:
-    - tools-redis.tools.eqiad.wmflabs.
-    - tools-redis.svc.eqiad.wmflabs.
-    - tools-redis.eqiad.wmflabs.
-  tools.db.svc.eqiad.wmflabs.:
-    - tools-db.tools.eqiad.wmflabs.
