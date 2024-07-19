@@ -24,6 +24,7 @@ profile::tlsproxy::envoy::global_cert_name: 'ticket.discovery.wmnet'
 profile::tlsproxy::envoy::cfssl_options:
   hosts:
     - ticket.wikimedia.org
+profile::tlsproxy::envoy::firewall_srange: []
 profile::tlsproxy::envoy::upstream_response_timeout: 130.0
 profile::tlsproxy::envoy::tls_port: 1443
 
@@ -33,3 +34,5 @@ profile::base::production::role_description: 'VRTS Web Application Server'
 profile::vrts::public_dns: 'ticket.wikimedia.org'
 
 profile::puppet::agent::force_puppet7: true
+
+profile::firewall::provider: nftables
