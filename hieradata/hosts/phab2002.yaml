@@ -1,3 +1,0 @@
-profile::firewall::provider: nftables
-profile::tlsproxy::envoy::firewall_src_sets:
-  - CACHES

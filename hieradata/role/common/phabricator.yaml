@@ -29,6 +29,8 @@ profile::phabricator::aphlict::ensure: absent
 
 profile::tlsproxy::envoy::global_cert_name: "phabricator.discovery.wmnet"
 profile::tlsproxy::envoy::ssl_provider: 'cfssl'
+profile::tlsproxy::envoy::firewall_src_sets:
+  - CACHES
 profile::tlsproxy::envoy::cfssl_options:
   hosts:
     - phabricator.wikimedia.org
@@ -53,6 +55,8 @@ phabricator::vcs::enable: true
 profile::puppet::agent::force_puppet7: true
 
 profile::phabricator::logmail::sndr_address: 'aklapper@wikimedia.org'
+
+profile::firewall::provider: nftables
 
 profile::mail::default_mail_relay::smarthosts:
 - 'mx-out1001.wikimedia.org'
