@@ -28,6 +28,13 @@ profile::durum::service::common:
   durum_path: '/srv/durum'
 
 profile::firewall::provider: nftables
+profile::firewall::nftables_throttling::ensure: absent
+profile::firewall::nftables_throttling::policy: accept
+# allow 60 requests per 60 seconds, ban clients above for 300 seconds
+profile::firewall::nftables_throttling::throttle_requests: 60
+profile::firewall::nftables_throttling::throttle_duration: 300
+profile::firewall::nftables_throttling::port: 443
+profile::firewall::nftables_throttling::nft_logging: false
 
 profile::bird::do_ipv6: true
 profile::bird::advertise_vips:
