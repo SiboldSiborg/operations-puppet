@@ -11,7 +11,10 @@ profile::tlsproxy::envoy::cfssl_options:
   hosts:
     - people.wikimedia.org
 
-profile::tlsproxy::envoy::firewall_global: true
+profile::tlsproxy::envoy::firewall_src_sets:
+  - CACHES
+  - DEPLOYMENT_HOSTS
+
 profile::microsites::peopleweb::sitename: 'people.wikimedia.org'
 profile::microsites::peopleweb::docroot: '/srv/org/wikimedia/publichtml'
 profile::microsites::peopleweb::rsync_src_host: 'people2003.codfw.wmnet'
