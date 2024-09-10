@@ -15,7 +15,7 @@ define profile::thanos::sidecar (
     Stdlib::Port::Unprivileged $prometheus_port,
     String $prometheus_instance,
     Boolean $enable_upload = false,
-    Optional[String] $min_time = undef,
+    Optional[String] $min_time = '-15d',
 ) {
     $http_port = $prometheus_port + 10000
     $grpc_port = $prometheus_port + 20000

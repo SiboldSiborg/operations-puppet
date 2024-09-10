@@ -5,7 +5,6 @@ class profile::prometheus::cloud (
     Optional[Stdlib::Datasize] $storage_retention_size = lookup('profile::prometheus::cloud::storage_retention_size', {default_value => undef}),
     Array $alertmanagers = lookup('alertmanagers', {'default_value' => []}),
     Boolean $enable_thanos_upload     = lookup('profile::prometheus::enable_thanos_upload', { 'default_value' => false }),
-    Optional[String] $thanos_min_time = lookup('profile::prometheus::thanos::min_time', { 'default_value' => undef }),
     String $replica_label = lookup('prometheus::replica_label'),
     String $maintain_dbusers_primary = lookup('wmcs_maintain_dbusers_primary'),
 ) {
@@ -308,7 +307,6 @@ class profile::prometheus::cloud (
         prometheus_port     => $port,
         prometheus_instance => 'cloud',
         enable_upload       => $enable_thanos_upload,
-        min_time            => $thanos_min_time,
     }
 
     prometheus::pint::source { 'cloud':

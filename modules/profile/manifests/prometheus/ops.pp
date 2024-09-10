@@ -11,7 +11,6 @@ class profile::prometheus::ops (
     Array[Stdlib::Host] $bastion_hosts                        = lookup('bastion_hosts', { 'default_value' => [] }),
     Stdlib::Host $netmon_server                               = lookup('netmon_server'),
     Boolean $enable_thanos_upload                             = lookup('profile::prometheus::enable_thanos_upload', { 'default_value' => false }),
-    Optional[String] $thanos_min_time                         = lookup('profile::prometheus::thanos::min_time', { 'default_value' => undef }),
     Array $alertmanagers                                      = lookup('alertmanagers', {'default_value' => []}),
     Array[Stdlib::HTTPUrl] $blackbox_pingthing_http_check_urls = lookup('profile::prometheus::ops::blackbox_pingthing_http_check_urls', { 'default_value' => [] }),
     Array[Stdlib::HTTPUrl] $blackbox_pingthing_proxied_urls    = lookup('profile::prometheus::ops::blackbox_pingthing_proxied_urls', { 'default_value' => [] }),
@@ -2613,7 +2612,6 @@ class profile::prometheus::ops (
         prometheus_port     => $port,
         prometheus_instance => 'ops',
         enable_upload       => $enable_thanos_upload,
-        min_time            => $thanos_min_time,
     }
 
     file { '/srv/prometheus/ops/gerrit.token':

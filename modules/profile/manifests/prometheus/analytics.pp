@@ -9,7 +9,6 @@
 class profile::prometheus::analytics (
     String $replica_label              = lookup('prometheus::replica_label'),
     Boolean $enable_thanos_upload      = lookup('profile::prometheus::enable_thanos_upload', { 'default_value' => false }),
-    Optional[String] $thanos_min_time  = lookup('profile::prometheus::thanos::min_time', { 'default_value' => undef }),
     Array[Stdlib::Host] $alertmanagers = lookup('alertmanagers', {'default_value' => []}),
     String $storage_retention          = lookup('profile::prometheus::analytics::storage_retention', {'default_value' => '4032h'}),
 ){
@@ -355,7 +354,6 @@ class profile::prometheus::analytics (
         prometheus_port     => $port,
         prometheus_instance => 'analytics',
         enable_upload       => $enable_thanos_upload,
-        min_time            => $thanos_min_time,
     }
 
     prometheus::rule { 'rules_analytics.yml':

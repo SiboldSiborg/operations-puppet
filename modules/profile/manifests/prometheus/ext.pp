@@ -8,7 +8,6 @@ class profile::prometheus::ext (
     String           $storage_retention              = lookup('profile::prometheus::ext::storage_retention', { 'default_value' => '730h'  }),
     String           $replica_label                  = lookup('prometheus::replica_label'),
     Boolean          $enable_thanos_upload           = lookup('profile::prometheus::enable_thanos_upload',      { 'default_value' => false   }),
-    Optional[String] $thanos_min_time                = lookup('profile::prometheus::thanos::min_time', { 'default_value' => undef   }),
     Array            $alertmanagers                  = lookup('alertmanagers', {'default_value' => []}),
     Array            $alerting_relabel_configs_extra = lookup('profile::prometheus::ext::alerting_relabel_configs_extra'),
 ){
@@ -96,7 +95,6 @@ class profile::prometheus::ext (
         prometheus_port     => $listen_port,
         prometheus_instance => $instance_name,
         enable_upload       => $enable_thanos_upload,
-        min_time            => $thanos_min_time,
     }
 
     prometheus::pint::source { 'ext':

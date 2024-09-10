@@ -5,7 +5,6 @@
 class profile::prometheus::k8s (
     String                     $replica_label          = lookup('prometheus::replica_label'),
     Boolean                    $enable_thanos_upload   = lookup('profile::prometheus::enable_thanos_upload', { 'default_value' => false }),
-    Optional[String]           $thanos_min_time        = lookup('profile::prometheus::thanos::min_time', { 'default_value' => undef }),
     Array[Stdlib::Host]        $alertmanagers          = lookup('alertmanagers', { 'default_value' => [] }),
 ) {
     # Get all prometheus enabled k8s clusters for this DC, excluding aliases
@@ -618,7 +617,6 @@ class profile::prometheus::k8s (
             prometheus_port     => $port,
             prometheus_instance => $k8s_cluster,
             enable_upload       => $enable_thanos_upload,
-            min_time            => $thanos_min_time,
         }
 
         prometheus::rule { "rules_${k8s_cluster}.yml":
