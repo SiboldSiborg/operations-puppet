@@ -982,9 +982,9 @@ node /^db22(26|28|31|32|33|34)\.codfw\./ {
     role(insetup::data_persistence)
 }
 
-# New proxies T361352
+# New passive codfw proxies for misc databases T361352
 node /^dbproxy200(5|6|7|8)\.codfw\./ {
-    role(insetup::data_persistence)
+    role(mariadb::proxy::master)
 }
 
 # New external storage T378146
