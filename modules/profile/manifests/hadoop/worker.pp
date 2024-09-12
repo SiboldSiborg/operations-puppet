@@ -12,11 +12,17 @@
 #    Make Puppet use Kerberos authentication when executing hdfs commands.
 #
 class profile::hadoop::worker (
-    String $cluster_name                  = lookup('profile::hadoop::common::hadoop_cluster_name'),
-    Boolean $monitoring_enabled           = lookup('profile::hadoop::worker::monitoring_enabled', { 'default_value' => false }),
-    String $ferm_srange                   = lookup('profile::hadoop::worker::ferm_srange', { 'default_value' => '$DOMAIN_NETWORKS' }),
-    Boolean $check_mountpoints_disk_space = lookup('profile::hadoop::worker::check_mountpoints_disk_space', { 'default_value' => true }),
+    String $cluster_name                     = lookup('profile::hadoop::common::hadoop_cluster_name'),
+    Boolean $monitoring_enabled              = lookup('profile::hadoop::worker::monitoring_enabled', { 'default_value' => false }),
+    String $ferm_srange                      = lookup('profile::hadoop::worker::ferm_srange', { 'default_value' => '$DOMAIN_NETWORKS' }),
+    Boolean $check_mountpoints_disk_space    = lookup('profile::hadoop::worker::check_mountpoints_disk_space', { 'default_value' => true }),
+    Boolean $enable_performance_cpu_governor = lookup('profile::hadoop::worker::enable_performance_cpu_governor', { 'default_value' => true })
 ) {
+    if $enable_performance_cpu_governor {
+        # enable CPU performance governor; see T362922
+        class { 'cpufrequtils': }
+    }
+
     require ::profile::analytics::cluster::packages::common
     require ::profile::hadoop::common
     require ::profile::java
