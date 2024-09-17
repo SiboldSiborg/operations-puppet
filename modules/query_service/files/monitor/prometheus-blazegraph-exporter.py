@@ -41,6 +41,7 @@ class PrometheusBlazeGraphExporter(object):
 
     def __init__(self, nginx_port, blazegraph_port, namespace):
 
+        self.namespace = namespace
         self.url = 'http://localhost:{port}/bigdata'.format(port=blazegraph_port)
         self.counters = []
         if nginx_port is None:
@@ -215,7 +216,17 @@ class PrometheusBlazeGraphExporter(object):
         lag_metric = GaugeMetricFamily('blazegraph_lastupdated', 'Last update timestamp')
 
         try:
-            sparql_query = """ prefix schema: <http://schema.org/>
+            if self.namespace == "categories":
+                sparql_query = """
+                        prefix schema: <http://schema.org/>
+                        SELECT * WHERE { {
+                          SELECT ( COUNT( * ) AS ?count ) { ?s ?p ?o }
+                        } UNION {
+                          SELECT (min(?date) as ?y) WHERE { ?wiki schema:dateModified ?date }
+                        } }"""
+            else:
+                sparql_query = """
+                        prefix schema: <http://schema.org/>
                         SELECT * WHERE { {
                           SELECT ( COUNT( * ) AS ?count ) { ?s ?p ?o }
                         } UNION {
