@@ -2,8 +2,8 @@ server {
     listen 5668 <%- if @acme_certname %> ssl <%- end -%>;
 
     <%- if @acme_certname -%>
-    ssl_certificate /etc/acmecerts/<%= @acme_certname %>/live/rsa-2048.chained.crt;
-    ssl_certificate_key /etc/acmecerts/<%= @acme_certname %>/live/rsa-2048.key;
+    ssl_certificate /etc/acmecerts/<%= @acme_certname %>/live/ec-prime256v1.chained.crt;
+    ssl_certificate_key /etc/acmecerts/<%= @acme_certname %>/live/ec-prime256v1.key;
     <%= @ssl_settings.join("\n    ") %>
     <%- end -%>
 
