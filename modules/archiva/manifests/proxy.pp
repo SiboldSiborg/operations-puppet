@@ -43,14 +43,10 @@ class archiva::proxy(
 
             $ssl_ecdsa_certificate_chained = "/etc/acmecerts/${certificate_name}/live/ec-prime256v1.chained.crt"
             $ssl_ecdsa_certificate_key = "/etc/acmecerts/${certificate_name}/live/ec-prime256v1.key"
-            $ssl_rsa_certificate_chained = "/etc/acmecerts/${certificate_name}/live/rsa-2048.chained.crt"
-            $ssl_rsa_certificate_key = "/etc/acmecerts/${certificate_name}/live/rsa-2048.key"
 
             $tls_server_properties = [
                 "ssl_certificate     ${ssl_ecdsa_certificate_chained};",
                 "ssl_certificate_key ${ssl_ecdsa_certificate_key};",
-                "ssl_certificate     ${ssl_rsa_certificate_chained};",
-                "ssl_certificate_key ${ssl_rsa_certificate_key};",
             ]
         } else {
             $ssl_certificate_chained = '/etc/ssl/certs/ssl-cert-snakeoil.pem'
