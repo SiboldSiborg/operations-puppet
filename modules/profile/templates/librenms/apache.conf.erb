@@ -16,8 +16,6 @@
     SSLEngine on
     SSLCertificateFile /etc/acmecerts/librenms/live/ec-prime256v1.chained.crt
     SSLCertificateKeyFile /etc/acmecerts/librenms/live/ec-prime256v1.key
-    SSLCertificateFile /etc/acmecerts/librenms/live/rsa-2048.chained.crt
-    SSLCertificateKeyFile /etc/acmecerts/librenms/live/rsa-2048.key
     <%= @ssl_settings.join("\n    ") %>
 
     DocumentRoot <%= @install_dir %>/html
