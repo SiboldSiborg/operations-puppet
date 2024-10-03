@@ -114,6 +114,7 @@ profile::druid::coordinator::properties:
   druid.emitter: composing
   druid.emitter.composing.emitters: ["logging","http"]
   druid.emitter.http.recipientBaseUrl: "http://127.0.0.1:8000/"
+  druid.coordinator.kill.on: true
 profile::druid::coordinator::env:
   DRUID_HEAP_OPTS: "-Xmx1g"
   DRUID_EXTRA_JVM_OPTS: "-XX:+UseG1GC -XX:+PrintGCDetails -XX:+PrintGCTimeStamps"
