@@ -283,11 +283,6 @@ funnel	zero.wikipedia.org	https://www.wikipedia.org
 # redirect wikimedia.org/resources to meta (T172417)
 override	wikimedia.org/resources	https://meta.wikimedia.org/wiki/Wikimedia_Resource_Center
 
-# redirect "als" sister projects - T169450
-funnel	als.wiktionary.org	 https://als.wikipedia.org/wiki/Wort:Houptsyte
-funnel	als.wikiquote.org	https://als.wikipedia.org/wiki/Spruch:Houptsyte
-funnel	als.wikibooks.org	https://als.wikipedia.org/wiki/Buech:Houptsyte
-
 # redirect Moldovan Wikipedia and Wiktionary to Romanian Wikipedia and Wiktionary - T169450
 funnel	mo.wikipedia.org	https://ro.wikipedia.org/wiki/Pagina_principală
 funnel	mo.wiktionary.org	https://ro.wiktionary.org/wiki/Pagina_principală
