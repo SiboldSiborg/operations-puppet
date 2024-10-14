@@ -13,6 +13,7 @@ class role::alerting_host {
     include profile::icinga::performance
     include profile::icinga::logmsgbot
     include profile::certspotter
+    include profile::confd
     include profile::scap::dsh
 
     include profile::dns::auth::monitoring::global

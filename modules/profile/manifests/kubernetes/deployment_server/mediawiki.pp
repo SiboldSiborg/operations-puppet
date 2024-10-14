@@ -15,6 +15,7 @@ class profile::kubernetes::deployment_server::mediawiki(
         mode   => '0755'
     }
     include profile::kubernetes::deployment_server::mediawiki::config
+    include profile::kubernetes::deployment_server::mediawiki::conftool
     include profile::kubernetes::deployment_server::mediawiki::builder
     include profile::kubernetes::deployment_server::mediawiki::release
     include profile::kubernetes::deployment_server::mediawiki::repl

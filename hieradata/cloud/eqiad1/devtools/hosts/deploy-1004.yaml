@@ -1,1 +1,6 @@
 profile::mediawiki::scap_client::is_master: true
+
+# T367118 Moved confd definition out of scap::dsh
+profile::confd::instances:
+  main:
+    interval: 300

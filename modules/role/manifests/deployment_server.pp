@@ -13,6 +13,7 @@ class role::deployment_server {
 
     # webserver, scap deployment tool with SSH agent, rsync
     include profile::mediawiki::deployment::server
+    include profile::confd
     include profile::scap::dsh
     include profile::keyholder::server
 

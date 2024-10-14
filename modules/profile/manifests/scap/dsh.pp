@@ -8,15 +8,6 @@ class profile::scap::dsh(
     Array[Stdlib::Host] $masters = lookup('scap::dsh::scap_masters', {'default_value' => []}),
 ) {
 
-    $instances = {
-        'main' => {
-            'interval' => 300,
-        },
-    }
-    class { 'profile::confd':
-        instances => $instances,
-    }
-
     $scap_targets = {
         'scap_targets' => {
             'hosts' => (wmflib::class::hosts('mediawiki::scap') + wmflib::resource::hosts('scap::target')).sort.unique,

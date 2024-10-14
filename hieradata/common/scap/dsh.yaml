@@ -116,3 +116,8 @@ scap::dsh::groups:
         and resources { type = "Class" and title = "Profile::Releases::Mediawiki" }
         order by certname
       }
+
+# T367118 Moved confd definition out of scap::dsh
+profile::confd::instances:
+  main:
+    interval: 300

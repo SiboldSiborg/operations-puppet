@@ -108,3 +108,8 @@ profile::corto::phabricator_proj_phid: 'PHID-PROJ-hxlfvdumta7urfj3f3az'
 profile::corto::phabricator_phid: 'PHID-USER-ca2zmrdgzg4iool4fgaw'
 
 profile::corto::log_level: 'info'
+
+# T367118 Moved confd definition out of scap::dsh
+profile::confd::instances:
+  main:
+    interval: 300
