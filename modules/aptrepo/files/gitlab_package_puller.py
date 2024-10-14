@@ -3,11 +3,14 @@
 
 import re
 import os
+import glob
 import json
+import shutil
 import logging
 import zipfile
 import argparse
 import tempfile
+import subprocess
 
 from typing import Union
 from gitlab.v4.objects import (
@@ -25,6 +28,7 @@ ProtectedBranchesType = Union[branches_types.ProjectProtectedBranch, RESTObject]
 
 TRUSTED_PROJECT_PATH = "repos/releng/gitlab-trusted-runner"
 TRUSTED_PROJECT_FILE = "projects.json"
+APT_STAGING_PATH = "/srv/aptrepo/wikimedia-staging"
 
 
 class GitlabPackagePuller:
@@ -44,6 +48,8 @@ class GitlabPackagePuller:
 
         self.trusted_project_paths = self.get_project_paths_from_trusted_list()
         self.allow_untrusted_projects = args.allow_untrusted_projects
+        self.allow_unprotected_branches = args.allow_unprotected_branches
+        self.import_debs = args.import_debs
         if args.project_paths:
             self.project_paths = self.check_project_paths_in_trusted_list(
                 args.project_paths
@@ -127,7 +133,14 @@ class GitlabPackagePuller:
 
             for job in jobs:
                 if self.can_download_package(job, protected_branches):
-                    self.download_debs(job, project)
+                    if self.download_debs(job, project):
+                        # We've successfully downloaded a job with a deb file,
+                        # no sense going any further
+                        logging.info(
+                            "Downloaded the most recent package for project %s, skipping the rest",
+                            project.name,
+                        )
+                        break
                 else:
                     logging.info(
                         "No packages meeting criteria for job %s in project %s found",
@@ -162,12 +175,12 @@ class GitlabPackagePuller:
                 job.ref,
             )
             return False
-        if job.ref not in protected_branches:
+        if job.ref not in protected_branches and not self.allow_unprotected_branches:
             logging.debug("Rejected %s for not being in a protected branch", job_str)
             return False
         return True
 
-    def download_debs(self, job: JobsType, project: ProjectsType) -> None:
+    def download_debs(self, job: JobsType, project: ProjectsType) -> bool:
         """Downloads artifacts related to a given job, extracts the WMF_BUILD_DIR from a zipfile,
         and moves to the destination dir
         """
@@ -184,7 +197,9 @@ class GitlabPackagePuller:
                     project.name,
                     job.id,
                 )
-                return
+
+                #  Returning true here so that we can optimistically skip older artifacts
+                return True
 
             with open(zipfile_path, "wb") as f:
                 logging.debug("Downloading artifact and writing %s", zipfile_path)
@@ -197,7 +212,7 @@ class GitlabPackagePuller:
                     # This is logged as info, because some artifacts are expected
                     # to be cleaned up after a while
                     logging.info("Artifacts do not exist in job %s", job.id)
-                    return
+                    return False
 
             os.mkdir(job_artifact_path)
             with zipfile.ZipFile(zipfile_path) as zf:
@@ -205,6 +220,39 @@ class GitlabPackagePuller:
                     "Extracting zipfile %s to %s", zipfile_path, job_artifact_path
                 )
                 zf.extractall(path=job_artifact_path)
+
+                for f in glob.glob(
+                    os.path.join(job_artifact_path, "WMF_BUILD_DIR", "*")
+                ):
+                    # Move files to the root of the incoming/ dir in the apt repo
+                    dest = os.path.join(self.destination_dir, f.split("/")[-1])
+                    logging.debug("Moving %s to %s", f, dest)
+                    shutil.move(f, dest)
+
+            if self.import_debs:
+                self.import_deb_files_to_repo()
+
+        return True
+
+    def import_deb_files_to_repo(self) -> None:
+        """Uses the reprepro command to import the given debs to the staging repository"""
+        logging.debug("Attempting to import packages into the apt repo")
+        result = subprocess.run(
+            [
+                "/usr/bin/reprepro",
+                "-b",
+                APT_STAGING_PATH,
+                "processincoming",
+                "default",
+            ],
+            check=False,
+        )
+
+        if result.returncode != 0:
+            logging.error(
+                "Couldn't import packages to apt-staging. Error seen is: %s",
+                result.stderr,
+            )
 
 
 if __name__ == "__main__":
@@ -214,7 +262,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "-D",
         "--destination-dir",
-        default="/srv/incoming-packages",
+        default="/srv/aptrepo/wikimedia-staging/incoming",
         help="Directory to save downloaded packages to",
     )
     parser.add_argument(
@@ -242,6 +290,11 @@ if __name__ == "__main__":
         help="Allows project paths that aren't in the list of jobs run on trusted runners",
     )
     parser.add_argument(
+        "--allow-unprotected-branches",
+        action="store_true",
+        help="Allows project paths that aren't in unprotected branches",
+    )
+    parser.add_argument(
         "-l",
         "--log-level",
         default="warning",
@@ -262,6 +315,12 @@ if __name__ == "__main__":
         nargs="?",
         default=50,
         help="Number of CI jobs to check for new packages",
+    )
+    parser.add_argument(
+        "-i",
+        "--import-debs",
+        action="store_true",
+        help="Imports the downloaded .deb files into the staging repo",
     )
 
     g = GitlabPackagePuller(parser.parse_args())

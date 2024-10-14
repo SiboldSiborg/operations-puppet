@@ -2,4 +2,4 @@ profile::aptrepo::staging::basedir: /srv/aptrepo/wikimedia-staging
 profile::aptrepo::staging::homedir: '/root'
 profile::aptrepo::staging::gpg_user: 'root'
 profile::aptrepo::staging::gpg_pubring: ~
-profile::aptrepo::staging::gpg_secring: ~
+profile::aptrepo::staging::gpg_secring: 'apt/staging_secring.gpg'
