@@ -1,0 +1,12 @@
+<%#- SPDX-License-Identifier: Apache-2.0 -%>
+[Unit]
+Description=Liberica control plane daemon
+After=network-online.target liberica-fp.service liberica-hcforwarder.service liberica-healtcheck.service gobgpd.service
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+User=liberica
+ExecStart=/usr/bin/liberica cp
+Restart=on-failure

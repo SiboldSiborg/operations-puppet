@@ -1,0 +1,11 @@
+<%#- SPDX-License-Identifier: Apache-2.0 -%>
+[Unit]
+Description=Liberica healthcheck daemon
+After=network-online.target
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+ExecStart=/usr/bin/liberica healthcheck
+Restart=on-failure

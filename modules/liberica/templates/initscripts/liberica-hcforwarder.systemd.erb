@@ -1,0 +1,12 @@
+<%#- SPDX-License-Identifier: Apache-2.0 -%>
+[Unit]
+Description=Liberica healthcheck forwarder
+After=network-online.target
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+LimitMEMLOCK=infinity
+ExecStart=/usr/bin/liberica hcforwarder
+Restart=on-failure

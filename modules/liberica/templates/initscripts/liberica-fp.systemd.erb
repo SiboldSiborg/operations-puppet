@@ -1,0 +1,12 @@
+<%#- SPDX-License-Identifier: Apache-2.0 -%>
+[Unit]
+Description=Liberica forwarding plane daemon
+After=network-online.target
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+LimitMEMLOCK=infinity
+ExecStart=/usr/bin/liberica fp
+Restart=on-failure
