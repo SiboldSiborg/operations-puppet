@@ -1,0 +1,49 @@
+profile::liberica::hcforwarder_config:
+  log_level: info
+  grpc:
+    network: tcp
+    address: 127.0.0.1:1100
+  prometheus:
+    address: ":3000"
+  hashing_algorithm: jenkins
+
+profile::liberica::healthcheck_config:
+  log_level: info
+  grpc:
+    network: tcp
+    address: 127.0.0.1:1101
+  prometheus:
+    address: ":3001"
+
+profile::liberica::fp_config:
+  log_level: info
+  grpc:
+    network: tcp
+    address: 127.0.0.1:1102
+  prometheus:
+    address: ":3002"
+  forwarding_plane: ipvs
+
+profile::liberica::cp_config:
+  log_level: info
+  prometheus:
+    address: ":3003"
+
+profile::liberica::bgp_config:
+  grpc:
+    network: tcp
+    address: 127.0.0.1:50051
+  asn: 64600
+  next_hop_ipv4: "%{facts.networking.ip}"
+  next_hop_ipv6: "%{facts.networking.ip6}"
+  peers:
+    - "%{facts.default_routes.ipv4}"
+# communities TBD at host level
+
+profile::liberica::etcd_config:
+  conftool_domain: eqiad.wmnet
+  datacenter: "%{::site}"
+
+profile::liberica::include_services:
+  - ncredir
+  - ncredir-https
