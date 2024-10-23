@@ -410,6 +410,11 @@ tables:
     canonicality: derivative
     visibility: public
     dblist: flaggedrevs
+  - name: translate_cache
+    source: translate
+    canonicality: canonical
+    visibility: public
+    dblist: translate
   - name: revtag
     source: translate
     canonicality: derivative
