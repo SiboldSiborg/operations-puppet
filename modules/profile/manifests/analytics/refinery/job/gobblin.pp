@@ -22,9 +22,12 @@
 #   Ingests legacy EventLogging streams. (No datacenter topic prefixes, topics start with
 #   'eventlogging_'.)
 #
-# - webrequest_frontend_rc0
-#   Ingests the composite webrequest.frontend.rc0 stream (upload and text topics) into
-#   /wmf/data/raw/webrequest_frontend_rc0.
+# - webrequest_frontend
+#   Bug: T377931
+#   Ingests haproxykafka webrequest_frontend_text and webrequest_frontend_upload into
+#   /wmf/data/raw/webrequest_frontend.
+#   This is a work-in-progress feed that aims to replace varnishkafka log ingestion (the webrequest job)
+#   with haproxy logs. Once finalized, the webrequest_frontend job will supersede webrequest.
 #
 # == Parameters
 #
@@ -59,6 +62,15 @@ class profile::analytics::refinery::job::gobblin(
         # The 5 minutes offset from calendar hour is to mitigate out-of-order events
         # messing up with _IMPORTED flags generation.
         interval         => '*-*-* *:05/10:00',
+    }
+
+    profile::analytics::refinery::job::gobblin_job { 'webrequest_frontend':
+        # webrequest_frontend is large. Run it every 10 minutes to keep pressure on Kafka
+        # low (pulling more often means it is more likely for data to be in Kafka's cache).
+        # The offset from calendar hour is to mitigate out-of-order events
+        # messing up with _IMPORTED flags generation, and runs of the webrequest gobblin job
+        # happening simulatenously.
+        interval         => '*-*-* *:08/10:00',
     }
 
     profile::analytics::refinery::job::gobblin_job { 'netflow':
