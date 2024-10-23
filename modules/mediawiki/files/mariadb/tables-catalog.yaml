@@ -430,6 +430,11 @@ tables:
     canonicality: derivative
     visibility: public
     dblist: translate
+  - name: translate_message_group_subscriptions
+    source: translate
+    canonicality: canonical
+    visibility: private
+    dblist: translate
   - name: translate_messageindex
     source: translate
     canonicality: derivative
