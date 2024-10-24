@@ -279,6 +279,7 @@ profile::kubernetes::deployment_server::mediawiki::release::mw_releases:
       canary:
         stage: "canaries"
       next: {}
+      migration: {}
     mw_flavour: "publish"
     web_flavour: "webserver"
     debug: false
@@ -297,6 +298,7 @@ profile::kubernetes::deployment_server::mediawiki::release::mw_releases:
       canary:
         stage: "canaries"
       next: {}
+      migration: {}
     mw_flavour: "publish"
     web_flavour: "webserver"
     debug: false
@@ -305,6 +307,7 @@ profile::kubernetes::deployment_server::mediawiki::release::mw_releases:
       main: {}
       canary:
         stage: "canaries"
+      migration: {}
     mw_flavour: "publish"
     web_flavour: "webserver"
     debug: false
@@ -313,6 +316,7 @@ profile::kubernetes::deployment_server::mediawiki::release::mw_releases:
       main: {}
       canary:
         stage: "canaries"
+      migration: {}
     mw_flavour: "publish"
     web_flavour: "webserver"
     debug: false
