@@ -1,7 +1,60 @@
 # SPDX-License-Identifier: Apache-2.0
 # == Class: haproxykafka
 #
+# Install haproxykafka, dependencies and service files
+#
+# [*ensure*]
+#   present or absent.
+#
+# [*config*]
+#   Haproxykafka::Config struct used to build the actual configuration.
+#
+# [*user*]
+#   The user to run haproxykafka, created with systemd::sysuser
+#   Defaults to haproxykafka.
+#
+
 class haproxykafka (
-    Wmflib::Ensure $ensure = absent,
+    Wmflib::Ensure       $ensure,
+    Haproxykafka::Config $config,
+    String               $user = 'haproxykafka',
 ) {
+    package { 'haproxykafka':
+        ensure  => $ensure,
+    }
+
+    # TODO: from param/hiera
+    file { '/var/run/haproxykafka':
+        ensure => stdlib::ensure($ensure, 'directory'),
+        owner  => $user,
+        mode   => '0755',
+    }
+
+    $confdir = '/etc/haproxykafka'
+    $conffile = 'config.yaml'
+    $conffile_full_path = "${confdir}/${conffile}"
+
+    file { $confdir:
+        ensure => stdlib::ensure($ensure, 'directory'),
+    }
+
+    file { $conffile_full_path:
+        ensure  => $ensure,
+        owner   => $user,
+        mode    => '0444',
+        content => to_yaml($config),
+        require => [File[$confdir], Package['haproxykafka']],
+    }
+
+    systemd::sysuser { $user:
+        ensure => $ensure,
+        shell  => '/bin/false',
+    }
+
+    systemd::service { 'haproxykafka':
+        ensure  => $ensure,
+        content => systemd_template('haproxykafka'),
+        restart => true,
+        require => File[$conffile_full_path],
+    }
 }

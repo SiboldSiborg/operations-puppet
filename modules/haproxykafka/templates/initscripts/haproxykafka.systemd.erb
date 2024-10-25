@@ -1,0 +1,13 @@
+<%#- SPDX-License-Identifier: Apache-2.0 -%>
+[Unit]
+Description=HAProxy log parser and forwarder
+After=network-online.target
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+User=haproxykafka
+Group=haproxykafka
+ExecStart=/usr/bin/haproxykafka -c <%= @conffile_full_path %>
+Restart=on-failure
