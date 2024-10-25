@@ -17,5 +17,6 @@ profile::memcached::localcacert: "%{facts.puppet_config.localcacert}"
 profile::memcached::notls_port: 11211
 profile::memcached::port: 11214
 profile::contacts::role_contacts: ['ServiceOps']
+profile::base::production::role_description: 'Mediawiki memcached'
 
 profile::puppet::agent::force_puppet7: true
