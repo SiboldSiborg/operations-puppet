@@ -10,6 +10,8 @@
 #   http_host - optional http Host: header to add to the request
 #   upstream - upstream host to contact. If unspecified, <service>.discovery.wmnet will be assumed.
 #   retry - The retry policy, if any. See the envoy docs for RetryPolicy for details.
+#   tcp_keepalive - optional tcp-level keepalive using config.core.v3.TcpKeepalive proto.
+#             see envoy docs for parameters and values.
 #   keepalive - keepalive timeout. If not specified, the default envoy value will be used.
 #             For nodejs applications assume the right value is 5 seconds (see T247484)
 #   xfp - Set an explicit value for X-Forwarded-Proto, instead of letting envoy inject it (see T249535)

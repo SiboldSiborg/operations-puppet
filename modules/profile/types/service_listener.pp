@@ -10,6 +10,11 @@ type Profile::Service_listener =  Struct[{
     'retry'        => Optional[Hash],
     'keepalive'    => Optional[String],
     'sets_sni'     => Optional[Boolean],
+    'tcp_keepalive' => Optional[Struct[{
+        'keepalive_probes'   => Optional[Integer],
+        'keepalive_time'     => Optional[Integer],
+        'keepalive_interval' => Optional[Integer]
+    }]],
     'split'        => Optional[Struct[{
         'service' => String,
         'upstream' => Stdlib::Fqdn,

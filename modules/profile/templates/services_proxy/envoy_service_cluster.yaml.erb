@@ -26,6 +26,13 @@ load_assignment:
 #circuit_breakers:
 #  thresholds:
 #    - max_pending_requests: 30
+<%- if @listener['tcp_keepalive'] -%>
+upstream_connection_options:
+  tcp_keepalive:
+  <%- @listener['tcp_keepalive'].each do |ka_key, ka_val| -%>
+    <%= ka_key %>: <%= ka_val %>
+  <%- end -%>
+<%- end -%>
 <%- if @svc['encryption'] -%>
 transport_socket:
   name: envoy.transport_sockets.tls
