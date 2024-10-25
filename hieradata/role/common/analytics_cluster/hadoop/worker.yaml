@@ -68,6 +68,7 @@ profile::java::java_packages:
 profile::java::extra_args:
   JAVA_TOOL_OPTIONS: "-Dfile.encoding=UTF-8"
 profile::contacts::role_contacts: ['Data Platform']
+profile::base::production::role_description: 'Hadoop worker (DataNode & NodeManager)'
 
 profile::base::certificates::include_bundle_jks: true
 

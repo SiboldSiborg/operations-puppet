@@ -67,5 +67,6 @@ profile::hadoop::firewall::master::client_ferm_srange: '(($ANALYTICS_NETWORKS $D
 profile::hadoop::common::config_override:
   hadoop_var_directory: '/srv/hadoop'
 profile::contacts::role_contacts: ['Data Platform']
+profile::base::production::role_description: 'Hadoop standby NameNode'
 
 profile::puppet::agent::force_puppet7: true
