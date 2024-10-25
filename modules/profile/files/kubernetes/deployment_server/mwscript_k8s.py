@@ -50,6 +50,10 @@ def kube_env(namespace: str, cluster: str, deploy: bool = False) -> dict[str, st
     }
 
 
+def env_vars_str(env_vars: dict[str, str]) -> str:
+    return ' '.join(f'{key}={value}' for key, value in env_vars.items())
+
+
 def job_name(namespace: str, cluster: str, release: str) -> str:
     # Duplicates the functionality of mw.name.namespace.env.release in the Helm chart.
     return f'{namespace}.{cluster}.{release}'
@@ -147,17 +151,15 @@ def wait_until_started(env_vars: dict[str, str], job: str, container: str) -> No
             logger.info('🚀 Job is running.')
             break
     else:
-        env_vars_str = ' '.join(f'{key}={value}' for key, value in env_vars.items())
         logger.warning('🚩 Timed out waiting for the container to start. Proceeding anyway, but '
                        'this might not work. To check on the job, run:\n'
-                       '%s kubectl describe job %s', env_vars_str, job)
+                       '%s kubectl describe job %s', env_vars_str(env_vars), job)
     w.stop()
 
 
 def logs_command(env_vars: dict[str, str], release: str) -> str:
-    env_vars_str = ' '.join(f'{key}={value}' for key, value in env_vars.items())
     job = job_name(NAMESPACE, env_vars['K8S_CLUSTER'], release)
-    return f'{env_vars_str} kubectl logs -f job/{job} {app_container(release)}'
+    return f'{env_vars_str(env_vars)} kubectl logs -f job/{job} {app_container(release)}'
 
 
 def parse_duration(duration: str) -> int:
@@ -258,7 +260,11 @@ def start(args: argparse.Namespace) -> dict[str, str]:
         except subprocess.CalledProcessError as e:
             raise ServerError(f'Command failed with status {e.returncode}: {shlex.join(e.cmd)}')
         except KeyboardInterrupt:
-            logger.info('🔁 To resume streaming logs, run:\n%s', logs_command(env_vars, release))
+            logger.info('🔁 To resume streaming logs, run:\n%s\n'
+                        'ℹ️ To terminate your job and delete it, run:\n%s kubectl delete job %s',
+                        logs_command(env_vars, release),
+                        env_vars_str(kube_env(NAMESPACE, environment, deploy=True)),
+                        job)
     elif args.attach:
         wait_until_started(env_vars, job, container)
         if sys.stdin.isatty():
@@ -312,7 +318,8 @@ def main() -> int:
                     "Pass any options below for this script, then '--', then all remaining "
                     "arguments are passed to MWScript.php. A typical invocation looks like:\n\n"
                     "%(prog)s --comment='backfill for T123456' -- Filename.php --wiki=aawiki "
-                    "--script-specific-arg",
+                    "--script-specific-arg\n\n"
+                    "More information: https://wikitech.wikimedia.org/wiki/Maintenance_scripts",
         formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('-v', '--verbose', action='count', default=0,
                         help='Print extra output from the underlying helmfile invocation. (-vv: '
