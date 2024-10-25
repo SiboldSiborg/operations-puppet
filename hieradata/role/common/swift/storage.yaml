@@ -193,5 +193,6 @@ profile::prometheus::statsd_exporter::mappings:
       method: "$3"
       status: "$4"
 profile::contacts::role_contacts: ['Data Persistence']
+profile::base::production::role_description: 'Swift backend (ms cluster)'
 
 profile::puppet::agent::force_puppet7: true

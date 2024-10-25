@@ -1,5 +1,6 @@
 profile::contacts::role_contacts:
   - 'Data Persistence'
+profile::base::production::role_description: 'Swift backend (Thanos cluster)'
 
 cluster: thanos
 

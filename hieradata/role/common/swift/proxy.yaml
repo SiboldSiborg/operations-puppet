@@ -167,6 +167,7 @@ profile::prometheus::statsd_exporter::mappings:
       storage_policy: "$2"
 
 profile::contacts::role_contacts: ['Data Persistence']
+profile::base::production::role_description: 'Swift frontend (ms cluster)'
 
 profile::swift::proxy::use_tls: true
 profile::envoy::ensure: present
