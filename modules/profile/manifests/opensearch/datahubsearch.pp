@@ -8,9 +8,9 @@ class profile::opensearch::datahubsearch {
 
     include profile::opensearch::server
 
-    ferm::service {'opensearch-query':
-        proto  => 'tcp',
-        port   => '9200',
-        srange => '$DOMAIN_NETWORKS',
+    firewall::service {'opensearch-query':
+        proto    => 'tcp',
+        port     => 9200,
+        src_sets => ['DOMAIN_NETWORKS'],
     }
 }
