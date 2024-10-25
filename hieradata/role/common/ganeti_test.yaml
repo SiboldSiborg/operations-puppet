@@ -22,6 +22,8 @@ cluster: ganeti_test
 profile::contacts::role_contacts: ['Infrastructure Foundations']
 profile::base::production::role_description: 'Ganeti node (staging/test)'
 
+profile::ganeti::manage_known_hosts: true
+
 profile::firewall::provider: nftables
 
 prometheus::node_exporter::collectors_extra:
