@@ -29,7 +29,7 @@ class profile::conftool::client (
     Optional[Stdlib::Port] $port                   = lookup('etcd_port', { 'default_value' => undef }),
     String                 $pool_pwd_seed          = lookup('etcd::autogen_pwd_seed'),
     String                 $etcd_user              = lookup('profile::conftool::client::etcd_user', { 'default_value' => '__auto__' }),
-    Stdlib::Fqdn           $conftool2git_host      = lookup('profile::conftool2git::active_host', { 'default_value' => '' }),
+    Optional[Stdlib::Fqdn] $conftool2git_host      = lookup('profile::conftool2git::active_host', { 'default_value' => undef }),
     String                 $conftool2git_bind_addr = lookup('profile::conftool2git::address', { 'default_value' => '0.0.0.0:1312' }),
 ) {
     ensure_packages(['python3-conftool'])
@@ -71,7 +71,7 @@ class profile::conftool::client (
         settings => conftool::cluster_credentials($user, $pwd, $pool_pwd_seed, $conftool_cluster),
     }
 
-    if $conftool2git_host != '' {
+    if $conftool2git_host != undef {
         $parsed_addr = split($conftool2git_bind_addr, /:/)
         $conftool2git_address = "${conftool2git_host}:${parsed_addr[1]}"
     } else {
