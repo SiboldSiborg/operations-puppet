@@ -1,6 +1,5 @@
 # Fix ruby-git deficiencies. TODO: move to rugged instead?
 require 'git'
-require 'yaml'
 
 class GitOps
   # Helper class to perform the git operations we use in the rakefile
@@ -18,12 +17,7 @@ class GitOps
   def process
     # Process the current diff and populate @changed
     diffs = @git.diff('HEAD^')
-    # Support fully ignoring paths
-    data = YAML.safe_load(File.open("#{@git.dir.path}/.ignored.yaml"))
-    ignored_modules = data["ignored_modules"]
     diffs.each do |diff|
-      # Ignore upstream modules
-      next unless ignored_modules.select { |m| %r'^modules/#{m}/' =~ diff.path }.empty?
       next if diff.path.start_with?('vendor_modules/')
       next if diff.path.start_with?('core_modules/')
       name_status = diffs.name_status[diff.path]
