@@ -83,8 +83,15 @@ def _email_member(member, subject, body):
     if member.lower() in USER_IGNORE_LIST:
         return
 
-    userrec = ldap_conn.search_s(member, ldap.SCOPE_BASE)
-    email = userrec[0][1]["mail"][0]
+    userrec = ldap_conn.search_s(
+        member, ldap.SCOPE_BASE, "(objectclass=*)", ["*", "pwdPolicySubentry"]
+    )[0][1]
+
+    if len(userrec.get("pwdPolicySubentry", [])) > 0:
+        # user is disabled, do not email
+        return
+
+    email = userrec["mail"][0]
 
     args = ["/usr/bin/mail", "-s", subject, "-a", "Precedence: Bulk", email.decode()]
 
