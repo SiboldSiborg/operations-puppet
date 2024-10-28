@@ -19,5 +19,13 @@ class cephadm::osd(
         srange     => $cluster_nodes,
     }
 
+    # Parameters taken from cephadm upstream default OSD settings
+    sysctl::parameters { 'cephadm_osd_settings':
+        values => {
+            'fs.aio-max-nr'  => 1048576,
+            'kernel.pid_max' => 4194304,
+        },
+    }
+
     # TODO: custom fact for storage layout
 }
