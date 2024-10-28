@@ -5,4 +5,5 @@ type Dynamicproxy::Zone = Struct[{
   'deprecated'     => Optional[Boolean],
   'default'        => Optional[Boolean],
   'shared'         => Optional[Boolean],
+  'apex'           => Optional[Boolean],
 }]

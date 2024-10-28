@@ -175,53 +175,58 @@ class Dns:
         if hostname[-1] != ".":
             hostname += "."
 
-        hostname_parent = hostname[hostname.index(".") + 1:]
-
-        # For now, regardless if the project owns that zone, ensure that
-        # the used parent zone is explicitely allowed by the admins
-        if hostname_parent in self.zones:
-            if self.zones[hostname_parent].get("deprecated", False):
-                enforce_policy("proxy:zones:use_deprecated", project)
-            if self.zones[hostname_parent]["project"] != project and not self.zones[
-                hostname_parent
-            ].get("shared", False):
-                log.logger.warning(
-                    "Rejecting project %s from using non-shared zone %s in %s",
-                    project,
-                    hostname_parent,
-                    self.zones[hostname_parent]["project"],
-                )
-                return None
-            if hostname.startswith("*.") and self.zones[hostname_parent].get(
-                "shared", False
-            ):
-                log.logger.warning(
-                    "Rejecting project %s from using wildcard in shared zone %s",
-                    project,
-                    hostname_parent,
-                )
-                return None
-
-            for zone in self.designateclient(project).zones.list():
-                # we don't have multi-level wildcard certs
-                if zone["name"] == hostname:
-                    return (hostname, project, zone["id"])
-
-            # TODO: check for conflicting other projects' zones?
-
-            return (
+        zone_name = None
+        if hostname in self.zones:
+            zone_name = hostname
+        elif hostname[hostname.index(".") + 1 :] in self.zones:  # noqa: E203
+            zone_name = hostname[hostname.index(".") + 1 :]  # noqa: E203
+        else:
+            log.logger.info(
+                "Did not find zone for hostname %s (supported zones %s)",
                 hostname,
-                self.zones[hostname_parent]["project"],
-                self.zones[hostname_parent]["id"],
+                ", ".join(self.zones.keys()),
             )
+            return None
 
-        log.logger.info(
-            "Did not find zone for hostname %s (parent %s, supported zones %s)",
+        if self.zones[zone_name].get("deprecated", False):
+            enforce_policy("proxy:zones:use_deprecated", project)
+        if self.zones[zone_name]["project"] != project and not self.zones[
+            zone_name
+        ].get("shared", False):
+            log.logger.warning(
+                "Rejecting project %s from using non-shared zone %s in %s",
+                project,
+                zone_name,
+                self.zones[zone_name]["project"],
+            )
+            return None
+        if hostname.startswith("*.") and self.zones[zone_name].get("shared", False):
+            log.logger.warning(
+                "Rejecting project %s from using wildcard in shared zone %s",
+                project,
+                zone_name,
+            )
+            return None
+        if hostname == zone_name and not self.zones[zone_name].get("apex", False):
+            log.logger.warning(
+                "Rejecting project %s from using apex in zone %s",
+                project,
+                zone_name,
+            )
+            return None
+
+        for zone in self.designateclient(project).zones.list():
+            # we don't have multi-level wildcard certs
+            if zone["name"] == hostname:
+                return (hostname, project, zone["id"])
+
+        # TODO: check for conflicting other projects' zones?
+
+        return (
             hostname,
-            hostname_parent,
-            ", ".join(self.zones.keys()),
+            self.zones[zone_name]["project"],
+            self.zones[zone_name]["id"],
         )
-        return None
 
     def can_use_hostname(self, project: str, hostname: str) -> bool:
         """Checks if the given project can use the given hostname."""
@@ -367,6 +372,7 @@ def list_zones(project_id):
             "deprecated": details.get("deprecated", False),
             "default": details.get("default", False),
             "shared": details.get("shared", False),
+            "apex": details.get("apex", False),
         }
         for zone, details in zones.items()
         if (
