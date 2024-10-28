@@ -10,13 +10,10 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import List, Set
 
-import yaml
 from conftool.extensions.reqconfig import (
-    Requestctl,
+    api,
     RequestctlError,
-    parse_args as reqctl_args,
 )
-from git import Repo
 from lxml import html
 from netaddr import IPNetwork, cidr_merge
 from requests import Session
@@ -298,55 +295,21 @@ def main() -> int:
                 runtime_error = True
 
     if args.conftool:
-        repo_base = Path(args.repo)
-        requestctl_path = repo_base / "requestctl"
-        ipblocks_path = requestctl_path / "request-ipblocks"
-        git_repo = Repo(repo_base)
+        req_api = api.RequestcltApi(api.client(config="/etc/conftool/config.yaml"))
         for ipblock_type, ipblocks in data.items():
-            (ipblocks_path / ipblock_type).mkdir(exist_ok=True)
             for ipblock_name, cidrs in ipblocks.items():
-                name = ipblock_name.lower()
-                # Save the data to a file on disk:
-                file_path = ipblocks_path / ipblock_type / f"{name}.yaml"
-                to_update = {
-                    "cidrs": cidrs,
-                    "comment": f"Automatically generated IPs for {ipblock_name}",
-                }
-                file_path.write_text(yaml.dump(to_update, default_flow_style=False))
-        # safety measure: if there is an uncommitted object added to the index of the
-        # repository, we won't add what follows to git. We will still sync it though.
-        if git_repo.index.diff("HEAD"):
-            logging.error(
-                "The git index of %s is dirty, not adding/committing ipblocks.",
-                repo_base,
-            )
-            runtime_error = True
-        else:
-            # Add and commit to the private repo if anything
-            git_repo.index.add([str(ipblocks_path / ipblock_type) for ipblock_type in data])
-            # We check the added stuff to HEAD, so that spurious changes leftover
-            # in the repo won't create an issue.
-            if git_repo.index.diff("HEAD"):
-                git_repo.index.commit(
-                    "Automatic commit of cloud IP ranges (dump_cloud_ip_ranges)"
-                )
-        # now sync it. The fastest way is to just pass an
-        # argparse.Namespace to Requestctl.
-        try:
-            Requestctl(
-                reqctl_args(
-                    [
-                        "-c",
-                        "/etc/conftool/config.yaml",
-                        "sync",
-                        "-g",
-                        str(requestctl_path),
-                        "ipblock",
-                    ]
-                )
-            ).run()
-        except RequestctlError:
-            runtime_error = True
+                slug = f"{ipblock_type}/{ipblock_name.lower()}"
+                try:
+                    logging.info("Updating ipblock@%s", slug)
+                    entity = req_api.get("ipblock", slug)
+                    to_update = {
+                        "cidrs": cidrs,
+                        "comment": f"Automatically generated IPs for {ipblock_name}",
+                    }
+                    req_api.write(entity, to_update)
+                except RequestctlError as error:
+                    logging.error("Error updating %s: %s", slug, error)
+                    runtime_error = True
 
     temp_datafile = Path(f"{datafile}.tmp")
     temp_datafile.write_text(json.dumps(data, indent=4, sort_keys=True))
