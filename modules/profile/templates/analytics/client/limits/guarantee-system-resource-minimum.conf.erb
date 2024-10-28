@@ -1,0 +1,10 @@
+# SPDX-License-Identifier: Apache-2.0
+# enable resource management for system.slice via cgroups
+[Slice]
+CPUAccounting=yes
+IOAccounting=yes
+IOWeight=25
+MemoryAccounting=yes
+# preserve 3% of total memory for normal system functions. This is more than sufficient for the
+# stat hosts, which have a minimum of 128 GB RAM.
+MemoryMin=3%

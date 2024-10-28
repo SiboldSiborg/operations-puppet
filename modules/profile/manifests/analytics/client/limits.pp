@@ -29,6 +29,11 @@ class profile::analytics::client::limits {
         # for more details
         unit    => 'user-.slice'
     }
+    systemd::override {'guarantee-system-resource-minimum.conf':
+        content => template('profile/analytics/client/limits/guarantee-system-resource-minimum.conf.erb'),
+        unit    => 'system.slice'
+    }
+
     # By default the cron.service unit runs under the system.slice.
     # This means that all crontab's processes escape the limits imposed
     # by the user.slice, so an explicit override is needed.
