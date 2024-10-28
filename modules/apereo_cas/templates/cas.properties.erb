@@ -138,10 +138,12 @@ cas.ticket.registry.memcached.transcoder=<%= @memcached_transcoder %>
 
 <%- if @redis_enable -%>
 cas.ticket.registry.redis.enabled=true
-cas.ticket.registry.redis.cluster.nodes[0].host=<%= @redis_server %>
-cas.ticket.registry.redis.cluster.nodes[0].port=<%= @redis_port %>
+cas.ticket.registry.redis.host=<%= @redis_server %>
+cas.ticket.registry.redis.port=<%= @redis_port %>
+cas.ticket.registry.redis.database=<%= @redis_database %>
+cas.ticket.registry.redis.password=<%= @redis_password %>
 <%- else -%>
-cas.ticket.registry.redis.enabled=false
+CasFeatureModule.TicketRegistry.redis.enabled=false
 <%- end -%>
 
 <%- if @enable_cors -%>

@@ -137,6 +137,8 @@ class apereo_cas (
     Boolean                           $redis_enable                  = false,
     Stdlib::Port                      $redis_port                    = 6379,
     Stdlib::Host                      $redis_server                  = 'localhost',
+    Integer[0,15]                     $redis_database                = 0,
+    String                            $redis_password                = 'changeme',
     Boolean                           $u2f_jpa_enable                = false,
     String                            $u2f_jpa_username              = 'cas',
     String                            $u2f_jpa_password              = 'changeme',
