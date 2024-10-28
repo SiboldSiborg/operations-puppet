@@ -7,7 +7,7 @@
 # available for Ceph use.
 #
 # @param [Array[Stdlib::Host]] cluster_nodes
-#     Set of nodes to allow ceph traffice from
+#     Set of nodes to allow ceph traffic from
 class cephadm::osd(
     Array[Stdlib::Host] $cluster_nodes,
 ) {
