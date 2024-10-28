@@ -20,7 +20,7 @@ define profile::mediawiki::sharded_periodic_job(
         Systemd::Timer::Interval,
         Systemd::Timer::Datetime
     ] $interval,
-    Array[String] $shards = ['s1', 's2', 's3', 's4', 's5', 's6', 's7', 's8', 's11'],
+    Array[String] $shards = ['s1', 's2', 's3', 's4', 's5', 's6', 's7', 's8'],
     Wmflib::Ensure $ensure = present
 ) {
     $shards.map |$shard| {
@@ -34,5 +34,11 @@ define profile::mediawiki::sharded_periodic_job(
             command  => "/usr/local/bin/mwscriptwikiset ${script}",
             interval => $interval,
         }
+    }
+
+    profile::mediawiki::periodic_job { "${title}_s11":
+        ensure   => absent,
+        command  => "/usr/local/bin/mwscriptwikiset ${script}",
+        interval => $interval,
     }
 }
