@@ -28,6 +28,9 @@
 [domain_realm]
         .<%= @krb_realm_name.downcase %> = <%= @krb_realm_name.upcase %>
         <%= @krb_realm_name.downcase %> = <%= @krb_realm_name.upcase %>
+        <%- @krb_extra_realm_domains.each do |krb_extra_realm_domain| -%>
+        <%= krb_extra_realm_domain.downcase %> = <%= @krb_realm_name.upcase %>
+        <%- end -%>
 
 [logging]
         kdc = FILE:/var/log/kerberos/krb5kdc.log

@@ -1261,6 +1261,11 @@ jenkins_controller_hosts:
     - contint2002.wikimedia.org
 
 kerberos_realm_name: WIKIMEDIA
+# Bind the following set of domains to the kerberos realm,
+# thus allowing services hosted at subdomains of these domains to
+# rely on Kerberos authentication
+kerberos_extra_realm_domains:
+- 'discovery.wmnet'
 kerberos_kadmin_server_primary: 'krb1001.eqiad.wmnet'
 kerberos_kadmin_keytabs_repo:
 - 'puppetserver1001.eqiad.wmnet'
