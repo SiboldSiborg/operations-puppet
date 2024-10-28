@@ -1,8 +1,6 @@
 type Profile::Mariadb::Valid_section = Enum[
     # MediaWiki metadata
     's1', 's2', 's3', 's4', 's5', 's6', 's7', 's8',
-    # labtestwiki - hosted on clouddb2002-dev, does not appear in puppet T258376
-    #'s11',
     # MediaWiki extension data
     'x1',
     # MainStash data

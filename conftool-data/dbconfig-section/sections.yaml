@@ -7,7 +7,6 @@ eqiad:
   - s6
   - s7
   - s8
-  - s11  # Replaces wikitech; used for labstestwikitech
   - es1
   - es2
   - es3
@@ -31,7 +30,6 @@ codfw:
   - s6
   - s7
   - s8
-  - s11  # Replaces wikitech; used for labstestwikitech
   - es1
   - es2
   - es3
