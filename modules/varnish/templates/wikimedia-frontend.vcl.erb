@@ -531,22 +531,6 @@ sub normalize_request_nonmisc {
     set req.url = querysort.querysort(req.url);
 }
 
-sub wm_recv_purge {
-    /* Support HTTP PURGE */
-    if (req.method == "PURGE") {
-        if (local.endpoint == "<%= @privileged_uds %>" || std.ip(req.http.X-Client-IP, "192.0.2.1") ~ local_host) {
-            if (req.http.Host ~ "<%= @vcl_config.fetch('purge_host_regex') %>") {
-                set req.hash_ignore_busy = true;
-                return (purge);
-            } else {
-                return (synth(204, "Domain not cached here"));
-            }
-        } else {
-                return (synth(405, "Method not allowed"));
-        }
-    }
-}
-
 sub wm_recv_pass {
 <%
     def uc_action(uc)
@@ -752,7 +736,19 @@ sub vcl_recv {
 <%- end -%>
 
     call cluster_fe_recv_pre_purge;
-    call wm_recv_purge;
+    /* Support HTTP PURGE */
+    if (req.method == "PURGE") {
+        if (local.endpoint == "<%= @privileged_uds %>" || std.ip(req.http.X-Client-IP, "192.0.2.1") ~ local_host) {
+            if (req.http.Host ~ "<%= @vcl_config.fetch('purge_host_regex') %>") {
+                set req.hash_ignore_busy = true;
+                return (purge);
+            } else {
+                return (synth(204, "Domain not cached here"));
+            }
+        } else {
+                return (synth(405, "Method not allowed"));
+        }
+    }
 
     // Occasionally throw an error to clients connecting with RSA - We're
     // removing support for that soon. (T370837)
