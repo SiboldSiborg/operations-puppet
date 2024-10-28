@@ -75,8 +75,6 @@ cache::alternate_domains:
     caching: 'normal'
   labtesthorizon.wikimedia.org:
     caching: 'normal'
-  labtestwikitech.wikimedia.org:
-    caching: 'normal'
   logstash.wikimedia.org:
     caching: 'normal'
   netbox.wikimedia.org:
