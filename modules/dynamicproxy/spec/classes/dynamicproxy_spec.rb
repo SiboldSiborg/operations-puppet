@@ -26,7 +26,6 @@ describe 'dynamicproxy' do
               'shared'         => false,
             },
             'zone3.example.' => {
-              'id'             => 'cccccccccc',
               'project'        => 'someproject',
               'acmechief_cert' => 'certname3',
               'deprecated'     => false,

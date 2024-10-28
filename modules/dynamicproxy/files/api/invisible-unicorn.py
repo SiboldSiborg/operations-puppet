@@ -225,7 +225,7 @@ class Dns:
         return (
             hostname,
             self.zones[zone_name]["project"],
-            self.zones[zone_name]["id"],
+            self.zones[zone_name].get("id"),
         )
 
     def can_use_hostname(self, project: str, hostname: str) -> bool:
@@ -235,25 +235,29 @@ class Dns:
             return False
 
         hostname, project, zone_id = zone
-        client = self.designateclient(project)
+        if zone_id:
+            client = self.designateclient(project)
 
-        existing_records = client.recordsets.list(
-            zone_id, criterion={"name": hostname, "type": "A"}
-        )
-        if len(existing_records) != 0:
-            log.logger.info(
-                "Rejecting can_use_hostname (%s %s), found existing records: %s",
-                project,
-                hostname,
-                ", ".join([record["name"] for record in existing_records]),
+            existing_records = client.recordsets.list(
+                zone_id, criterion={"name": hostname, "type": "A"}
             )
+            if len(existing_records) != 0:
+                log.logger.info(
+                    "Rejecting can_use_hostname (%s %s), found existing records: %s",
+                    project,
+                    hostname,
+                    ", ".join([record["name"] for record in existing_records]),
+                )
 
-            return False
+                return False
 
         return True
 
     def add_records_for(self, project: str, hostname: str):
         hostname, project, zone_id = self.get_zone(project, hostname)
+        if not zone_id:
+            return
+
         client = self.designateclient(project)
 
         if not client.recordsets.list(
@@ -263,6 +267,9 @@ class Dns:
 
     def delete_records_for(self, project: str, hostname: str):
         hostname, project, zone_id = self.get_zone(project, hostname)
+        if not zone_id:
+            return
+
         client = self.designateclient(project)
 
         a_recordsets = client.recordsets.list(
