@@ -16,19 +16,6 @@ class profile::openstack::base::horizon::docker_deploy(
     Hash $env                = lookup('profile::openstack::base::horizon::env', { 'default_value' => {} }),
     Hash $secret_env         = lookup('profile::openstack::base::horizon::secret_env', { 'default_value' => {} } ),
 ) {
-
-    # This is still here because of wikitech
-    class { '::httpd':
-        modules => [
-          'alias',
-          'expires',
-          'headers',
-          'proxy_fcgi',  # Needed by ::openstack::wikitech::web
-          'rewrite',
-          'ssl',
-        ],
-    }
-
     $ldap_rw_host = $ldap_config['rw-server']
 
     class { '::openstack::horizon::config':
@@ -55,18 +42,5 @@ class profile::openstack::base::horizon::docker_deploy(
         environment  => deep_merge($env, $secret_env),
         host_network => true,
         bind_mounts  => {'/etc/openstack-dashboard/local_settings.py' => '/opt/lib/python/site-packages/openstack_dashboard/local/local_settings.py'},
-    }
-
-    # Horizon error logs to ELK.  The Apache log is called horizon_error
-    #  but it contains anything that the Horizon python code logs.
-    #
-    # The arcane startmsg_regex is meant to detect continued lines
-    #  in python stack-traces. It declares a new message to begine
-    #  with a timestamp followed by a single space; two spaces
-    #  is taken to be the indented continuation of a message.
-    rsyslog::input::file { 'horizon_error':
-        path           => '/var/log/apache2/horizon_error.log',
-        syslog_tag     => 'horizon',
-        startmsg_regex => '^[[:digit:]-]{10} [[:digit:]:]{8}.[[:digit:]]* [^ ]',
     }
 }
