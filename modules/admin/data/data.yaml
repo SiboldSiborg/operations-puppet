@@ -977,7 +977,7 @@ groups:
   deploy-ml-service:
     gid: 833
     description: Users allowed to deploy k8s Machine Learning Services
-    members: [*ml-team-admins]
+    members: [*ml-team-admins, kartik]
     privileges: []
     approval:
       - Chris Albon
