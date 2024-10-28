@@ -6,8 +6,7 @@ class role::aux_k8s::master {
 
     # setup as a kubernetes master
     include profile::kubernetes::master
-    # setup docker on the machine
-    include profile::docker::engine
+    include profile::kubernetes::container_runtime
     # kubernete's masters are also regular nodes
     include profile::kubernetes::node
     # setup calico, our kubernetes CNI

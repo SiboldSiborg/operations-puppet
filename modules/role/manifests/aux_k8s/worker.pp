@@ -4,8 +4,7 @@ class role::aux_k8s::worker {
     include profile::base::production
     include profile::firewall
 
-    # setup docker on the machine
-    include profile::docker::engine
+    include profile::kubernetes::container_runtime
     # setup as a kubernetes node
     include profile::kubernetes::node
     # setup calico, our kubernetes CNI
