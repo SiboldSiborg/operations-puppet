@@ -1914,8 +1914,12 @@ node /^lvs10(1[789]|20)\.eqiad\./ {
     role(lvs::balancer)
 }
 
+node /^lvs1013\.eqiad\./ {
+    role(liberica)
+}
+
 # old lvs servers T295804 (insetup for future experimentation!)
-node /^lvs101[3456]\.eqiad\./ {
+node /^lvs101[456]\.eqiad\./ {
     role(insetup_noferm)
 }
 
