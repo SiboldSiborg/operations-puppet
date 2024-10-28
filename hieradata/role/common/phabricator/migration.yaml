@@ -7,3 +7,4 @@ profile::phabricator::migration::dst_hosts:
   - "%{lookup('phabricator_passive_server')}"
 
 profile::contacts::role_contacts: ['Collaboration Services']
+profile::base::production::role_description: 'Temp role to allow migrating Phabricator data to a new server'

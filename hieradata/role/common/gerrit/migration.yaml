@@ -3,3 +3,4 @@ profile::admin::groups:
   - gerrit-admin
 contactgroups: 'admins,gerrit'
 profile::contacts::role_contacts: ['Collaboration Services']
+profile::base::production::role_description: 'Temp role to allow migrating Gerrit data to a new server'
