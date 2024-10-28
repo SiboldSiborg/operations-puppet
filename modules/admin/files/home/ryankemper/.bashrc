@@ -23,6 +23,7 @@ export PROMPT_COMMAND='history -a; history -r'
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=1000
 HISTFILESIZE=2000
+export HISTTIMEFORMAT="%F %T "
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
