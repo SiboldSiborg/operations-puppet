@@ -66,7 +66,7 @@ class profile::idp(
     Boolean                           $expose_tomcat             = lookup('profile::idp::expose_tomcat'),
 ){
 
-    ensure_packages(['python3-pymysql'])
+    ensure_packages(['python3-pymysql', 'python3-redis'])
     include passwords::ldap::production
     include profile::java
     class{ 'sslcert::dhparam': }

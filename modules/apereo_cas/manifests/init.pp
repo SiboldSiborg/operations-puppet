@@ -223,7 +223,7 @@ class apereo_cas (
     ensure_packages('libmemcached-tools')
 
     file { '/usr/local/sbin/memcached-dump':
-        ensure => file,
+        ensure => absent,
         mode   => '0550',
         owner  => 'root',
         group  => 'root',
@@ -231,7 +231,7 @@ class apereo_cas (
     }
 
     file { '/usr/local/sbin/return-tgt-for-user':
-        ensure => file,
+        ensure => absent,
         mode   => '0550',
         owner  => 'root',
         group  => 'root',

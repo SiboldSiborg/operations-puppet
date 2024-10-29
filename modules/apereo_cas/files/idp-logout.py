@@ -2,13 +2,13 @@
 # SPDX-License-Identifier: Apache-2.0
 # -*- coding: utf-8 -*-
 
+import configparser
 import json
 import os
-import subprocess
-import datetime
-import glob
+
+import redis
 import requests
-import configparser
+
 from wmflib.idm import LogoutdBase
 
 
@@ -22,45 +22,57 @@ class IdpLogoutd(LogoutdBase):
     """idp"""
 
     user_identifier = 'cn'
+    cfg = configparser.ConfigParser()
+    idp_prefix = ''
 
-    def query_tgt(self, cn):
-        memcached_host = 'localhost:11000'
-        max_tgt_lifetime = 7  # Max ticket lifetime is seven days
-        logfile_globbing = '/var/log/cas/cas_audit*log'
-        logs_processed = 0
-        base_cmd = ['/usr/local/sbin/return-tgt-for-user', '-u', cn, '-s', memcached_host, '-f']
+    def __init__(self, args=None):
+        super().__init__(args)
 
-        max_log_age = datetime.datetime.now() - datetime.timedelta(days=max_tgt_lifetime)
-        for f in glob.glob(logfile_globbing):
-            logs_processed += 1
-            if (datetime.datetime.fromtimestamp(os.path.getmtime(f)) > max_log_age):
-                base_cmd.append(f)
-
-        if not logs_processed:
-            return Tgt(False, "")
-        else:
-            try:
-                output = subprocess.check_output(base_cmd, universal_newlines=True).strip()
-            except subprocess.CalledProcessError:
-                return Tgt(False, "")
-
-        return Tgt(True, output)
-
-    # Return codes follow the logout.d semantics, see T283242
-    def logout_user(self, user):
         try:
-            cfg = configparser.ConfigParser()
             # The cas.properties is not a standard .ini file to prepend a dummy section
             with open("/etc/cas/config/cas.properties") as stream:
-                cfg.read_string("[dummy]\n" + stream.read())
-                idp_prefix = cfg.get("dummy", "cas.server.prefix")
+                self.cfg.read_string("[dummy]\n" + stream.read())
+                self.idp_prefix = self.cfg.get("dummy", "cas.server.prefix")
 
         except IOError as e:
             print("Failed to open cas.properties file: {}".format(e))
             return 1
 
-        tgt = self.query_tgt(user)
-        url = "{}api/ssoSessions/{}".format(idp_prefix, tgt.tgt)
+        self.r = redis.Redis(
+            host=self.cfg.get("dummy", "cas.ticket.registry.redis.host"),
+            port=self.cfg.get("dummy", "cas.ticket.registry.redis.port"),
+            db=self.cfg.get("dummy", "cas.ticket.registry.redis.database"),
+            password=self.cfg.get("dummy", "cas.ticket.registry.redis.password")
+        )
+
+    def query_tgt(self, cn):
+
+        # Get all TGTs in Redis. If the user have signed in before and after a
+        # server switch over, they will have a ticket for each of the IDP hosts,
+        # as the host name is embedded in the TGT.
+        # E.g. TGT-1-********VJizN-B-idp-test1004
+        keys = self.r.keys("CAS_TICKET:TGT:TGT*")
+
+        tgts = []
+        # Find all the tickets for the given CN.
+        for key in keys:
+            principal, tgt = self.r.hmget(key, 'principal', 'ticketId')
+            if principal.decode() != cn:
+                continue
+            tgts.append(Tgt(True, tgt.decode()))
+
+        return tgts
+
+    # Return codes follow the logout.d semantics, see T283242
+    def logout_user(self, user):
+        tgts = self.query_tgt(user)
+        state = [0, ]
+        for tgt in tgts:
+            state.append(self.logout_query(user, tgt))
+        return max(state)
+
+    def logout_query(self, user, tgt):
+        url = "{}/api/ssoSessions/{}".format(self.idp_prefix, tgt.tgt)
 
         response = requests.delete(url)
 
@@ -83,25 +95,27 @@ class IdpLogoutd(LogoutdBase):
             return 1
 
     def list(self):
-        pass
+        keys = self.r.keys("CAS_TICKET:TGT:TGT*")
+        # Find all the tickets for the given CN.
+        for key in keys:
+            principal, tgt = self.r.hmget(key, 'principal', 'ticketId')
+            print(json.dumps(
+                {
+                    'user': principal.decode(),
+                    'TGT': tgt.decode()
+                 }
+            ))
 
     # Return codes follow the logout.d semantics, see T283242
     def query_user(self, user):
-        res = {}
-        res['id'] = user
-        # TODO if verbose is enabled we could print since when a user is logged in
-        res['verbose'] = ''
+        tgts = self.query_tgt(user)
+        res = {
+            'id': user,
+            'active': 'active' if tgts else 'inactive',
+            'verbose': ''}
 
-        tgt = self.query_tgt(user)
-
-        if tgt.exists:
-            res['active'] = "active"
-            print(json.dumps(res))
-            return 1
-        else:
-            res['active'] = "inactive"
-            print(json.dumps(res))
-            return 0
+        print(json.dumps(res))
+        return 1 if tgts else 0
 
 
 if os.geteuid() != 0:
