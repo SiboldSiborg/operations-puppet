@@ -22,8 +22,6 @@ import operator
 import mwopenstackclients
 
 
-ZONE = 'wmflabs.org.'
-TENANT = 'wmflabsdotorg'
 logger = logging.getLogger(__name__)
 
 
@@ -47,13 +45,11 @@ def add_proxy(args):
     client = mwopenstackclients.Clients(oscloud=args.os_cloud)
     proxy_url, session = proxy_client(client, args.project)
 
-    fqdn = '{}.{}'.format(args.host, ZONE)
-
     session.put(
         f"{proxy_url}/mapping",
         data=json.dumps({
             'backends': [args.target_url],
-            'domain': fqdn.rstrip('.')
+            'domain': args.host.rstrip('.'),
         })
     )
 
@@ -81,9 +77,7 @@ def delete_proxy(args):
     client = mwopenstackclients.Clients(oscloud=args.os_cloud)
     proxy_url, session = proxy_client(client, args.project)
 
-    fqdn = '{}.{}'.format(args.host, ZONE)
-
-    session.delete(f"{proxy_url}/mapping/{fqdn.rstrip('.')}")
+    session.delete(f"{proxy_url}/mapping/{args.host.rstrip('.')}")
 
 
 def main():
@@ -107,14 +101,14 @@ def main():
 
     parser_add = subparsers.add_parser('add', help='Add a new proxy')
     parser_add.add_argument(
-        'host', help='Proxy hostname (under wmflabs.org domain)')
+        'host', help='Proxy FQDN')
     parser_add.add_argument(
         'target_url', help='URL to proxy to')
     parser_add.set_defaults(func=add_proxy)
 
     parser_delete = subparsers.add_parser('delete', help='Delete a proxy')
     parser_delete.add_argument(
-        'host', help='Proxy hostname (under wmflabs.org domain)')
+        'host', help='Proxy FQDN')
     parser_delete.set_defaults(func=delete_proxy)
 
     args = parser.parse_args()
