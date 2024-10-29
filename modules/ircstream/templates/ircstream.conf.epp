@@ -6,7 +6,6 @@
       Stdlib::Port $rc2udp_listen_port,
       Stdlib::Host $prometheus_listen_address,
       Stdlib::Port $prometheus_listen_port,
-      Boolean      $eventstream,
 | -%>
 [irc]
 listen_address = <%= $irc_listen_address %>
@@ -32,18 +31,9 @@ welcome_msg =
   If you want to talk, please join one of the many
   Wikimedia-related channels on libera.chat.
 
-  Alternatively, you can use Wikimedia's EventStreams service,
-  which streams recent changes as JSON using the SSE protocol.
-  See https://wikitech.wikimedia.org/wiki/EventStreams for details.
-
-<%- if $eventstream { -%>
-[sse]
-url = https://eventstreams-internal.discovery.wmnet:4992/v2/stream/mediawiki.recentchange
-<%- } else { -%>
 [rc2udp]
 listen_address = <%= $rc2udp_listen_address %>
 listen_port = <%= $rc2udp_listen_port %>
-<%- } -%>
 
 [prometheus]
 listen_address = <%= $prometheus_listen_address %>

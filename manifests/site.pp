@@ -1434,10 +1434,6 @@ node /^irc[12]003\.wikimedia\./ {
     role(ircstream)
 }
 
-node /^irc[12]004\.wikimedia\./ {
-    role(ircstream_sse)
-}
-
 # Cloud cumin hosts
 node /^cloudcumin1001\.eqiad\./ {
     role(cluster::cloud_management)

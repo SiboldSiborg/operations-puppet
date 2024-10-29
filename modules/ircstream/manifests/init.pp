@@ -8,18 +8,8 @@ class ircstream (
     Stdlib::Port $rc2udp_listen_port = 9390,
     Stdlib::Host $prometheus_listen_address = '::',
     Stdlib::Port $prometheus_listen_port = 16667,
-    Boolean      $eventstream = false,
 ){
-    if $eventstream {
-        ensure_packages(['python3-aiohttp'])
-        apt::package_from_component { 'ircstream':
-            packages  => ['ircstream'],
-            component => 'component/ircstream-sse',
-            priority  => 1002,
-        }
-    } else {
-        ensure_packages(['ircstream'])
-    }
+    ensure_packages(['ircstream'])
 
     $epp_params = {
         irc_listen_address        => $irc_listen_address,
@@ -29,7 +19,6 @@ class ircstream (
         rc2udp_listen_port        => $rc2udp_listen_port,
         prometheus_listen_address => $prometheus_listen_address,
         prometheus_listen_port    => $prometheus_listen_port,
-        eventstream               => $eventstream,
     }
 
     file { '/etc/ircstream.conf':
