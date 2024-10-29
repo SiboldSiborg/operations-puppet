@@ -2275,6 +2275,25 @@ class profile::prometheus::ops (
         port       => 9000,
     }
 
+    # Job definition for cephadm-managed clusters
+    $cephadm_jobs = [
+        {
+            'file_sd_configs' => [
+                { 'files' => [ "${targets_path}/cephadm_*.yaml"] },
+            ],
+            'honor_labels'    => true,
+            'job_name'        => 'cephadm',
+            'metrics_path'    => '/metrics',
+            'scheme'          => 'http',
+            'scrape_interval' => '15s',
+        },
+    ]
+    prometheus::class_config {"cephadm_${::site}":
+        dest       => "${targets_path}/cephadm_${::site}.yaml",
+        class_name => 'cephadm::monitor',
+        port       => 9283,
+    }
+
     # Job definition for dragonfly supernode and clients (dfdaemon)
     $dragonfly_jobs = [
       {
@@ -2584,7 +2603,7 @@ class profile::prometheus::ops (
             $atlas_exporter_jobs, $cadvisor_jobs,
             $envoy_jobs, $squid_jobs, $nic_saturation_exporter_jobs, $thanos_jobs,
             $wikidough_jobs, $chartmuseum_jobs, $es_exporter_jobs, $alertmanager_jobs, $pushgateway_jobs,
-            $udpmxircecho_jobs, $minio_jobs, $dragonfly_jobs, $gitlab_jobs, $cfssl_jobs, $cache_haproxy_tls_jobs,
+            $udpmxircecho_jobs, $minio_jobs, $cephadm_jobs, $dragonfly_jobs, $gitlab_jobs, $cfssl_jobs, $cache_haproxy_tls_jobs,
             $mini_textfile_jobs, $gitlab_runner_jobs, $netbox_global_jobs, $ipmi_jobs, $ganeti_jobs, $benthos_jobs,
             $pint_jobs, $swagger_exporter_jobs, $fastnetmon_jobs, $liberica_jobs, $gnmi_jobs, $lvs_realserver_jobs,
             $postfix_jobs, $fifo_log_demux_jobs, $sql_exporter_jobs, $haproxykafka_jobs, $gnmic_jobs, $ircstream_jobs
