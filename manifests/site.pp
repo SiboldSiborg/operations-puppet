@@ -1336,11 +1336,11 @@ node /^ganeti203[3-4]\.codfw\./ {
 }
 
 # Old servers, to be decommed
-node /^ganeti20(1[34])\.codfw\./ {
+node /^ganeti20(1[345])\.codfw\./ {
     role(insetup::infrastructure_foundations)
 }
 
-node /^ganeti20(1[5-9]|2[0-9]|3[01256789]|4[0-2])\.codfw\./ {
+node /^ganeti20(1[6-9]|2[0-9]|3[01256789]|4[0-2])\.codfw\./ {
     role(ganeti)
 }
 
