@@ -46,6 +46,7 @@ class profile::cache::haproxy(
     Boolean $use_etcd_req_filters = lookup('profile::cache::haproxy::use_etcd_req_filters', {'default_value'                                     => false}),
     Boolean $numa_networking = lookup('profile::cache::haproxy::numa_networking', {'default_value'                                               => true}),
     String $conftool_prefix = lookup('conftool_prefix'),
+    Optional[Array[Haproxy::Ring, 1]] $rings = lookup('profile::cache::haproxy::rings', {'default_value'                                         => undef}),
 ) {
     class { 'sslcert::dhparam':
     }

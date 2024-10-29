@@ -35,6 +35,16 @@ backend <%= table['name'] %>
     stick-table type <%= table['type'] %> <%= table['len'] ? "len " + table['len'].to_s : "" %> size <%= table['size'] %> <%= table['expire'] ? "expire " + table['expire'] : "" %> <%= table['store'] ? "store " + table['store'].join(',') : "" %>
 <%- end -%>
 <%- end -%>
+<%- if @rings -%>
+# Log rings used mainly to route additional logging
+<%- @rings.each do |ring| -%>
+ring <%= ring['name'] %>
+    format <%= ring['format'] %>
+    timeout connect <%= ring['timeout_connect_ms'] %>
+    timeout server <%= ring['timeout_server_ms'] %>
+    server <%= ring['backend_name'] %> <% if ring['backend_prefix'] %><%= ring['backend_prefix'] %>@<% end %><%= ring['backend_address'] %><%- if ring['backend_log_proto'] -%> log-proto <%= ring['backend_log_proto'] %><%- end %>
+<%- end -%>
+<%- end -%>
 
 listen tls
     log global
