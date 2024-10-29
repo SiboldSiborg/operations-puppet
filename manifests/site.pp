@@ -1085,6 +1085,11 @@ node /^elastic(205[5-9]|20[6-9][0-9])\.codfw\./ {
 node /^elastic210[0-9]\.codfw\./ {
     role(elasticsearch::cirrus)
 }
+
+node /^elastic211[0-5]\.codfw\./ {
+    role(insetup::search_platform)
+}
+
 # External Storage, Shard 1 (es1) databases
 # RO section
 ## eqiad servers
@@ -1807,6 +1812,11 @@ node /^cloudelastic100[5-9]\.eqiad\./ {
 node /^cloudelastic1010\.eqiad\./ {
     role(elasticsearch::cloudelastic)
 }
+
+node /^cloudelastic101[12]\.eqiad\./ {
+    role(insetup::search_platform)
+}
+
 
 node /^cloudnet100[56]\.eqiad\./ {
     role(wmcs::openstack::eqiad1::net)
@@ -2669,6 +2679,10 @@ node /^wdqs202[3-4].codfw\./ {
 
 node /^wdqs2025.codfw\./ {
     role(wdqs::test)
+}
+
+node /^wdqs202[67].codfw\./ {
+    role(insetup::search_platform)
 }
 
 node /^wdqs-categories1001.eqiad\./ {
