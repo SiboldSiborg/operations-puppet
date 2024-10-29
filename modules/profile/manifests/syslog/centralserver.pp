@@ -93,13 +93,12 @@ class profile::syslog::centralserver (
         class { 'profile::rsyslog::netdev_kafka_relay': }
     }
 
-    include profile::syslog::remote
     prometheus::blackbox::check::tcp { 'rsyslog-receiver':
         port             => 6514,
         force_tls        => true,
         use_client_auth  => true,
-        client_auth_cert => $profile::syslog::remote::cert_file,
-        client_auth_key  => $profile::syslog::remote::key_file,
+        client_auth_cert => '/etc/prometheus/ssl/cert.pem',
+        client_auth_key  => '/etc/prometheus/ssl/server.key',
         server_name      => $facts['networking']['fqdn'],
     }
 
