@@ -18,6 +18,7 @@ define profile::query_service::blazegraph (
     String $config_file_name,
     String $prefixes_file,
     Optional[String] $sparql_query_stream,
+    Optional[String] $graph_name,
     Optional[String] $event_service_endpoint,
     Boolean $use_geospatial,
     String $journal,
@@ -46,10 +47,14 @@ define profile::query_service::blazegraph (
     ]
 
     $event_service_jvm_opts = $sparql_query_stream ? {
-        default => [
-            "-Dwdqs.event-sender-filter.event-gate-endpoint=${event_service_endpoint}",
-            "-Dwdqs.event-sender-filter.event-gate-sparql-query-stream=${sparql_query_stream}"
-        ],
+        default => $graph_name ? {
+            default => [
+                "-Dwdqs.event-sender-filter.event-gate-endpoint=${event_service_endpoint}",
+                "-Dwdqs.event-sender-filter.event-gate-sparql-query-stream=${sparql_query_stream}",
+                "-Dwdqs.event-sender-filter.graph-name=${graph_name}"
+            ],
+            undef   => fail('$graph_name must be provided with $sparql_query_stream')
+        },
         undef   => []
     }
 

@@ -61,6 +61,7 @@ class profile::query_service::categories(
         contact_groups         => $contact_groups,
         monitoring_enabled     => true, # ????
         sparql_query_stream    => undef,
+        graph_name             => undef,
         event_service_endpoint => undef,
         nginx_port             => $nginx_port,
         blazegraph_port        => $blazegraph_port,
