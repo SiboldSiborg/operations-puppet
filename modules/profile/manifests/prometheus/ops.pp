@@ -978,11 +978,9 @@ class profile::prometheus::ops (
     ]
 
     prometheus::class_config { "ircstream_${::site}":
-        dest             => "${targets_path}/ircstream_${::site}.yaml",
-        class_name       => 'ircstream',
-        class_parameters => { 'eventstream' => false},
-        labels           => { 'eventsource' => 'udp'},
-        port             => 16667
+        dest       => "${targets_path}/ircstream_${::site}.yaml",
+        class_name => 'ircstream',
+        port       => 16667
     }
 
 
