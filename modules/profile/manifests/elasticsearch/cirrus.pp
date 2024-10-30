@@ -135,6 +135,7 @@ class profile::elasticsearch::cirrus(
                 team           => 'data-platform-sre',
                 severity       => 'task',
                 path           => '/_snapshot/elastic_snaps',
+                port           => $tls_port,
                 ip_families    => ['ip4','ip6'],
                 status_matches => [200],
                 force_tls      => true,
