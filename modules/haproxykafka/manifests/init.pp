@@ -29,6 +29,7 @@ class haproxykafka (
         ensure => stdlib::ensure($ensure, 'directory'),
         owner  => $user,
         mode   => '0755',
+        force  => true,
     }
 
     $confdir = '/etc/haproxykafka'
@@ -37,6 +38,7 @@ class haproxykafka (
 
     file { $confdir:
         ensure => stdlib::ensure($ensure, 'directory'),
+        force  => true,
     }
 
     file { $conffile_full_path:
