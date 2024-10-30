@@ -57,6 +57,7 @@ profile::idp::services:
     required_groups:
       - nda
       - wmf
+      - logstash-access
   people:
     id: 7
     service_id: 'https://people\.wikimedia\.org(/.*)?'
