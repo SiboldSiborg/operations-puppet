@@ -71,7 +71,6 @@ describe 'haproxykafka' do
             'mode' => '0755',
           })
         }
-        it { is_expected.to contain_user('haproxykafka') }
         it { is_expected.to contain_service('haproxykafka') }
         it { is_expected.to contain_file('/etc/haproxykafka').with_ensure('directory') }
         it { is_expected.to contain_file('/etc/haproxykafka/config.yaml').with({
