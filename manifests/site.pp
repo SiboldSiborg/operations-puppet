@@ -1345,13 +1345,8 @@ node /^ganeti20(1[345])\.codfw\./ {
     role(insetup::infrastructure_foundations)
 }
 
-node /^ganeti20(1[6-9]|2[0-9]|3[01256789]|4[0-2])\.codfw\./ {
+node /^ganeti20(1[6-9]|2[0-9]|3[01256789]|4[0-4])\.codfw\./ {
     role(ganeti)
-}
-
-# New Codfw  Ganeti nodes
-node /^ganeti20(4[3-4])\.codfw\./ {
-    role(insetup::infrastructure_foundations)
 }
 
 node /^ganeti-test200[123]\.codfw\./ {
