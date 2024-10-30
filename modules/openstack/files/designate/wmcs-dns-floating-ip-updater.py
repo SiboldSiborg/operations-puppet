@@ -291,7 +291,7 @@ def update(config, os_cloud, retries, retry_interval):
     for ptr in proxies:
         logger.info("Trimming FQDN list for %s", ptr)
         # Usually there will be an FQDN_TEMPLATE host in there somewhere
-        fqdns = [h for h in public_PTRs[ptr] if proxy_fqdn_re.match(h)]
+        fqdns = [h for h in public_PTRs[ptr] if not proxy_fqdn_re.match(h)]
         if not fqdns:
             # If for some reason there are no FQDN_TEMPLATE hosts take the whole
             # giant list, but sorted just for fun
