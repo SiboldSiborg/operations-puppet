@@ -5,7 +5,7 @@ profile::cache::haproxykafka::message_buffer: 1.0e+6
 profile::cache::haproxykafka::sdid: haproxykafka@0
 profile::cache::haproxykafka::socket:
   path: /var/run/haproxykafka.sock
-  mode: '0622'
+  mode: "0622"
   user: haproxykafka
   group: haproxy
   batch_size: 102400

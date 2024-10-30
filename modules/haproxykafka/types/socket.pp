@@ -25,7 +25,7 @@
 
 type Haproxykafka::Socket = Struct[{
     'path'           => Stdlib::Unixpath,
-    'mode'           => Stdlib::Filemode,
+    'mode'           => String,
     'user'           => String,
     'group'          => String,
     'batch_size'     => Integer[1024],
