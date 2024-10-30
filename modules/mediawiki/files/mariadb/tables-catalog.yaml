@@ -751,6 +751,21 @@ tables:
         cluster: x1
     canonicality: canonical
     visibility: private
+  - name: srcwork
+    source: credit_source
+    dblist: wikivoyage
+    canonicality: canonical
+    visibility: public
+  - name: revsrc
+    source: credit_source
+    dblist: wikivoyage
+    canonicality: canonical
+    visibility: public
+  - name: swsite
+    source: credit_source
+    dblist: wikivoyage
+    canonicality: canonical
+    visibility: public
 sources:
   core:
     - path: maintenance/tables.json
@@ -773,6 +788,9 @@ sources:
   cognate:
     - path: extensions/Cognate/sql/tables.json
       gerrit: https://gerrit.wikimedia.org/r/plugins/gitiles/mediawiki/extensions/Cognate/+/master/sql/tables.json
+  credit_source:
+    - path: extensions/CreditsSource/schema/tables.json
+      gerrit: https://gerrit.wikimedia.org/r/plugins/gitiles/mediawiki/extensions/CreditsSource/+/master/schema/tables.json
   discussiontools:
     - path: extensions/DiscussionTools/sql/discussiontools_persistent.json
       gerrit: https://gerrit.wikimedia.org/r/plugins/gitiles/mediawiki/extensions/DiscussionTools/+/master/sql/discussiontools_persistent.json
