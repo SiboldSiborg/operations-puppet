@@ -119,7 +119,7 @@ class profile::dns::auth::update (
         description    => 'check if authdns-update was run after a change was merged to operations/dns.git',
         nrpe_command   => '/usr/local/lib/nagios/plugins/check_authdns_update_run',
         check_interval => 5, # min
-        retry_interval => 1, # min
+        retry_interval => 5, # min
         notes_url      => 'https://wikitech.wikimedia.org/wiki/DNS#authdns_update_run',
     }
 
