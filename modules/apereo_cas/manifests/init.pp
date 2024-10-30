@@ -219,29 +219,9 @@ class apereo_cas (
         source  => $keystore_source,
     }
 
-    # /usr/bin/memcdump is needed by memcached-dump tool
-    ensure_packages('libmemcached-tools')
-
-    file { '/usr/local/sbin/memcached-dump':
-        ensure => absent,
-        mode   => '0550',
-        owner  => 'root',
-        group  => 'root',
-        source => 'puppet:///modules/apereo_cas/memcached-dump.py',
-    }
-
-    file { '/usr/local/sbin/return-tgt-for-user':
-        ensure => absent,
-        mode   => '0550',
-        owner  => 'root',
-        group  => 'root',
-        source => 'puppet:///modules/apereo_cas/return-tgt-for-user.py',
-    }
     file { '/usr/local/sbin/cas-remove-u2f':
         ensure => file,
         mode   => '0550',
-        owner  => 'root',
-        group  => 'root',
         source => 'puppet:///modules/apereo_cas/cas_remove_u2f.py',
     }
 
