@@ -1,6 +1,5 @@
 cluster: ganeti
 profile::ganeti::nodes:
-  - ganeti2016.codfw.wmnet
   - ganeti2017.codfw.wmnet
   - ganeti2018.codfw.wmnet
   - ganeti2019.codfw.wmnet
