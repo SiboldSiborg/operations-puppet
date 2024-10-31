@@ -26,6 +26,8 @@
 # @param thread_pool_max Maximum threads per pool
 # @param vsl_size Size of the space for VSL records (default 160M)
 # @param fe_mem_gb_reserved Frontend memory cache size will be set to total host memory minus this many GB (def 170)
+# @param check_min_fe_mem Whether we should fail compilation if the computed frontend memory cache size is below a certain limit (def 150 GB)
+# @param check_min_fe_mem_value If the computed frontend memory cache size is below this value and check_min_fe_mem is set, fail Puppet compilation
 # @param fe_beacon_uri_regex URI path regex to use when intercepting '/beacon' URIs to return a synthetic 204.  For e.g. /beacon/event, /beacon/statsv, etc.  Default: matches /beacon/*.  If undefined, this feature will be disabled.
 class profile::cache::varnish::frontend (
     # Globals
@@ -59,6 +61,8 @@ class profile::cache::varnish::frontend (
     Integer[1]              $thread_pool_max         = lookup('profile::cache::varnish::frontend::thread_pool_max'),
     Optional[String]        $vsl_size                = lookup('profile::cache::varnish::frontend::vsl_size', {'default_value' => '160M'}),
     Optional[Integer]       $fe_mem_gb_reserved      = lookup('profile::cache::varnish::frontend::fe_mem_gb_reserved', {'default_value' => 170}),
+    Boolean                 $check_min_fe_mem        = lookup('profile::cache::varnish::frontend::check_min_fe_mem', {'default_value' => false}),
+    Optional[Integer]       $check_min_fe_mem_value  = lookup('profile::cache::varnish::frontend::check_min_fe_mem_value', {'default_value' => 150}),
     Optional[String]        $fe_beacon_uri_regex     = lookup('profile::cache::varnish::frontend::fe_beacon_uri_regex', {'default_value' => '^/beacon\/[^/?]+'})
 ) {
     include profile::cache::base
@@ -123,6 +127,25 @@ class profile::cache::varnish::frontend (
         $fe_mem_gb = 1
     } else {
         $fe_mem_gb = ceiling($sys_mem_gb - $fe_mem_gb_reserved)
+    }
+
+    # This check is inspired by T376737. TL;DR: we should have some sort of a
+    # check during provisioning and bringing up a new host so that if the
+    # physical memory is beneath a certain threshold, we should fail() and
+    # abort the reimaging. Otherwise, $fe_mem_gb gets values such as 1, which
+    # is not desirable for a prod instance.
+    #
+    # The value of 150 GB (the default) is simply derived from the minimum
+    # physical memory as per https://wikitech.wikimedia.org/wiki/CDN/Hardware.
+    # Subtracting $fe_mem_gb_reserved (default of 170), we pick a value of 150.
+    # Even on config F2 and F3 (old configs) at the time of this commit
+    # (codfw/drmrs), 404294909952 bytes of physical memory (376 Gi) should mean
+    # that it is greater than 150 GB. Anything below that indicates issues with
+    # the hardware so we should fail the reimaging and notify the user
+    #
+    # This would have prevented issues with T376737 above.
+    if ($check_min_fe_mem and ($fe_mem_gb < $check_min_fe_mem_value)) {
+        fail("We expected a minimum frontend memory of ${check_min_fe_mem_value} GB but computed ${fe_mem_gb} GB. Please check the physical memory on this host or override this value.")
     }
 
     $vcl_config = $fe_vcl_config + {

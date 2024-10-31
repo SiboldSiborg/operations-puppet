@@ -13,3 +13,6 @@ profile::cache::varnish::frontend::use_ip_reputation: false
 profile::cache::varnish::frontend::enable_monitoring: true
 profile::cache::varnish::frontend::fe_jemalloc_conf: 'thp:never'
 profile::cache::varnish::frontend::thread_pool_max: 12000
+# complain if computed frontend memory size is below a certain threshold (150 GB).
+# to override this, set check_min_fe_mem_value.
+profile::cache::varnish::frontend::check_min_fe_mem: true

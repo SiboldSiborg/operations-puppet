@@ -5,7 +5,8 @@ describe 'profile::cache::varnish::frontend' do
       context "on #{os} (#{cluster})" do
         let(:facts) { os_facts }
         let(:node_params) {{ '_role' => cluster }}
-
+        # this only applies to prod instances otherwise $fe_mem_gb is 1
+        let(:params) {{'check_min_fe_mem' => false}}
         it { is_expected.to compile.with_all_deps }
       end
     end
