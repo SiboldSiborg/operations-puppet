@@ -62,7 +62,6 @@ Puppet::Type.type(:package).provide(:opensearch_dashboards_plugin, parent: Puppe
   end
 
   def update
-    uninstall
     install
   end
 
@@ -77,6 +76,8 @@ Puppet::Type.type(:package).provide(:opensearch_dashboards_plugin, parent: Puppe
   private
 
   def install_from_repo
+    # remove the older package if necessary
+    uninstall unless properties[:ensure] == :absent
     # constructs the plugin/url ourselves based on :name and :ensure parameters
     repo = @resource[:source].delete_suffix('/')
     unless repo.slice(0, 4) == 'http'
@@ -88,6 +89,8 @@ Puppet::Type.type(:package).provide(:opensearch_dashboards_plugin, parent: Puppe
   end
 
   def install_from_file
+    # remove the older package if necessary
+    uninstall unless properties[:ensure] == :absent
     # constructs the plugin/url based on what is provided by the :source parameter
     plugin_file = @resource[:source]
     unless plugin_file.slice(0, 4) == 'http'
