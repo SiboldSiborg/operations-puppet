@@ -42,6 +42,7 @@ class haproxykafka (
     file { '/var/run/haproxykafka':
         ensure => stdlib::ensure($ensure, 'directory'),
         owner  => $user,
+        group  => $user,
         mode   => '0755',
         force  => true,
     }

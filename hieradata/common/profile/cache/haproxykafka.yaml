@@ -7,7 +7,7 @@ profile::cache::haproxykafka::socket:
   path: /var/run/haproxykafka/haproxykafka.sock
   mode: "0622"
   user: haproxykafka
-  group: haproxy
+  group: haproxykafka
   batch_size: 102400
   batch_deadline: "100ms"
 profile::cache::haproxykafka::logparser:
