@@ -213,13 +213,8 @@ node /^apt-staging2001\.codfw\./ {
 }
 
 # Analytics Query Service
-node /^aqs10(1[0-9]|2[0-1])\.eqiad\./ {
+node /^aqs10(1[0-9]|2[0-2])\.eqiad\./ {
     role(aqs)
-}
-
-# New: https://phabricator.wikimedia.org/T372514
-node /^aqs1022\.eqiad\./ {
-    role(insetup::data_persistence)
 }
 
 node /^aqs200[1-9]|aqs201[0-2]\.codfw\./ {

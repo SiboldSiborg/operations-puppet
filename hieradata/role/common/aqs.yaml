@@ -78,6 +78,11 @@ profile::cassandra::instances:
       listen_address: 10.64.135.14
     b:
       listen_address: 10.64.135.15
+  "aqs1022.eqiad.wmnet":
+    "a":
+      listen_address: 10.64.48.94
+    "b":
+      listen_address: 10.64.48.181
   "aqs2001.codfw.wmnet":
     a:
       listen_address: 10.192.0.214
