@@ -320,7 +320,8 @@ groups:
     privileges: ['ALL = NOPASSWD: /usr/local/sbin/modify-ldap-user',
                  'ALL = NOPASSWD: /usr/local/sbin/modify-ldap-group',
                  'ALL = (www-data) NOPASSWD: ALL']
-
+    approval:
+      - Joanna Borun
   contint-users:
     gid: 718
     description: users with accounts on jenkins hosts
