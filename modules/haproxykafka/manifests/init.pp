@@ -10,8 +10,8 @@
 #   Haproxykafka::Config struct used to build the actual configuration.
 #
 # [*user*]
-#   The user to run haproxykafka, used to set permissions on files and
-#   directories.
+#   The user to run haproxykafka, created with systemd-sysuser used to
+#   set permissions on files and directories.
 #   Defaults to haproxykafka.
 #
 
@@ -20,6 +20,12 @@ class haproxykafka (
     Haproxykafka::Config $config,
     String               $user = 'haproxykafka',
 ) {
+
+    systemd::sysuser { $user:
+        ensure => $ensure,
+        shell  => '/bin/false',
+    }
+
     package { 'haproxykafka':
         ensure  => $ensure,
     }
