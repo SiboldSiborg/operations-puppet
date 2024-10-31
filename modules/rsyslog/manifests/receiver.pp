@@ -66,10 +66,11 @@ class rsyslog::receiver (
             $key_file = '/etc/rsyslog-receiver/ssl/server.key'
         }
         'cfssl': {
-            $ssl_paths = profile::pki::get_cert(
-                'syslog',
-                'rsyslog-receiver',
-                {'notify_services' => ['rsyslog-receiver'] })
+            $ssl_paths = profile::pki::get_cert( 'syslog', 'rsyslog-receiver', {
+                'hosts'           => [ $facts['hostname'], $facts['fqdn'] ],
+                'notify_services' => ['rsyslog-receiver'],
+            })
+
             $cert_file = $ssl_paths['chained']
             $key_file = $ssl_paths['key']
             $ca_file = '/etc/ssl/certs/wmf-ca-certificates.crt'
