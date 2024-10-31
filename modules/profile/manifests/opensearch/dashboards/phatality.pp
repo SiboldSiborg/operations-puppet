@@ -1,8 +1,17 @@
 # SPDX-License-Identifier: Apache-2.0
 class profile::opensearch::dashboards::phatality (
-  $enabled          = lookup('profile::opensearch::dashboards::phatality::enabled',        { 'default_value' => true }),
-  $provision_scap   = lookup('profile::opensearch::dashboards::phatality::provision_scap', { 'default_value' => true }),
+  $enabled           = lookup('profile::opensearch::dashboards::phatality::enabled',        { 'default_value' => true }),
+  $provision_scap    = lookup('profile::opensearch::dashboards::phatality::provision_scap', { 'default_value' => true }),
+  $phatality_version = lookup('profile::opensearch::dashboards::phatality::version',        { 'default_value' => undef }),
 ) {
+  if $phatality_version {
+    package { 'phatality':
+      ensure   => $phatality_version,
+      source   => 'http://apt.wikimedia.org/opensearch',
+      provider => 'opensearch_dashboards_plugin'
+    }
+  }
+
   if $enabled {
     # All files in /usr/share/opensearch-dashboards are owned by root, but `opensearch-dashboards-plugin install`
     # recommends it not be run as root.
