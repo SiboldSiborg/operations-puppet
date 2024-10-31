@@ -2285,7 +2285,7 @@ class profile::prometheus::ops (
             'job_name'        => 'cephadm',
             'metrics_path'    => '/metrics',
             'scheme'          => 'http',
-            'scrape_interval' => '60s',
+            'scrape_interval' => '15s',
         },
     ]
     prometheus::class_config {"cephadm_${::site}":
