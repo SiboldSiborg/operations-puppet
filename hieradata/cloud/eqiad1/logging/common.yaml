@@ -33,6 +33,7 @@ profile::opensearch::dashboards::httpd_proxy::auth_realm: 'local'
 profile::opensearch::dashboards::httpd_proxy::vhost: 'beta-logs.wmcloud.org'
 profile::opensearch::dashboards::httpd_proxy::serveradmin: 'root@logging-logstash-03.logging.eqiad1.wikimedia.cloud'
 profile::opensearch::dashboards::phatality::provision_scap: false
+profile::opensearch::dashboards::phatality::version: '2.7.0.1'
 
 profile::opensearch::version: '2.0.0'
 profile::opensearch::rack: ''
