@@ -8,7 +8,8 @@ class profile::opensearch::dashboards::phatality (
     package { 'phatality':
       ensure   => $phatality_version,
       source   => 'http://apt.wikimedia.org/opensearch',
-      provider => 'opensearch_dashboards_plugin'
+      provider => 'opensearch_dashboards_plugin',
+      notify   => Service['opensearch-dashboards']
     }
   }
 
