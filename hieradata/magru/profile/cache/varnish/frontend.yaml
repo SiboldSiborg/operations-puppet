@@ -1,1 +1,2 @@
 profile::cache::varnish::frontend::single_backend: true
+profile::cache::varnish::frontend::check_min_fe_mem: false    # false till T376737 is resolved
