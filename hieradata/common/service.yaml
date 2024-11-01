@@ -67,7 +67,7 @@ service::catalog:
         ProxyFetch:
           url:
             - https://apus.discovery.wmnet/
-    page: false
+    page: true
     port: 443
     probes:
       - type: http
