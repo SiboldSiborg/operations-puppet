@@ -3,17 +3,21 @@
 
 """Start a MediaWiki maintenance script on Kubernetes."""
 import argparse
+import collections
 import glob
 import grp
 import json
 import logging
 import os
 import random
+import re
 import shlex
 import string
 import subprocess
 import sys
 import tempfile
+from pathlib import Path
+from typing import TextIO
 
 import yaml
 from conftool.cli import ConftoolClient
@@ -179,11 +183,45 @@ def parse_duration(duration: str) -> int:
             'must be a plain number of seconds, or a number with a unit like 1d, 2h, 30m, 40s')
 
 
+def parse_filename_pair(filenames: str) -> tuple[str, TextIO]:
+    if ':' in filenames:
+        # Use rsplit() so that we can handle a colon in the local_name (which the user might not be
+        # able to change) as long as there's no colon in the remote_name (which they can).
+        local_name, remote_name = filenames.rsplit(':', maxsplit=1)
+        # We'll still check against the full filename regex below, but check first for a specific
+        # likely cause so that we can give a specific error message.
+        if '/' in remote_name:
+            raise argparse.ArgumentTypeError(
+                'remote filename may not include a directory; files are placed in the working '
+                'directory, /data')
+    else:
+        local_name = filenames
+        remote_name = Path(local_name).name  # By default use the same filename (sans directories).
+
+    # Use the same regex that the ConfigMap type is validated against.
+    if not re.fullmatch('[-._a-zA-Z0-9]+', remote_name):
+        # Briefer version of the error that Kubernetes would emit if we didn't catch this. (This is
+        # possible with or without an explicit remote_name, e.g. if the local_name also wasn't
+        # compliant.)
+        raise argparse.ArgumentTypeError(
+            "remote filename must consist of alphanumeric characters, '-', '_' or '.'")
+    # Use the FileType factory instead of just calling open() ourselves, so that we get argparse's
+    # error handling for free.
+    return remote_name, argparse.FileType()(local_name)
+
+
 def start(args: argparse.Namespace) -> dict[str, str]:
     environment = get_primary_dc()
     # If we can't open the config, bail out with a clear error message, instead of running helmfile.
     check_config_file(NAMESPACE, environment)
 
+    if args.file:
+        try:
+            textdata = {name: f.read() for name, f in args.file}
+        except UnicodeDecodeError as e:
+            raise ClientError(f'Invalid {e.encoding}: only text files may be passed with --file.')
+    else:
+        textdata = None
     # Since mwscript.args is a list, passing it on the helmfile command line would get into some
     # messy escaping. Instead, we'll write it to a values file, and pass that *path* to helmfile. As
     # long as we're doing that, we'll set all these values that way.
@@ -204,6 +242,7 @@ def start(args: argparse.Namespace) -> dict[str, str]:
             'stdin': args.attach,
             'activeDeadlineSeconds': args.timeout,
             'tty': args.attach and sys.stdin.isatty(),
+            'textdata': textdata,
         }
     }
     with tempfile.NamedTemporaryFile(mode='w', delete=False) as f:
@@ -329,6 +368,12 @@ def main() -> int:
                         help='Specify a MediaWiki image (without registry), e.g. '
                              'restricted/mediawiki-multiversion:2024-08-08-135932-publish '
                              '(Default: Use the same image as mw-web)')
+    parser.add_argument('--file', action='append', type=parse_filename_pair,
+                        help="Copy a text file into the MediaWiki container (in the script's "
+                             "working directory) to be used as script input. Format: "
+                             "path/to/local-file.txt[:remote-file.txt] -- omit colon section to "
+                             "use the same filename (with any leading path stripped). Pass --file "
+                             "again to copy multiple files.")
     parser.add_argument('--timeout', type=parse_duration,
                         help='Set a deadline for the job, to interrupt it after a set interval. '
                              'Examples: 1d, 2h, 30m, 40s, 40 -- number without unit is in seconds. '
@@ -357,6 +402,15 @@ def main() -> int:
     args = parser.parse_args()
 
     try:
+        # Catch duplicate remote names like "--file input1:input --file input2:input", or even
+        # "--file dir1/input --file dir2/input". If this were allowed, the second "input" would
+        # clobber the first.
+        if args.file:
+            remote_names = collections.Counter(remote_name for remote_name, f in args.file)
+            duplicates = ', '.join(remote_name for remote_name, n in remote_names.items() if n > 1)
+            if duplicates:
+                raise ClientError(f'Duplicate remote filenames for --file: {duplicates}')
+
         if args.output != 'none':
             if args.attach:
                 raise ClientError(f'--output={args.output} cannot be passed with --attach.')
@@ -364,6 +418,7 @@ def main() -> int:
                 raise ClientError(f'--output={args.output} cannot be passed with --follow.')
             elif args.verbose:
                 raise ClientError(f'--output={args.output} cannot be passed with --verbose.')
+
         job_info = start(args)
     except (ServerError, ClientError) as e:
         logger.critical(f'{e.icon}️ {e}')
