@@ -16,7 +16,7 @@ define wikistats::job::update (
         ensure          => $ensure,
         user            => 'wikistatsuser',
         description     => "pull fresh numbers for table ${name}",
-        command         => "/usr/bin/php /usr/lib/wikistats/update.php ${project}",
+        command         => "/usr/bin/php /usr/lib/wikistats/update.php ${project} extinfo",
         logging_enabled => true,
         logfile_basedir => '/var/log/wikistats/',
         logfile_name    => "update-${name}.log",
