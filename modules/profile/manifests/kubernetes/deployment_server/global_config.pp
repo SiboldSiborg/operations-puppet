@@ -462,6 +462,20 @@ class profile::kubernetes::deployment_server::global_config (
             'search' => wmflib::role::ips('analytics_cluster::airflow::search'),
             'wmde' => wmflib::role::ips('analytics_cluster::airflow::wmde'),
           }
+        },
+        'hive' => {
+          '_meta' => {
+            'ports' => [
+              {
+                'name' => 'metastore',
+                'port' => 9083
+              }
+            ],
+          },
+          'instances' => {
+            'analytics'      => wmflib::role::ips('analytics_cluster::coordinator'),
+            'analytics_test' => wmflib::role::ips('analytics_cluster_test::coordinator'),
+          }
         }
       },
       $external_service_redis,
