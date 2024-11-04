@@ -495,7 +495,7 @@ groups:
   snapshot-admins:
     gid: 743
     description: People who can sudo into the dumpsgen user on snapshot hosts.
-    members: [*platform_engineering_members, hoo]
+    members: [*platform_engineering_members, hoo, ebernhardson]
     privileges: ['ALL = (dumpsgen) NOPASSWD: ALL']
     approval:
       - Olja Dimitrjevic
