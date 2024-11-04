@@ -1322,11 +1322,11 @@ node /^lists2001\.wikimedia\./ {
     role(lists)
 }
 
-node /^ganeti10(09|1[0-9]|2[0-9]|3[0-8])\.eqiad\./ {
+node /^ganeti10(09|1[0-9]|2[0-9]|3[0-9]|4[0])\.eqiad\./ {
     role(ganeti)
 }
 
-node /^ganeti10(39|4[0-9]|5[0-2]|)\.eqiad\./ {
+node /^ganeti10(4[1-9]|5[0-2]|)\.eqiad\./ {
     role(insetup::infrastructure_foundations)
 }
 
@@ -1336,7 +1336,7 @@ node /^ganeti203[3-4]\.codfw\./ {
 }
 
 # Old servers, to be decommed
-node /^ganeti20(1[3456])\.codfw\./ {
+node /^ganeti20(1[56])\.codfw\./ {
     role(insetup::infrastructure_foundations)
 }
 
