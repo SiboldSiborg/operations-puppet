@@ -797,7 +797,7 @@ node /^db1176\.eqiad\./ {
 }
 
 # m5 codfw master
-node /^db2135\.codfw\./ {
+node /^db2(1|2)35\.codfw\./ {
     role(mariadb::misc)
 }
 
@@ -958,7 +958,7 @@ node /^dbproxy10(12|13|14|15|16|20|21|22|23|24|25|26|27|28|29)\.eqiad\./ {
 }
 
 # New databases T373579
-node /^db22(26|28|31|32|33|34|35|36)\.codfw\./ {
+node /^db22(26|28|31|32|33|34|36)\.codfw\./ {
     role(insetup::data_persistence)
 }
 
