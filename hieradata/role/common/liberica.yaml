@@ -1,2 +1,4 @@
 cluster: liberica
 profile::contacts::role_contacts: ['Traffic']
+profile::puppet::agent::force_puppet7: true
+profile::base::production::role_description: 'Liberica based loadbalancer'
