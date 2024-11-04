@@ -1677,12 +1677,12 @@ node /^wikikube-worker21(5[6-9]|6[0-9]|70)\.codfw\./ {
 }
 
 # T376185
-node /^wikikube-worker12(3[5-9]|4[0-2])\.eqiad\./ {
+node /^wikikube-worker13(0[5-9]|1[0-2])\.eqiad\./ {
     role(insetup::serviceops)
 }
 
 # T376307
-node /^wikikube-worker12(4[3-9]|5[0-8])\.eqiad\./ {
+node /^wikikube-worker13(1[3-9]|2[0-8])\.eqiad\./ {
     role(insetup::serviceops)
 }
 
