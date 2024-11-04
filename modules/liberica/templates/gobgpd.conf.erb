@@ -1,3 +1,4 @@
 <%#- SPDX-License-Identifier: Apache-2.0 -%>
 [global.config]
   as = <%= @config['bgp']['asn'] %>
+  router-id = <%= @facts['networking']['ip'] %>
