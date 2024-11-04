@@ -215,27 +215,27 @@ class profile::hadoop::spark3 (
     if $driver_port {
         $driver_port_max = $driver_port + $port_max_retries
         ferm::service { 'spark3-driver':
-            proto  => 'tcp',
-            port   => "${driver_port}:${driver_port_max}",
-            srange => '$ANALYTICS_NETWORKS',
+            proto      => 'tcp',
+            port_range => [$driver_port, $driver_port_max],
+            src_sets   => ['ANALYTICS_NETWORKS'],
         }
     }
 
     if $driver_blockmanager_port {
         $driver_blockmanager_port_max = $driver_blockmanager_port + $port_max_retries
         ferm::service { 'spark3-driver-blockmanager':
-            proto  => 'tcp',
-            port   => "${driver_blockmanager_port}:${driver_blockmanager_port_max}",
-            srange => '$ANALYTICS_NETWORKS',
+            proto      => 'tcp',
+            port_range => [$driver_blockmanager_port, $driver_blockmanager_port_max],
+            src_sets   => ['ANALYTICS_NETWORKS'],
         }
     }
 
     if $ui_port {
         $ui_port_max = $ui_port + $port_max_retries
         ferm::service { 'spark3-ui-port':
-            proto  => 'tcp',
-            port   => "${ui_port}:${ui_port_max}",
-            srange => '$ANALYTICS_NETWORKS',
+            proto      => 'tcp',
+            port_range => [$ui_port, $ui_port_max],
+            src_sets   => ['ANALYTICS_NETWORKS'],
         }
     }
 
