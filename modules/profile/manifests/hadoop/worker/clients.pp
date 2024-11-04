@@ -14,12 +14,6 @@ class profile::hadoop::worker::clients {
     # JSON backed Hive tables.
     include ::profile::hive::client
 
-    # We want to exclude spark2 from bullseye installs
-    if debian::codename::lt('bullseye') {
-        # Spark 2 is manually packaged by us, it is not part of CDH.
-        include ::profile::hadoop::spark2
-    }
-
     # Spark 3 is provided in our custom conda-analytics package
     # via pyspark installed in the conda environment in /opt/conda-analytics.
     include ::profile::hadoop::spark3

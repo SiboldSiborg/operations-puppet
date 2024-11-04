@@ -16,12 +16,6 @@ class profile::analytics::cluster::airflow {
     require ::profile::hadoop::common
     require ::profile::hive::client
 
-    # We want to exclude spark2 from bullseye installs
-    if debian::codename::lt('bullseye') {
-        # Spark 2 is manually packaged by us.
-        require ::profile::hadoop::spark2
-    }
-
     # Install Spark 3 configuration to be used as a trial with
     # the Spark3 installed with Airflow.
     # Note: this installs conda-analytics package.
