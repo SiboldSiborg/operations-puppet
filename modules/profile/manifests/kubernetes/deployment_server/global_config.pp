@@ -236,6 +236,18 @@ class profile::kubernetes::deployment_server::global_config (
                 'name'     => 'namenode',
                 'port'     => 8020,
               },
+              {
+                'name'     => 'yarn-localizer',
+                'port'     => 8040
+              },
+              {
+                'name'     => 'yarn-resourcemanager-http',
+                'port'     => 8088
+              },
+              {
+                'name'     => 'dfs-http',
+                'port'     => 50070
+              }
             ],
           },
           'instances' => {
@@ -247,6 +259,10 @@ class profile::kubernetes::deployment_server::global_config (
           '_meta' => {
             'namespace' => 'hadoop',
             'ports'     => [
+              {
+                'name'     => 'journalnode',
+                'port'     => 8485,
+              },
               {
                 'name'     => 'datanode-data',
                 'port'     => 50010,
