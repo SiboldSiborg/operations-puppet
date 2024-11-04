@@ -44,22 +44,16 @@ class profile::cumin::master (
 
     file { $cumin_log_path:
         ensure => directory,
-        owner  => 'root',
-        group  => 'root',
         mode   => '0750',
     }
 
     file { '/etc/cumin':
         ensure => directory,
-        owner  => 'root',
-        group  => 'root',
         mode   => '0755',
     }
 
     file { '/etc/cumin/config.yaml':
         ensure  => file,
-        owner   => 'root',
-        group   => 'root',
         mode    => '0640',
         content => template('profile/cumin/config.yaml.erb'),
         require => File['/etc/cumin'],
@@ -67,8 +61,6 @@ class profile::cumin::master (
 
     file { '/etc/cumin/config-installer.yaml':
         ensure  => file,
-        owner   => 'root',
-        group   => 'root',
         mode    => '0640',
         content => template('profile/cumin/config-installer.yaml.erb'),
         require => File['/etc/cumin'],
@@ -76,8 +68,6 @@ class profile::cumin::master (
 
     file { '/etc/cumin/aliases.yaml':
         ensure  => file,
-        owner   => 'root',
-        group   => 'root',
         mode    => '0644',
         content => template('profile/cumin/aliases.yaml.erb'),
         require => File['/etc/cumin'],
@@ -88,30 +78,22 @@ class profile::cumin::master (
         ensure => $check_cumin_aliases_ensure,
         source => 'puppet:///modules/profile/cumin/check_cumin_aliases.py',
         mode   => '0544',
-        owner  => 'root',
-        group  => 'root',
     }
 
     file { '/usr/local/bin/secure-cookbook':
         ensure => file,
         source => 'puppet:///modules/profile/cumin/secure_cookbook.py',
         mode   => '0555',
-        owner  => 'root',
-        group  => 'root',
     }
 
     file { '/usr/local/sbin/insetup-role-report':
         ensure => file,
         source => 'puppet:///modules/profile/cumin/insetup_role_report.py',
         mode   => '0544',
-        owner  => 'root',
-        group  => 'root',
     }
 
     file { $ssh_config_path:
         ensure => file,
-        owner  => 'root',
-        group  => 'root',
         mode   => '0640',
         source => 'puppet:///modules/profile/cumin/ssh_config',
     }
@@ -125,6 +107,7 @@ class profile::cumin::master (
         description   => 'Checks the cumin aliases file for problems.',
         command       => '/usr/local/sbin/check-cumin-aliases',
         send_mail     => $email_alerts,
+        send_mail_to  => 'sre-foundations@wikimedia.org',
         ignore_errors => true,
         interval      => { 'start' => 'OnCalendar', 'interval' => $times['OnCalendar'] },
     }
