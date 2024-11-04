@@ -33,11 +33,6 @@ profile::cassandra::instances:
       listen_address: 10.64.32.128
     "b":
       listen_address: 10.64.32.145
-  "aqs1013.eqiad.wmnet":
-    "a":
-      listen_address: 10.64.32.146
-    "b":
-      listen_address: 10.64.32.147
   "aqs1014.eqiad.wmnet":
     "a":
       listen_address: 10.64.48.65
