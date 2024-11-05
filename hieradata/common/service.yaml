@@ -4181,3 +4181,16 @@ service::catalog:
     sites:
       - eqiad
     state: service_setup
+
+  chart-renderer:
+    description: Stateless microservice that renders charts as SVGs with Apache eCharts, used by https://www.mediawiki.org/wiki/Extension:Chart
+    encryption: true
+    ip: *k8s-ingress-wikikube_ips
+    page: false  # TODO(T372081): set to true before launching beyond testwiki
+    probes:
+      - type: http
+    port: *k8s-ingress-wikikube_port
+    sites:
+      - eqiad
+      - codfw
+    state: service_setup
