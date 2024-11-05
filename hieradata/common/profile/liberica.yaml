@@ -6,9 +6,10 @@ profile::liberica::hcforwarder_config:
   prometheus:
     address: ":3000"
   hashing_algorithm: jenkins
-  egress: "%{facts.interface_primary}"
-  v4: ipip0
-  v6: ipip60
+  interface:
+    egress: "%{facts.interface_primary}"
+    v4: ipip0
+    v6: ipip60
 
 profile::liberica::healthcheck_config:
   log_level: info
