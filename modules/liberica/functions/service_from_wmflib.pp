@@ -55,6 +55,7 @@ function liberica::service_from_wmflib(
                         $hc_url = {
                             # this produces pretty long names for ProxyFetch healthchecks
                             "L7-${url}"  => {
+                                type         => 'HTTPCheck',
                                 url          => $url,
                                 status_code  => $status_code,
                                 timeout      => $http_check_timeout,
@@ -65,6 +66,7 @@ function liberica::service_from_wmflib(
                     },
                     'IdleConnection' => {
                         'L4' => {
+                            type             => 'IdleTCPConnectionCheck',
                             timeout          => $idle_connection_timeout,
                             check_period     => '300ms',
                             reconnect_period => '1s',

@@ -39,6 +39,7 @@ describe 'liberica::service_from_wmflib' do
           'port' => 80,
           'healthchecks' => {
             'L7-http://www.wikipedia.com/_status' => {
+              'type' => 'HTTPCheck',
               'url' => 'http://www.wikipedia.com/_status',
               'status_code' => 200,
               'timeout' => '5s',
@@ -55,6 +56,7 @@ describe 'liberica::service_from_wmflib' do
           'port' => 80,
           'healthchecks' => {
             'L7-http://www.wikipedia.com/_status' => {
+              'type' => 'HTTPCheck',
               'url' => 'http://www.wikipedia.com/_status',
               'status_code' => 200,
               'timeout' => '5s',
@@ -84,6 +86,7 @@ describe 'liberica::service_from_wmflib' do
           'port' => 80,
           'healthchecks' => {
             'L4' => {
+              'type' => 'IdleTCPConnectionCheck',
               'timeout' => '3s',
               'check_period' => '300ms',
               'reconnect_period' => '1s',
@@ -99,6 +102,7 @@ describe 'liberica::service_from_wmflib' do
           'port' => 80,
           'healthchecks' => {
             'L4' => {
+              'type' => 'IdleTCPConnectionCheck',
               'timeout' => '3s',
               'check_period' => '300ms',
               'reconnect_period' => '1s',
@@ -128,12 +132,14 @@ describe 'liberica::service_from_wmflib' do
           'port' => 80,
           'healthchecks' => {
             'L7-http://www.wikipedia.com/_status' => {
+              'type' => 'HTTPCheck',
               'url' => 'http://www.wikipedia.com/_status',
               'status_code' => 200,
               'timeout' => '5s',
               'check_period' => '10s',
             },
             'L4' => {
+              'type' => 'IdleTCPConnectionCheck',
               'timeout' => '3s',
               'check_period' => '300ms',
               'reconnect_period' => '1s',
@@ -149,12 +155,14 @@ describe 'liberica::service_from_wmflib' do
           'port' => 80,
           'healthchecks' => {
             'L7-http://www.wikipedia.com/_status' => {
+              'type' => 'HTTPCheck',
               'url' => 'http://www.wikipedia.com/_status',
               'status_code' => 200,
               'timeout' => '5s',
               'check_period' => '10s',
             },
             'L4' => {
+              'type' => 'IdleTCPConnectionCheck',
               'timeout' => '3s',
               'check_period' => '300ms',
               'reconnect_period' => '1s',

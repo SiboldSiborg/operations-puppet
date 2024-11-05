@@ -77,6 +77,7 @@ describe 'liberica' do
                   port: 80,
                   healthchecks: {
                     'L4': {
+                      type: 'IdleTCPConnectionCheck',
                       timeout: '1s',
                       check_period: '300ms',
                       reconnect_period: '1s',
@@ -148,6 +149,7 @@ services:
     port: 80
     healthchecks:
       L4:
+        type: IdleTCPConnectionCheck
         timeout: 1s
         check_period: 300ms
         reconnect_period: 1s
