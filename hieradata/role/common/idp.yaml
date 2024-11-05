@@ -282,7 +282,7 @@ profile::idp::actuators:
   - sso
   - ssoSessions
 profile::idp::is_staging_host: false
-profile::idp::memcached_enable: true
+profile::idp::memcached_enable: false
 profile::idp::memcached::mcrouter_cluster: 'idp'
 profile::idp::memcached::enable_tls: true
 profile::idp::memcached::auto_restarts: false
