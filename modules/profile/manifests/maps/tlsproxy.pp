@@ -12,6 +12,7 @@ class profile::maps::tlsproxy(
         default_server => true,
         enable_http2   => false,
         cfssl_paths    => $cfssl_paths,
+        tls_ports      => [443, 6543]
     }
 
     firewall::service { 'maps-proxy-https':

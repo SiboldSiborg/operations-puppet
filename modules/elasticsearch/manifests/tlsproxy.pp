@@ -33,7 +33,7 @@ define elasticsearch::tlsproxy (
         acme_chief        => $acme_chief,
         acme_certname     => $acme_certname,
         upstream_ports    => [$upstream_port],
-        tls_port          => $tls_port,
+        tls_ports         => [$tls_port],
         only_get_requests => $read_only,
         enable_http2      => $enable_http2,
         cfssl_paths       => $cfssl_paths,

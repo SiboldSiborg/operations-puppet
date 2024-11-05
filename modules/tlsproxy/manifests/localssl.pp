@@ -22,9 +22,9 @@
 # [*upstream_ports*]
 #   TCP ports array to proxy to. Defaults to ['80']
 #
-# [*tls_port*]
-#   TCP port to listen on as HTTPS.  This listener will proxy all traffic
-#   to @upsteam_ports. Default is 443.
+# [*tls_ports*]
+#   TCP ports to listen on as HTTPS.  This listener will proxy all traffic
+#   to @upsteam_ports. Default is [443].
 #
 # [*redir_port*]
 #   TCP port to listen on as plain HTTP.  This listener will redirect GET/HEAD
@@ -76,7 +76,7 @@ define tlsproxy::localssl(
     Boolean                           $default_server     = false,
     Stdlib::IP::Address               $upstream_ip        = $::ipaddress,
     Array[Stdlib::Port]               $upstream_ports     = [80],
-    Stdlib::Port                      $tls_port           = 443,
+    Array[Stdlib::Port, 1]            $tls_ports          = [443],
     Optional[Stdlib::Port]            $redir_port         = undef,
     Boolean                           $skip_private       = false,
     Boolean                           $access_log         = false,
@@ -91,7 +91,7 @@ define tlsproxy::localssl(
         fail('Must provide exactly one of cfssl_paths or acme_chief')
     }
 
-    if $redir_port != undef and $tls_port != 443 {
+    if $redir_port != undef and !(443 in $tls_ports) {
         fail('http -> https redirect only works with default 443 HTTPS port.')
     }
 
@@ -110,7 +110,7 @@ define tlsproxy::localssl(
     # never trigger.  We define the resource so it still allows us to catch multiple
     # definitions of default_server but shouldn't show as a change in puppet reporting
     if $default_server {
-        exec { "tlsproxy localssl default_server on port ${tls_port}":
+        exec { "tlsproxy localssl default_server on ports ${tls_ports}":
             command     => '/bin/true',
             onlyif      => '/bin/false',
             refreshonly => true,
@@ -138,7 +138,7 @@ define tlsproxy::localssl(
     $basename = regsubst($title, '[\W_]', '-', 'G')
 
     nginx::site { $name:
-        require => Exec["tlsproxy localssl default_server on port ${tls_port}"],    # Ensure a default_server has been defined
+        require => Exec["tlsproxy localssl default_server on ports ${tls_ports}"],    # Ensure a default_server has been defined
         content => template('tlsproxy/localssl.erb')
     }
 }
