@@ -31,7 +31,7 @@ class snapshot::dumps::systemdjobs(
     # wikidump.conf.dumps plus some stage files, make explicit
 
     systemd::timer::job { 'fulldumps-rest':
-        ensure             => absent, # Temporarily pausing dumps - See #T377594
+        ensure             => present,
         description        => 'snapshot - full dumps - rest',
         user               => $user,
         monitoring_enabled => false,
@@ -42,7 +42,7 @@ class snapshot::dumps::systemdjobs(
     }
 
     systemd::timer::job { 'partialdumps-rest':
-        ensure             => absent, # Temporarily pausing dumps - See #T377594
+        ensure             => present,
         description        => 'snapshot - partial dumps - rest',
         user               => $user,
         monitoring_enabled => false,

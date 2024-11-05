@@ -37,7 +37,7 @@ class snapshot::dumps::dump_fillin_wd(
     # try to run these same parts
     $command_args = "--startday 07 --endday 11 --numjobs ${maxjobs} --jobinfo ${parts_startend} --wiki wikidatawiki"
     systemd::timer::job { 'dumps_fillin_wd':
-        ensure             => absent, # Temporarily pausing dumps - See #T377594
+        ensure             => present,
         description        => 'snapshot - full dumps - fillin - wikidata',
         user               => $user,
         monitoring_enabled => false,
