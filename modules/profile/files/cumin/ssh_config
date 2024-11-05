@@ -1,5 +1,5 @@
 ## Networking Equipment
-Host cr?-* asw-* asw?-* lsw?-* ssw?-* fasw-* mr?-* msw?-* pfw?-* cloudsw?-*
+Host cr?-* asw-* asw?-* lsw?-* ssw?-* fasw-* mr?-* msw?-* pfw?-* cloudsw?-* fasw-* fasw?-*
     User homer
     IdentitiesOnly yes
     # So ssh doesn't try all the keys
