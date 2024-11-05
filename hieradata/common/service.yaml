@@ -1066,6 +1066,42 @@ service::catalog:
       - dnsdisc: kartotherian
         active_active: true
 
+  kartotherian-k8s-ssl:
+    description: Kartotherian, kartotherian.discovery.wmnet - HTTPS on K8s
+    encryption: true
+    ip:
+      codfw:
+        default: 10.2.1.13
+      eqiad:
+        default: 10.2.2.13
+    lvs:
+      class: low-traffic
+      conftool:
+        cluster: maps
+        service: kartotherian-k8s-ssl
+      depool_threshold: 0.5
+      enabled: true
+      monitors:
+        IdleConnection:
+          max-delay: 300
+          timeout-clean-reconnect: 3
+        ProxyFetch:
+          url:
+            - https://localhost:6543/
+      scheduler: wrr
+    page: false
+    probes:
+      - type: http
+        path: /osm-intl/6/23/24.png
+    port: 6543
+    sites:
+      - codfw
+      - eqiad
+    state: service_setup
+    discovery:
+      - dnsdisc: kartotherian
+        active_active: true
+
   kibana7:
     description: Kibana v7 env - HTTPS
     encryption: true
