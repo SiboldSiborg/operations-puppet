@@ -237,6 +237,10 @@ class profile::kubernetes::deployment_server::global_config (
                 'port'     => 8020,
               },
               {
+                'name'     => 'yarn-resourcemanager-ipc',
+                'port'     => 8032,
+              },
+              {
                 'name'     => 'yarn-localizer',
                 'port'     => 8040
               },
