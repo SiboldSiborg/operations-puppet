@@ -19,6 +19,9 @@ describe 'liberica' do
                   address: ':2020',
                 },
                 hashing_algorithm: 'jenkins',
+                egress: 'eth0',
+                v4: 'ipip0',
+                v6: 'ipip60',
               },
               healthcheck: {
                 log_level: 'debug',
@@ -96,6 +99,9 @@ hcforwarder:
   prometheus:
     address: ":2020"
   hashing_algorithm: jenkins
+  egress: eth0
+  v4: ipip0
+  v6: ipip60
 healthcheck:
   log_level: debug
   grpc:
