@@ -1,6 +1,6 @@
 profile::cache::haproxykafka::ensure: absent
 profile::cache::haproxykafka::kafka_cluster_name: jumbo-eqiad
-profile::cache::haproxykafka::workers: 1
+profile::cache::haproxykafka::workers: 2
 profile::cache::haproxykafka::message_buffer: 1.0e+6
 profile::cache::haproxykafka::sdid: haproxykafka@0
 profile::cache::haproxykafka::socket:
