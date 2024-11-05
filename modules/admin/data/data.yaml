@@ -575,6 +575,9 @@ groups:
     gid: 749
     description: users who maintain HTML/ZIM dumps
     members: []
+    approval:
+      - Olja Dimitrjevic
+      - Ben Tullis
   stewards-users:
     description: People with access to the stewards VMs
     gid: 751
@@ -827,6 +830,9 @@ groups:
                  'ALL = NOPASSWD: /bin/systemctl restart zookeeper.service',
                  'ALL = NOPASSWD: /bin/systemctl mask zookeeper.service',
                  'ALL = NOPASSWD: /bin/systemctl unmask zookeeper.service']
+    approval:
+      - Olja Dimitrjevic
+      - Ben Tullis
   wmcs-roots:
     description: root for cloud services infrastructure
     gid: 792
