@@ -215,6 +215,12 @@ profile::services_proxy::envoy::listeners:
     timeout: "10s"
     keepalive: "4s"
     sets_sni: true
+  - name: chart-renderer
+    port: 6039
+    service: chart-renderer
+    timeout: "30s"
+    keepalive: "4s"
+    sets_sni: true
 
   # Non-discovery records
   # Eqiad ports are at 61xx
@@ -404,6 +410,7 @@ profile::services_proxy::envoy::enabled_listeners:
   - wikifunctions
   - ipoid
   - mpic
+  - chart-renderer
 
 # Tracing percentage
 profile::services_proxy::envoy::local_otel_reporting_pct: 0.0
