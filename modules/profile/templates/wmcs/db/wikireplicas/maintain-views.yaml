@@ -519,7 +519,7 @@ customviews:
       - globalblocks
     view: >
       select gb_id,
-             if(gb_autoblock_parent_id != null, null, gb_address) as gb_address,
+             if(gb_autoblock_parent_id != 0, null, gb_address) as gb_address,
              gb_target_central_id,
              gb_by_central_id,
              gb_by_wiki,
@@ -530,8 +530,8 @@ customviews:
              gb_enable_autoblock,
              gb_autoblock_parent_id,
              gb_expiry,
-             if(gb_autoblock_parent_id != null, null, gb_range_start) as gb_range_start,
-             if(gb_autoblock_parent_id != null, null, gb_range_end) as gb_range_end
+             if(gb_autoblock_parent_id != 0, null, gb_range_start) as gb_range_start,
+             if(gb_autoblock_parent_id != 0, null, gb_range_end) as gb_range_end
     where: >
       not exists ( select 1 from globaluser where gu_id = gb_target_central_id AND gu_hidden_level != 0 )
   globaluser:
