@@ -2504,9 +2504,6 @@ class profile::prometheus::ops (
         port_parameter => 'port'
     }
 
-    # Demo config for liberica exporters
-    # https://phabricator.wikimedia.org/T342618
-
     $liberica_jobs = [
       {
         'job_name'        => 'liberica',
@@ -2517,24 +2514,28 @@ class profile::prometheus::ops (
       },
     ]
 
-    if $::site == 'eqiad' {
-        $liberica_demo_config = [{
-          'labels' => {
-            'cluster' => 'liberica',
-        },
-        'targets' =>  [
-          'lvs1013.eqiad.wmnet:9112',
-          'lvs1013.eqiad.wmnet:9113',
-        ]
-      }]
+    prometheus::class_config{ "liberica_hcforwarder_${::site}":
+        dest       => "${targets_path}/liberica_hcforwarder_${::site}.yaml",
+        class_name => 'profile::liberica',
+        port       => 3000,
+    }
 
-        file { "${targets_path}/liberica_eqiad.yaml":
-            backup  => false,
-            owner   => 'root',
-            group   => 'root',
-            mode    => '0444',
-            content => to_yaml($liberica_demo_config),
-        }
+    prometheus::class_config{ "liberica_healthcheck_${::site}":
+        dest       => "${targets_path}/liberica_healthcheck_${::site}.yaml",
+        class_name => 'profile::liberica',
+        port       => 3001,
+    }
+
+    prometheus::class_config{ "liberica_fp_${::site}":
+        dest       => "${targets_path}/liberica_fp_${::site}.yaml",
+        class_name => 'profile::liberica',
+        port       => 3002,
+    }
+
+    prometheus::class_config{ "liberica_cp_${::site}":
+        dest       => "${targets_path}/liberica_cp_${::site}.yaml",
+        class_name => 'profile::liberica',
+        port       => 3003,
     }
 
     $lvs_realserver_jobs = [
