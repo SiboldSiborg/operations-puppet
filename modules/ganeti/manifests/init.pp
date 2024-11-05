@@ -62,10 +62,14 @@ class ganeti(
     # not include all block devices. TODO: Do it via augeas
     file { '/etc/lvm/lvm.conf' :
         ensure => present,
-        owner  => 'root',
-        group  => 'root',
         mode   => '0644',
         source => 'puppet:///modules/ganeti/lvm.conf',
+    }
+
+    file { '/usr/local/sbin/setup-ganeti-lvm' :
+        ensure => present,
+        mode   => '0555',
+        source => 'puppet:///modules/ganeti/setup-ganeti-lvm.py',
     }
 
     $ssl_paths = profile::pki::get_cert('discovery', $certname, {
@@ -86,8 +90,6 @@ class ganeti(
     # on the target hosts after changes are merged.
     file { '/etc/default/ganeti':
         ensure  => present,
-        owner   => 'root',
-        group   => 'root',
         mode    => '0644',
         content => template('ganeti/etc_default_ganeti.erb')
     }
