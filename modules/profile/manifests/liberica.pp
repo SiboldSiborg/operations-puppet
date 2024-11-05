@@ -72,6 +72,20 @@ class profile::liberica(
         restart              => false,
     }
 
+    # Provide egress interfaces for both IPv4 and IPv6 traffic
+    # to be used by liberica hcforwarder
+    interface::ipip { 'ipip_ipv4':
+        ensure    => present,
+        interface => 'ipip0',
+        family    => 'inet',
+        address   => '127.0.0.42',
+    }
+    interface::ipip { 'ipip_ipv6':
+        ensure    => present,
+        interface => 'ipip60',
+        family    => 'inet6',
+    }
+
     $config = {
         hcforwarder  => $hcforwarder_config,
         healthcheck  => $healthcheck_config,
