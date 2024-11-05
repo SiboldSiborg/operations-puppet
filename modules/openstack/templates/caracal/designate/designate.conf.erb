@@ -133,7 +133,7 @@ default_limit_admin = 10000
 # List of notification handlers to enable, configuration of these needs to
 # correspond to a [handler:my_driver] section below or else in the config
 # Can be one or more of : nova_fixed, neutron_floatingip
-enabled_notification_handlers = nova_fixed_multi, wmf_sink
+enabled_notification_handlers = <%= @enabled_notification_handlers %>
 
 #-----------------------
 # mDNS Service
@@ -193,6 +193,23 @@ retry_interval = 10
 ########################
 ## Handler Configuration
 ########################
+
+[handler:nova_fixed]
+control_exchange = nova
+notification_topics = monitor
+notification_topics = notifications
+zone_id = <%= @domain_id_internal_forward %>
+formatv4 = '%(hostname)s.%(project)s.%(zone)s'
+formatv6 = '%(hostname)s.%(project)s.%(zone)s'
+
+[handler:wmcs_nova_fixed_ptr]
+control_exchange = nova
+notification_topics = monitor
+notification_topics = notifications
+domain_name = <%= @base_domain_name %>
+ptr_v4_zone_id = <%= @domain_id_internal_reverse_v4 %>
+ptr_v6_zone_id = <%= @domain_id_internal_reverse_v6 %>
+
 #-----------------------
 # Nova Fixed Multi Handler
 #-----------------------
@@ -207,7 +224,7 @@ notification_topics = notifications
 control_exchange = nova
 format = '%(hostname)s.%(project_id)s.%(zone)s'
 format = '%(hostname)s.%(project_name)s.%(zone)s'
-reverse_domain_id = '<%= @domain_id_internal_reverse %>'
+reverse_domain_id = '<%= @domain_id_internal_reverse_v4 %>'
 reverse_format = '%(hostname)s.%(project_id)s.%(zone)s'
 
 #-----------------------

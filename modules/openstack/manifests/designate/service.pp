@@ -10,9 +10,12 @@ class openstack::designate::service(
     $db_pass,
     $db_host,
     $db_name,
-    $domain_id_internal_forward,
     $domain_id_internal_forward_legacy,
-    $domain_id_internal_reverse,
+    String[1] $enabled_notification_handlers,
+    String[1] $domain_id_internal_forward,
+    String[1] $domain_id_internal_reverse_v4,
+    String[1] $domain_id_internal_reverse_v6,
+    String[1] $base_domain_name,
     $puppetmaster_hostname,
     Array[Stdlib::Fqdn] $memcached_nodes,
     $ldap_user_pass,
@@ -79,6 +82,30 @@ class openstack::designate::service(
         mode   => '0644',
         source => "puppet:///modules/openstack/${version}/designate/wmfdesignatelib.py",
         notify => Service['designate-sink'],
+    }
+
+    $wmcs_nova_fixed_ptr_git_clone = '/srv/git/designate-sink-wmcs-nova-fixed-ptr'
+    wmflib::dir::mkdir_p($wmcs_nova_fixed_ptr_git_clone)
+
+    git::clone { 'wmcs-nova-fixed-ptr-git-clone':
+        ensure    => latest,
+        origin    => 'https://gitlab.wikimedia.org/repos/cloud/cloud-vps/designate-sink-wmcs-nova-fixed-ptr',
+        directory => $wmcs_nova_fixed_ptr_git_clone,
+        branch    => 'main',
+        notify    => Exec['wmcs-nova-fixed-ptr-copy'],
+    }
+
+    $wmcs_nova_fixed_ptr_copy_src = "${wmcs_nova_fixed_ptr_git_clone}/wmcs_nova_fixed_ptr*/"
+    $wmcs_nova_fixed_ptr_copy_dst = '/usr/local/lib/python3/dist-packages/'
+
+    wmflib::dir::mkdir_p($wmcs_nova_fixed_ptr_copy_dst)
+
+    exec { 'wmcs-nova-fixed-ptr-copy':
+        path        => '/usr/bin',
+        command     => "cp -r ${wmcs_nova_fixed_ptr_copy_src} ${wmcs_nova_fixed_ptr_copy_dst}",
+        refreshonly => true,
+        require     => File[$wmcs_nova_fixed_ptr_copy_dst],
+        notify      => Service['designate-sink'],
     }
 
     # Stage pools.yaml.  Updating this file won't change active config;
