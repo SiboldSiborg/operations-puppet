@@ -115,7 +115,7 @@ profile::trafficserver::backend::mapping_rules:
       replacement: https://logstash.discovery.wmnet
     - type: map
       target: http://maps.wikimedia.org
-      replacement: https://kartotherian.discovery.wmnet
+      replacement: https://kartotherian.discovery.wmnet:6543
     - type: map
       target: http://netbox.wikimedia.org
       replacement: https://netbox.discovery.wmnet
