@@ -105,10 +105,10 @@ class profile::dns::auth::update (
         before     => Exec['authdns-local-update'],
     }
 
-    ferm::service { 'authdns_update_ssh_rule':
+    firewall::service { 'authdns_update_ssh_rule':
         proto  => 'tcp',
-        port   => '22',
-        srange => "(${authdns_servers_ips.values().join(' ')})",
+        port   => 22,
+        srange => $authdns_servers_ips.values(),
     }
 
     nrpe::plugin { 'check_authdns_update_run':
