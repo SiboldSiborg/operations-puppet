@@ -31,4 +31,6 @@ profile::ganeti::nodes:
   - ganeti1038.eqiad.wmnet
   - ganeti1039.eqiad.wmnet
   - ganeti1040.eqiad.wmnet
+  - ganeti1041.eqiad.wmnet
+  - ganeti1042.eqiad.wmnet
 profile::ganeti::rapi::certificate: ganeti01.svc.eqiad.wmnet
