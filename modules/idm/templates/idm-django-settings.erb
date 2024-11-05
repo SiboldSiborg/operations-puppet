@@ -297,7 +297,7 @@ ACCESS_REQUEST_RULES = {
     'ldapbackend': {
         'cn=idptest-users,ou=groups,dc=wikimedia,dc=org': [{
             'module': 'permissions.validators.manager_approval',
-            'managers': ['slyngshede', 'jmm'],
+            'managers': ['slyngshede', 'jmm', 'tarlogic1', 'tarlogic2'],
             'count': 2
         }],
     }
@@ -326,6 +326,7 @@ ACCOUNT_MANAGERS = [
     'slyngshede',  # WMF staff
     'taavi',  # Trusted volunteer
     'urbanecm',  # Steward
+    'tarlogic1', # TarLogic Pentester
 ]
 
 GERRIT = {
