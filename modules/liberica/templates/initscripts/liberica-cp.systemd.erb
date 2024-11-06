@@ -8,5 +8,13 @@ WantedBy=multi-user.target
 
 [Service]
 User=liberica
+CapabilityBoundingSet=
+AmbientCapabilities=
+SystemCallFilter=~@keyring @clock @cpu-emulation @obsolete @module @raw-io @reboot @swap
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+ProtectSystem=strict
+PrivateTmp=yes
+ProtectKernelModules=yes
+ProtectKernelTunables=yes
 ExecStart=/usr/bin/liberica cp
 Restart=on-failure
