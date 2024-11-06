@@ -313,6 +313,8 @@ groups:
     gid: 713
     description: general user tasks for udp2log (RT 5391)
     members: [milimetric]
+    approval:
+      - Leo Mata
   ldap-admins:
     gid: 715
     description: ldap admins
