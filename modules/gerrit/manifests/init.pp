@@ -339,6 +339,7 @@ class gerrit(
             source_host                => $active_host,
             dest_host                  => $lfs_sync_dest,
             module_path                => '/srv/gerrit/data/lfs',
+            chown                      => "${daemon_user}:${daemon_user}",
             ignore_missing_file_errors => true,
         }
     }
