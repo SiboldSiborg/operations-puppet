@@ -967,6 +967,11 @@ node /^dbproxy200(5|6|7|8)\.codfw\./ {
     role(insetup::data_persistence)
 }
 
+# New external storage T378146
+node /^es204(1|2|3|4|5|6)\.codfw\./ {
+    role(insetup::data_persistence)
+}
+
 # Passive codfw proxies for misc databases
 node /^dbproxy20(01|02|03|04)\.codfw\./ {
     role(mariadb::proxy::master)
