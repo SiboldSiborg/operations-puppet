@@ -1322,11 +1322,11 @@ node /^lists2001\.wikimedia\./ {
     role(lists)
 }
 
-node /^ganeti10(09|1[0-9]|2[0-9]|3[0-9]|4[0-2])\.eqiad\./ {
+node /^ganeti10(09|1[0-9]|2[0-9]|3[0-9]|4[0-4])\.eqiad\./ {
     role(ganeti)
 }
 
-node /^ganeti10(4[3-9]|5[0-2]|)\.eqiad\./ {
+node /^ganeti10(4[5-9]|5[0-2]|)\.eqiad\./ {
     role(insetup::infrastructure_foundations)
 }
 
