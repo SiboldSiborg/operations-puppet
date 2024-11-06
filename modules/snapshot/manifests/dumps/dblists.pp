@@ -14,11 +14,7 @@ class snapshot::dumps::dblists {
     $labs_bigwikis = ['enwiki', 'simplewiki', 'wikidatawiki']
     $labs_bigwikis_dblist = join($labs_bigwikis, "\n")
 
-    # labtestwiki can't be dumped from snapshot hosts
-    $excludewikis = ['labtestwiki']
-    $excludewikis_dblist = join($excludewikis, "\n")
-
-    $skip_dblist = "${enwiki_dblist}\n${wikidatawiki_dblist}\n${bigwikis_dblist}\n${excludewikis_dblist}"
+    $skip_dblist = "${enwiki_dblist}\n${wikidatawiki_dblist}\n${bigwikis_dblist}"
     $skip_labs_dblist = $labs_bigwikis_dblist
 
     $skipnone_dblist = ''
@@ -76,12 +72,11 @@ class snapshot::dumps::dblists {
         content => "${skip_labs_dblist}\n",
     }
     file { "${dblistsdir}/skipmonitor.dblist":
-        ensure  => 'present',
-        path    => "${dblistsdir}/skipmonitor.dblist",
-        mode    => '0644',
-        owner   => 'root',
-        group   => 'root',
-        content => "${excludewikis_dblist}\n",
+        ensure => 'absent',
+        path   => "${dblistsdir}/skipmonitor.dblist",
+        mode   => '0644',
+        owner  => 'root',
+        group  => 'root',
     }
     file { "${dblistsdir}/skipnone.dblist":
         ensure  => 'present',

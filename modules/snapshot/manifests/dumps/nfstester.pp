@@ -62,9 +62,8 @@ class snapshot::dumps::nfstester(
     $privatedblist = "${dblistsdir}/privatewikis.dblist"
     $closeddblist = "${dblistsdir}/closedwikis.dblist"
     $skipdblist = "${dblistsdir}/skip.dblist"
-    $skipmonitorlist = "${dblistsdir}/skipmonitor.dblist"
 
-    file { [ $privatedblist, $closeddblist, $skipdblist, $skipmonitorlist ]:
+    file { [ $privatedblist, $closeddblist, $skipdblist ]:
 
         ensure  => 'present',
         mode    => '0644',

@@ -158,10 +158,10 @@ class snapshot::dumps::configs(
                 },
             },
             monitor => {
-                skipdblist    => "${dblistsdir}/skipmonitor.dblist",
+                skipdblist    => '',
             },
             media => {
-                skipdblist    => "${dblistsdir}/skipmonitor.dblist,${dblistsdir}/globalusage.dblist",
+                skipdblist    => "${dblistsdir}/globalusage.dblist",
             },
         },
     }
@@ -182,7 +182,7 @@ class snapshot::dumps::configs(
             big => {
                 dblist            => "${dblistsdir}/bigwikis-labs.dblist",
                 closedlist        => "${apachedir}/dblists/closed-labs.dblist",
-                skipdblist        => "${dblistsdir}/skipmonitor.dblist",
+                skipdblist        => '',
                 keep              => '2',
                 chunksEnabled     => '1',
                 chunksForAbstract => '4',
