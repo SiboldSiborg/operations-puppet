@@ -7,6 +7,15 @@ After=network-online.target
 WantedBy=multi-user.target
 
 [Service]
+User=liberica
+CapabilityBoundingSet=CAP_BPF CAP_SYS_ADMIN CAP_NET_ADMIN
+AmbientCapabilities=CAP_BPF CAP_SYS_ADMIN CAP_NET_ADMIN
+SystemCallFilter=~@keyring @clock @cpu-emulation @obsolete @module @raw-io @reboot @swap
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX AF_NETLINK
+ProtectSystem=strict
+PrivateTmp=yes
+ProtectKernelModules=yes
+ProtectKernelTunables=yes
 LimitMEMLOCK=infinity
 ExecStart=/usr/bin/liberica fp
 Restart=on-failure
