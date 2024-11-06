@@ -766,6 +766,13 @@ tables:
     dblist: wikivoyage
     canonicality: canonical
     visibility: public
+  - name: globalimagelinks
+    source: globalusage
+    databases:
+      - dbname: commonswiki
+      - dbname: testcommonswiki
+    canonicality: derivative
+    visibility: public
 sources:
   core:
     - path: maintenance/tables.json
@@ -875,6 +882,9 @@ sources:
   property_suggester:
     - path: extensions/PropertySuggester/sql/tables.json
       gerrit: https://gerrit.wikimedia.org/r/plugins/gitiles/mediawiki/extensions/PropertySuggester/+/refs/heads/master/sql/tables.json
+  globalusage:
+    - path: extensions/GlobalUsage/sql/tables.json
+      gerrit: https://gerrit.wikimedia.org/r/plugins/gitiles/mediawiki/extensions/GlobalUsage/+/refs/heads/master/sql/tables.json
 dropped_tables:
   - flaggedtemplates
   - flaggedimages
