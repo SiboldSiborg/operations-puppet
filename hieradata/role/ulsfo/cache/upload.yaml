@@ -1,7 +1,3 @@
-profile::cache::haproxy::extended_logging: true
-profile::cache::haproxy::use_haproxykafka: true
-profile::cache::haproxykafka::ensure: present
-
 profile::cache::haproxy::sticktables:
   - name: limit-by-path
     type: integer
