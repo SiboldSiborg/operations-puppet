@@ -76,8 +76,8 @@ class profile::openstack::base::keystone::fernet_keys(
         mode   => '0700',
     }
 
-    file { '/etc/keystone/credential-keys/credential-key-0':
-        ensure  => directory,
+    file { '/etc/keystone/credential-keys/0':
+        ensure  => file,
         owner   => 'keystone',
         group   => 'keystone',
         mode    => '0400',
@@ -86,8 +86,8 @@ class profile::openstack::base::keystone::fernet_keys(
 
     # Strictly speaking this key isn't needed but keystone-manage
     #  creates it so I'm installing it to avoid future confusion
-    file { '/etc/keystone/credential-keys/credential-key-1':
-        ensure  => directory,
+    file { '/etc/keystone/credential-keys/1':
+        ensure  => file,
         owner   => 'keystone',
         group   => 'keystone',
         mode    => '0400',
@@ -96,8 +96,8 @@ class profile::openstack::base::keystone::fernet_keys(
 
     exec { 'migrate_credential_keys':
         command     => '/usr/bin/keystone-manage credential_migrate --keystone-user keystone --keystone-group keystone',
-        subscribe   => [File['/etc/keystone/credential-keys/credential-key-0'],
-                        File['/etc/keystone/credential-keys/credential-key-1']],
+        subscribe   => [File['/etc/keystone/credential-keys/0'],
+                        File['/etc/keystone/credential-keys/1']],
         refreshonly => true,
     }
 }
