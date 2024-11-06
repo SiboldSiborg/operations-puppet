@@ -47,7 +47,7 @@ class Wiki:
             subdomain = None
             domain, tld = self.host.rsplit(".", 1)
 
-        if self.dbname in {"labswiki", "labtestwiki", "loginwiki"}:
+        if self.dbname in {"labswiki", "loginwiki"}:
             self.mobile_host = None
         elif not subdomain or subdomain == "www":
             # Examples: wikisource.org -> m.wikisource.org, www.wikidata.org -> m.wikidata.org.
