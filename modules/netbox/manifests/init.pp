@@ -24,17 +24,14 @@
 # @param local_redis_maxmem The amount of memory in bytes that the local Redis instance should use
 # @param ldap_server The LDAP server to specify in the configuration
 # @param enable_ldap Enable/disable LDAP authentication
-# @param authentication_provider which auth provider to use ldap/cas/oidc
+# @param authentication_provider which auth provider to use ldap/oidc
 # @param swift_auth_url The authentication URL to be used for image storage.
 # @param http_proxy the proxy for netbox to use for outbound connections
-# @param cas_rename_attributes hash of attributes to rename
-# @param cas_group_attribute_mapping hash of cas attributes to map
-# @param cas_group_mapping hash of nextbox group mappings
-# @param cas_group_required list of required groups
 # @param validators list of custom validators
 #                   see: https://docs.netbox.dev/en/stable/customization/custom-validation/
 # @param cas_server_url The cas service url
-# @param cas_username_attribute The cas username attribute
+# @param oidc_key OpenID Connect key/service name.
+# @param oidc_secret OpenID Connect secret.
 # @param swift_user The user to connect to SWIFT for image storage as.
 # @param swift_key The key for the above user.
 # @param swift_container The name of the SWIFT container to store images to
@@ -66,20 +63,15 @@ class netbox (
     Integer[0]                    $job_retention               = 90,
     Optional[Stdlib::Fqdn]        $ldap_server                 = undef,
     Boolean                       $enable_ldap                 = false,
-    Optional[Enum['ldap', 'cas', 'oidc']] $authentication_provider     = undef,
+    Optional[Enum['ldap', 'oidc']] $authentication_provider     = undef,
     Optional[Stdlib::HTTPUrl]     $swift_auth_url              = undef,
     Optional[Stdlib::HTTPUrl]     $http_proxy                  = undef,
     Wmflib::Ensure                $rq_netbox_ensure            = 'present',
-    # Cas specific config
-    Hash[String, String]          $cas_rename_attributes       = {},
-    Hash[String, Array]           $cas_group_attribute_mapping = {},
-    Hash[String, Array]           $cas_group_mapping           = {},
-    Array                         $cas_group_required          = [],
+    # CAS-SSO specific config
     Array[String[1]]              $validators                  = [],
     Stdlib::HTTPSUrl              $cas_server_url              = 'https://cas.example.org',
     Optional[String]              $oidc_key                    = undef,
     Optional[String]              $oidc_secret                 = undef,
-    Optional[String]              $cas_username_attribute      = undef,
     # Swift specific config
     Optional[String]              $swift_user                  = undef,
     Optional[String]              $swift_key                   = undef,
@@ -146,15 +138,6 @@ class netbox (
         group   => 'www-data',
         mode    => '0440',
         content => template('netbox/ldap_config.py.erb'),
-        before  => Uwsgi::App['netbox'],
-        notify  => [Service['uwsgi-netbox'], Service['rq-netbox']],
-    }
-    file { '/etc/netbox/cas_configuration.py':
-        ensure  => stdlib::ensure($authentication_provider == 'cas', file),
-        owner   => 'netbox',
-        group   => 'www-data',
-        mode    => '0440',
-        content => template('netbox/cas_configuration.py.erb'),
         before  => Uwsgi::App['netbox'],
         notify  => [Service['uwsgi-netbox'], Service['rq-netbox']],
     }

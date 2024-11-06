@@ -236,8 +236,6 @@ CUSTOM_VALIDATORS = {
 
 <% if @authentication_provider == 'ldap' %>
 REMOTE_AUTH_BACKEND = 'netbox.authentication.LDAPBackend'
-<% elsif @authentication_provider == 'cas' %>
-CAS_ENABLED = True
 <% elsif @authentication_provider == 'oidc' %>
 REMOTE_AUTH_BACKEND = 'social_core.backends.open_id_connect.OpenIdConnectAuth'
 REMOTE_AUTH_GROUP_SYNC_ENABLED = True

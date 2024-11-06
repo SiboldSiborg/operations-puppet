@@ -296,14 +296,7 @@ profile::netbox::authentication_provider: "ldap"
 profile::netbox::changelog_retention: 1
 profile::netbox::job_retention: 1
 profile::netbox::validators: []
-profile::netbox::cas_rename_attributes:
-  cn: "first_name"
-  mail: "email"
-profile::netbox::cas_group_attribute_mapping: {}
-profile::netbox::cas_group_mapping: {}
-profile::netbox::cas_group_required: []
 profile::netbox::cas_server_url: ~
-profile::netbox::cas_username_attribute: ~
 
 profile::nginx::ensure: "present"
 profile::nginx::managed: true

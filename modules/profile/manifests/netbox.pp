@@ -20,7 +20,7 @@
 # @param db_primary primary database name
 # @param db_password primary database name
 # @param secret_key django secret key
-# @param authentication_provider Either ldap or cas
+# @param authentication_provider Either ldap or oidc
 # @param ssl_provider Either cfssl or acme
 # @param acme_certificate acme certificate name
 # @param netbox_api netbox api url
@@ -52,11 +52,6 @@
 #        Set this to 0 to retain job results in the database indefinitely.
 # @param validators a list of form validators to install
 #        Set this to True to prefer IPv4 instead.
-# @param cas_rename_attributes a mapping of attributes that should be renamed
-# @param cas_group_attribute_mapping a mapping of attributes to netbox groups
-# @param cas_group_mapping a mapping of ldap groups to local groups
-# @param cas_group_required list of required groups
-# @param cas_username_attribute cas attribute to use as a username
 # @param cas_server_url the location of the cas server
 # @param oidc_key the OIDC key to use
 # @param oidc_secret the OIDC secret to use
@@ -73,7 +68,7 @@ class profile::netbox (
     Stdlib::Fqdn                $db_primary              = lookup('profile::netbox::db_primary'),
     String                      $db_password             = lookup('profile::netbox::db_password'),
     String                      $secret_key              = lookup('profile::netbox::secret_key'),
-    Enum['ldap', 'cas', 'oidc'] $authentication_provider = lookup('profile::netbox::authentication_provider'),
+    Enum['ldap', 'oidc'] $authentication_provider = lookup('profile::netbox::authentication_provider'),
     Profile::Pki::Provider      $ssl_provider            = lookup('profile::netbox::ssl_provider'),
     Optional[String[1]]         $acme_certificate        = lookup('profile::netbox::acme_cetificate'),
     Stdlib::HTTPSUrl            $netbox_api              = lookup('profile::netbox::netbox_api'),
@@ -113,12 +108,7 @@ class profile::netbox (
     Integer                    $redis_maxmem                = lookup('profile::netbox::redis_maxmem'),
     Stdlib::Fqdn               $redis_host                  = lookup('profile::netbox::redis_host'),
 
-    # CAS Config
-    Hash[String, String]       $cas_rename_attributes       = lookup('profile::netbox::cas_rename_attributes'),
-    Hash[String, Array]        $cas_group_attribute_mapping = lookup('profile::netbox::cas_group_attribute_mapping'),
-    Hash[String, Array]        $cas_group_mapping           = lookup('profile::netbox::cas_group_mapping'),
-    Array                      $cas_group_required          = lookup('profile::netbox::cas_group_required'),
-    Optional[String]           $cas_username_attribute      = lookup('profile::netbox::cas_username_attribute'),
+    # CAS-SSO Config
     Optional[Stdlib::HTTPSUrl] $cas_server_url              = lookup('profile::netbox::cas_server_url'),
     Optional[String]           $oidc_key                    = lookup('profile::netbox::oidc_service'),
     Optional[String]           $oidc_secret                 = lookup('profile::netbox::oidc_secret')
@@ -176,41 +166,36 @@ class profile::netbox (
     # rsyslog forwards json messages sent to localhost along to logstash via kafka
     class { 'profile::rsyslog::udp_json_logback_compat': }
     class { 'netbox':
-        service_hostname            => $service_hostname,
-        discovery_name              => $discovery_name,
-        db_host                     => $db_primary,
-        db_password                 => $db_password,
-        secret_key                  => $secret_key,
-        ldap_password               => $proxypass,
-        scripts_path                => $netbox_scripts_path,
-        config_path                 => $netbox_config_path,
-        src_path                    => $netbox_src_path,
-        venv_path                   => $netbox_venv_path,
-        swift_auth_url              => $swift_auth_url,
-        swift_user                  => $swift_user,
-        swift_key                   => $swift_key,
-        swift_container             => $swift_container,
-        swift_url_key               => $swift_url_key,
-        ldap_server                 => $ldap_config['ro-server'],
-        authentication_provider     => $authentication_provider,
-        redis_port                  => $redis_port,
-        local_redis_maxmem          => $redis_maxmem,
-        redis_host                  => $redis_host,
-        redis_password              => $redis_password,
-        http_proxy                  => $http_proxy,
-        changelog_retention         => $changelog_retention,
-        job_retention               => $job_retention,
-        validators                  => $validators,
-        ca_certs                    => $ca_certs,
-        cas_server_url              => $cas_server_url,
-        cas_rename_attributes       => $cas_rename_attributes,
-        cas_username_attribute      => $cas_username_attribute,
-        cas_group_attribute_mapping => $cas_group_attribute_mapping,
-        cas_group_mapping           => $cas_group_mapping,
-        cas_group_required          => $cas_group_required,
-        oidc_key                    => $oidc_key,
-        oidc_secret                 => $oidc_secret,
-        rq_netbox_ensure            => $active_ensure,
+        service_hostname        => $service_hostname,
+        discovery_name          => $discovery_name,
+        db_host                 => $db_primary,
+        db_password             => $db_password,
+        secret_key              => $secret_key,
+        ldap_password           => $proxypass,
+        scripts_path            => $netbox_scripts_path,
+        config_path             => $netbox_config_path,
+        src_path                => $netbox_src_path,
+        venv_path               => $netbox_venv_path,
+        swift_auth_url          => $swift_auth_url,
+        swift_user              => $swift_user,
+        swift_key               => $swift_key,
+        swift_container         => $swift_container,
+        swift_url_key           => $swift_url_key,
+        ldap_server             => $ldap_config['ro-server'],
+        authentication_provider => $authentication_provider,
+        redis_port              => $redis_port,
+        local_redis_maxmem      => $redis_maxmem,
+        redis_host              => $redis_host,
+        redis_password          => $redis_password,
+        http_proxy              => $http_proxy,
+        changelog_retention     => $changelog_retention,
+        job_retention           => $job_retention,
+        validators              => $validators,
+        ca_certs                => $ca_certs,
+        cas_server_url          => $cas_server_url,
+        oidc_key                => $oidc_key,
+        oidc_secret             => $oidc_secret,
+        rq_netbox_ensure        => $active_ensure,
     }
     $ssl_settings = ssl_ciphersuite('apache', 'strong', true)
     class { 'sslcert::dhparam': }
