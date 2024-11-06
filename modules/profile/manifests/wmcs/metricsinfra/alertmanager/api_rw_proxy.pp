@@ -8,8 +8,8 @@ class profile::wmcs::metricsinfra::alertmanager::api_rw_proxy (
     Array[String[1]]                  $htpasswd_entries = lookup('profile::wmcs::metricsinfra::alertmanager::api_rw_proxy::htpasswd_entries', {default_value => []}),
 ) {
     $trusted_ips = $trusted_hosts.values.flatten.map |Stdlib::Fqdn $fqdn| {
-        ipresolve($fqdn, 4)
-    }
+        dnsquery::lookup($fqdn, true)
+    }.flatten
 
     file { '/etc/apache2/alertmanager-api-rw.htpasswd':
         ensure    => file,

@@ -87,7 +87,7 @@ innodb_autoinc_lock_mode       = 2  # interleaved to allow galera slave threads 
 
 # galera configuration
 wsrep_on=ON
-wsrep_cluster_address="gcomm://<%= @cluster_node_ips.map{|host_ip| "#{host_ip}"}.join(",") %>"
+wsrep_cluster_address="gcomm://<%= @cluster_node_ips.join(",") %>"
 wsrep_cluster_name="openstack"
 wsrep_provider=/usr/lib/galera/libgalera_smm.so
 wsrep_sst_method=rsync

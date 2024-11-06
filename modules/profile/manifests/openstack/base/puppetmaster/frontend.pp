@@ -22,7 +22,7 @@ class profile::openstack::base::puppetmaster::frontend(
 
     class { 'profile::openstack::base::puppetmaster::common': }
 
-    $designate_ips = $designate_hosts.map |$host| { ipresolve($host, 4) }
+    $designate_ips = $designate_hosts.map |$host| { dnsquery::lookup($host, true) }
     $openstack_controller_ips = $openstack_control_nodes.map |$node| {
         dnsquery::lookup($node['cloud_private_fqdn'], true)
     }

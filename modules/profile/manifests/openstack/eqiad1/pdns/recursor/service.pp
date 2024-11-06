@@ -23,7 +23,7 @@ class profile::openstack::eqiad1::pdns::recursor::service(
         openstack_control_nodes => $openstack_control_nodes,
         pdns_api_allow_from     => flatten([
             '127.0.0.1',
-            $api_allow_hosts.map |Stdlib::Fqdn $host| { ipresolve($host, 4) }
+            $api_allow_hosts.map |Stdlib::Fqdn $host| { dnsquery::lookup($host, true) }.flatten
         ]),
     }
 }

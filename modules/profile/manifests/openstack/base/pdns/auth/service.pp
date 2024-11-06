@@ -10,12 +10,12 @@ class profile::openstack::base::pdns::auth::service(
 ){
     $this_host_entry = ($hosts.filter | $host | {$host['host_fqdn'] == $::fqdn})[0]
     $dns_webserver_address = $this_host_entry['private_fqdn'].ipresolve(4)
-    $listen_on = [$this_host_entry['auth_fqdn'].ipresolve(4)]
+    $listen_on = dnsquery::lookup($this_host_entry['auth_fqdn'], true)
     $query_local_address = $this_host_entry['auth_fqdn']
 
     $pdns_auth_hosts = $hosts.map |$host| { $host['auth_fqdn'] }
     $pdns_api_allow_from = [$pdns_auth_hosts, $designate_hosts, $prometheus_nodes].flatten.map |Stdlib::Fqdn $fqdn| {
-        dnsquery::a($fqdn)
+        dnsquery::lookup($fqdn, true)
     }.flatten + ['127.0.0.1']
 
     class { '::pdns_server':

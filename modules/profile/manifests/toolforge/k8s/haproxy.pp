@@ -45,7 +45,7 @@ class profile::toolforge::k8s::haproxy (
         class { 'keepalived':
             auth_pass => $keepalived_password,
             peers     => delete($keepalived_peers, $facts['networking']['fqdn']),
-            vips      => $keepalived_vips.map |$host| { ipresolve($host, 4) },
+            vips      => $keepalived_vips.map |$host| { dnsquery::lookup($host, true) }.flatten,
         }
     }
 

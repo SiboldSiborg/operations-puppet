@@ -6,7 +6,7 @@ class profile::openstack::base::pdns::auth::db(
     Array[String] $mysql_root_clients = lookup('mysql_root_clients', {'default_value' => []}),
 ){
 
-    $designate_host_ips = $designate_hosts.map |$host| { ipresolve($host, 4) }
+    $designate_host_ips = $designate_hosts.map |$host| { dnsquery::lookup($host, true) }.flatten
 
     # install mysql locally on all dns servers
     include ::profile::mariadb::monitor::dba

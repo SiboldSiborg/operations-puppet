@@ -118,7 +118,7 @@ define scap::target(
 
     if $::realm == 'labs' {
         $deployment_host = lookup('scap::deployment_server')
-        $deployment_ip = dnsquery::a($deployment_host)[0]
+        $deployment_ips = dnsquery::lookup($deployment_host, true)
 
         if !defined(Security::Access::Config["scap-allow-${deploy_user}"]) {
             # Allow $deploy_user login from scap deployment host.
@@ -126,7 +126,7 @@ define scap::target(
             # to work around labs-specific restrictions
             security::access::config { "scap-allow-${deploy_user}":
                 ensure   => $ensure,
-                content  => "+ : ${deploy_user} : ${deployment_ip}\n",
+                content  => "+ : ${deploy_user} : ${deployment_ips.join(' ')}\n",
                 priority => 60,
             }
         }
@@ -136,7 +136,7 @@ define scap::target(
             # to work around labs-specific restrictions
             security::access::config { 'scap-allow-scap':
                 ensure   => $ensure,
-                content  => "+ : scap : ${deployment_ip}\n",
+                content  => "+ : scap : ${deployment_ips.join(' ')}\n",
                 priority => 65,
             }
         }

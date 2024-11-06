@@ -19,7 +19,7 @@ class profile::toolforge::docker::registry(
         puppet_rsc => Exec['nginx-reload'],
     }
 
-    $builders = dnsquery::a($builder_host)
+    $builders = dnsquery::lookup($builder_host, true)
 
     class { 'docker::registry':
         storage_backend => 'filebackend',

@@ -11,9 +11,9 @@ class profile::acme_chief::cloud (
 ) {
     $passive_hosts = [$passive_host].flatten()
     if $facts['networking']['fqdn'] in $passive_hosts {
-        $active_host_ip = dnsquery::a($active_host)[0]
+        $active_host_ips = dnsquery::lookup($active_host, true)
         security::access::config { 'acme-chief':
-            content  => "+ : acme-chief : ${active_host_ip}\n",
+            content  => "+ : acme-chief : ${active_host_ips.join(' ')}\n",
             priority => 60,
         }
     }

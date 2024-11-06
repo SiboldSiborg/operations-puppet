@@ -69,7 +69,7 @@ class galera(
         require => Package['mariadb-server'],
     }
 
-    $cluster_node_ips = $cluster_nodes.map |$host| { ipresolve($host, 4) }
+    $cluster_node_ips = $cluster_nodes.map |$host| { dnsquery::a($host) }.flatten
     $wsrep_node_address = dnsquery::a($wsrep_node_name) || { ['127.0.0.1'] }[0]
 
     file { '/etc/mysql/mariadb.conf.d/50-server.cnf':

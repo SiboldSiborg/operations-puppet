@@ -7,12 +7,12 @@ class profile::mariadb::grants::cloudinfra (
     String                     $repl_pass       = lookup('profile::mariadb::grants::cloudinfra::repl_pass'),
 ) {
     $repl_ips = $cloudinfra_dbs.map |Stdlib::Fqdn $fqdn| {
-        ipresolve($fqdn, 4)
-    }
+        dnsquery::lookup($fqdn, true)
+    }.flatten
 
     $labspuppet_client_ips = $enc_servers.map |Stdlib::Fqdn $fqdn| {
-        ipresolve($fqdn, 4)
-    }
+        dnsquery::lookup($fqdn, true)
+    }.flatten
 
     file { '/etc/mysql/cloudinfra-grants.sql':
         ensure  => present,
