@@ -139,9 +139,6 @@ codfw:
     wdqs2013.codfw.wmnet: [wdqs, wdqs-ssl, wdqs-heavy-queries]
     wdqs2016.codfw.wmnet: [wdqs, wdqs-ssl, wdqs-heavy-queries]
     wdqs2017.codfw.wmnet: [wdqs, wdqs-ssl, wdqs-heavy-queries]
-    wdqs2018.codfw.wmnet: [wdqs, wdqs-ssl, wdqs-heavy-queries]
-    wdqs2019.codfw.wmnet: [wdqs, wdqs-ssl, wdqs-heavy-queries]
-    wdqs2020.codfw.wmnet: [wdqs, wdqs-ssl, wdqs-heavy-queries]
   wdqs-internal:
     wdqs2008.codfw.wmnet: [wdqs]
     wdqs2014.codfw.wmnet: [wdqs]
