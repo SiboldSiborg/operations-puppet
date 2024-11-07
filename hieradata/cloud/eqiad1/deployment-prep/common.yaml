@@ -687,3 +687,65 @@ profile::mediawiki::php::icu67: true
 profile::confd::instances:
   main:
     interval: 300
+
+profile::cache::haproxykafka::ensure: absent
+profile::cache::haproxykafka::kafka_cluster_name: main-deployment-prep
+profile::cache::haproxykafka::workers: 2
+profile::cache::haproxykafka::message_buffer: 1.0e+6
+profile::cache::haproxykafka::sdid: haproxykafka@0
+profile::cache::haproxykafka::socket:
+  path: /var/run/haproxykafka/haproxykafka.sock
+  mode: "0622"
+  user: haproxykafka
+  group: haproxykafka
+  batch_size: 102400
+  batch_deadline: "1000ms"
+profile::cache::haproxykafka::logparser:
+  batch_size: 102400
+  batch_deadline: "1000ms"
+profile::cache::haproxykafka::kafka:
+  topic: webrequest_undefined
+  dlq_topic: webrequest_errors
+  flush_timeout: 1000
+  batch_size: 102400
+  batch_deadline: "1000ms"
+  rdkafka:
+    acks: "all"
+    client.id: "%{facts.hostname}"
+    security.protocol: "SSL"
+    ssl.ca.location: "/etc/ssl/certs/wmf-ca-certificates.crt"
+    ssl.cipher.suites: "ECDHE-ECDSA-AES256-GCM-SHA384"
+    ssl.curves.list: "P-256"
+    ssl.sigalgs.list: "ECDSA+SHA256"
+    queue.buffering.max.messages: 720000
+    queue.buffering.max.ms: 1000
+    batch.num.messages: 9000
+    compression.codec: "snappy"
+    topic.request.required.acks: 1
+profile::cache::haproxykafka::monitoring:
+  enable_pprof: true
+  enable_prometheus: true
+  server_bind: ":9341"
+  prometheus_prefix: "haproxykafka_"
+  prometheus_parsing_buckets:
+    - 5.0e-6
+    - 1.0e-5
+    - 5.0e-5
+    - 1.0e-4
+    - 5.0e-4
+    - 1.0e-3
+    - 5.0e-3
+  prometheus_processing_buckets:
+    - 1.0e-6
+    - 5.0e-6
+    - 1.0e-5
+    - 2.0e-5
+    - 3.0e-5
+    - 5.0e-5
+    - 1.0e-4
+    - 5.0e-4
+    - 1.0e-3
+profile::cache::haproxykafka::transform_rules:
+  haproxy_format: "02/Jan/2006:15:04:05.000"
+  date_format: "2006-01-02T15:04:05Z"
+  date_tz: UTC

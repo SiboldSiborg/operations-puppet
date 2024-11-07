@@ -18,10 +18,18 @@ class profile::cache::haproxykafka(
 ) {
 
     $kafka_cluster_cfg = kafka_config($kafka_cluster_name)
-    $bootstrap_servers = {
-        'rdkafka' => {
-            'bootstrap.servers' => $kafka_cluster_cfg['brokers']['ssl_string']
-        }
+    # that could not be defined in cloud environments
+    $bootstrap_servers = $kafka_cluster_cfg ? {
+        Undef => {
+            'rdkafka' => {
+                'bootstrap.servers' => '',
+            },
+        },
+        default => {
+            'rdkafka' => {
+                'bootstrap.servers' => $kafka_cluster_cfg['brokers']['ssl_string']
+            },
+        },
     }
 
     $config = {
