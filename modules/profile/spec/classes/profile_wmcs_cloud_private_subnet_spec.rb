@@ -4,26 +4,33 @@ require_relative '../../../../rake_modules/spec_helper'
 
 describe 'profile::wmcs::cloud_private_subnet' do
   on_supported_os(WMFConfig.test_on(11, 11)).each do |os, facts|
-    before(:each) do
-      Puppet::Functions.create_function(:'dnsquery::a') do
-        dispatch :dns_a do
-          param 'Stdlib::Fqdn', :domain
-          optional_block_param :block
-        end
-        def dns_a(domain)
-            if domain == 'cloudlb2001-dev.private.codfw.wikimedia.cloud'
-                ['172.20.5.2', '127.0.0.1']
-            elsif domain == 'cloudsw-b1.private.codfw.wikimedia.cloud'
-                ['172.20.5.1', '127.0.0.2']
-            end
-        end
-      end
-    end
-
     let(:pre_condition) do
       "class network::constants () {
         $cloud_instance_networks = {
-          'codfw' => ['192.0.2.0/24'],
+          'codfw' => [
+            '192.0.2.0/24',
+            '3fff:1::/64',
+          ],
+        }
+      }
+
+      function dnsquery::a ($name) {
+        if $name == 'cloudlb2001-dev.private.codfw.wikimedia.cloud' {
+          ['172.20.5.2', '127.0.0.1']
+        } elsif $name == 'cloudlb2002-dev.private.codfw.wikimedia.cloud' {
+          ['172.20.5.3']
+        } elsif $name == 'cloudsw-b1.private.codfw.wikimedia.cloud' {
+          ['172.20.5.1', '127.0.0.2']
+        }
+      }
+
+      function dnsquery::aaaa ($name) {
+        if $name == 'cloudlb2001-dev.private.codfw.wikimedia.cloud' {
+          ['3fff::2001']
+        } elsif $name == 'cloudlb2002-dev.private.codfw.wikimedia.cloud' {
+          []
+        } elsif $name == 'cloudsw-b1.private.codfw.wikimedia.cloud' {
+          ['3fff::1']
         }
       }"
     end
@@ -37,23 +44,25 @@ describe 'profile::wmcs::cloud_private_subnet' do
       let(:params) {{
         'cloud_private_gw_t' => 'cloudsw-<%= $rack %>.private.codfw.wikimedia.cloud',
         'vlan_mapping' => {
-            'codfw' => {
-                'b1' => 2151,
-            },
-            'eqiad' => {
-                'a1' => 1151,
-                'a2' => 1152,
-            },
+          'codfw' => {
+            'b1' => 2151,
+          },
+          'eqiad' => {
+            'a1' => 1151,
+            'a2' => 1152,
+          },
         },
-        'supernet'           => '172.20.0.0/16',
+        'supernet_v4'        => '172.20.0.0/16',
+        'supernet_v6'        => '3fff::/56',
         'public_cidrs'       => [
-            '185.15.57.0/26',
-            '1.2.3.0/24',
+          '185.15.57.0/26',
+          '172.25.0.0/16',
+          '3fff:2::/64',
         ],
-        'netbox_location'    => {
-            'rack'           => 'B1',
-            'row'            => 'codfw-row-b',
-            'site'           => 'codfw',
+        'netbox_location' => {
+          'rack' => 'B1',
+          'row'  => 'codfw-row-b',
+          'site' => 'codfw',
         },
       }}
       it { is_expected.to compile.with_all_deps }
@@ -66,15 +75,15 @@ describe 'profile::wmcs::cloud_private_subnet' do
               .with_legacy_vlan_naming(false)
       end
 
-      it "should assign an IP address to the interface" do
-        is_expected.to contain_interface__ip("cloud_private_subnet_ip")
+      it "should assign an IPv4 address to the interface" do
+        is_expected.to contain_interface__ip("cloud_private_subnet_ip4")
               .with_interface("vlan2151")
               .with_address("172.20.5.2")
               .with_prefixlen("24")
       end
 
-      it "should add route to cloud-private supernet" do
-        is_expected.to contain_interface__route("cloud_private_subnet_route_supernet")
+      it "should add route to cloud-private IPv4 supernet" do
+        is_expected.to contain_interface__route("cloud_private_subnet_route_supernet4")
               .with_address("172.20.0.0")
               .with_prefixlen("16")
               .with_nexthop("172.20.5.1")
@@ -82,28 +91,96 @@ describe 'profile::wmcs::cloud_private_subnet' do
               .with_persist(true)
       end
 
-      it "should add routes to public nets" do
-        is_expected.to contain_interface__route("cloud_private_subnet_route_public_0")
+      it "should add routes to public IPv4 nets" do
+        is_expected.to contain_interface__route("cloud_private_subnet_route_public_185.15.57.0/26")
               .with_address("185.15.57.0")
               .with_prefixlen("26")
               .with_nexthop("172.20.5.1")
               .with_interface("vlan2151")
               .with_persist(true)
-        is_expected.to contain_interface__route("cloud_private_subnet_route_public_1")
-              .with_address("1.2.3.0")
-              .with_prefixlen("24")
+        is_expected.to contain_interface__route("cloud_private_subnet_route_public_172.25.0.0/16")
+              .with_address("172.25.0.0")
+              .with_prefixlen("16")
               .with_nexthop("172.20.5.1")
               .with_interface("vlan2151")
               .with_persist(true)
       end
 
-      it "should add routes to instance nets" do
+      it "should add routes to instance IPv4 nets" do
         is_expected.to contain_interface__route("cloud_private_subnet_route_instances_192.0.2.0/24")
               .with_address("192.0.2.0")
               .with_prefixlen("24")
               .with_nexthop("172.20.5.1")
               .with_interface("vlan2151")
               .with_persist(true)
+      end
+
+      context "with IPv6 support" do
+        it "should assign an IPv6 address to the interface" do
+          is_expected.to contain_interface__ip("cloud_private_subnet_ip6")
+                .with_interface("vlan2151")
+                .with_address("3fff::2001")
+                .with_prefixlen("64")
+        end
+
+        it "should add route to cloud-private IPv6 supernet" do
+          is_expected.to contain_interface__route("cloud_private_subnet_route_supernet6")
+                .with_address("3fff::")
+                .with_prefixlen("56")
+                .with_nexthop("3fff::1")
+                .with_interface("vlan2151")
+                .with_persist(true)
+        end
+
+        it "should add routes to public IPv6 nets" do
+          is_expected.to contain_interface__route("cloud_private_subnet_route_public_3fff:2::/64")
+                .with_address("3fff:2::")
+                .with_prefixlen("64")
+                .with_nexthop("3fff::1")
+                .with_interface("vlan2151")
+                .with_persist(true)
+        end
+
+        it "should add routes to instance IPv6 nets" do
+          is_expected.to contain_interface__route("cloud_private_subnet_route_instances_3fff:1::/64")
+                .with_address("3fff:1::")
+                .with_prefixlen("64")
+                .with_nexthop("3fff::1")
+                .with_interface("vlan2151")
+                .with_persist(true)
+        end
+      end
+
+      context "without IPv6 support" do
+        let(:facts) { facts.merge({
+          'hostname' => 'cloudlb2002-dev',
+        }) }
+
+        it "should not assign an IPv6 address to the interface" do
+          is_expected.not_to contain_interface__ip("cloud_private_subnet_ip6")
+        end
+
+        it "should not add route to cloud-private IPv6 supernet" do
+          is_expected.not_to contain_interface__route("cloud_private_subnet_route_supernet6")
+        end
+
+        it "should not add routes to public IPv6 nets" do
+          is_expected.not_to contain_interface__route("cloud_private_subnet_route_public_3fff:2::/64")
+        end
+
+        it "should not add routes to instance IPv6 nets" do
+          is_expected.not_to contain_interface__route("cloud_private_subnet_route_instances_3fff:1::/64")
+        end
+      end
+
+      context "for a device without a DNS name" do
+        let(:facts) { facts.merge({
+          'hostname' => 'insetup1001',
+        }) }
+
+        it "should not compile" do
+          is_expected.not_to compile.with_all_deps
+        end
       end
     end
   end

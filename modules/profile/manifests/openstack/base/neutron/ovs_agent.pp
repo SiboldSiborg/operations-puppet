@@ -17,6 +17,6 @@ class profile::openstack::base::neutron::ovs_agent (
 
     class { 'openstack::neutron::ovs_agent':
         *               => wmflib::resource::dump_params(),
-        overlay_address => $profile::wmcs::cloud_private_subnet::cloud_private_address,
+        overlay_address => $profile::wmcs::cloud_private_subnet::cloud_private_address_v4,
     }
 }

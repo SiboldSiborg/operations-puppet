@@ -41,7 +41,7 @@ class profile::openstack::base::keystone::service(
     Stdlib::Port $admin_bind_port = lookup('profile::openstack::base::admin_bind_port'),
     Stdlib::Port $public_bind_port = lookup('profile::openstack::base::public_bind_port'),
     Array[Stdlib::Host] $haproxy_nodes = lookup('profile::openstack::base::haproxy_nodes'),
-    Optional[Stdlib::IP::Address::V4] $cloud_private_supernet = lookup('profile::wmcs::cloud_private_subnet::supernet', {default_value => undef}),
+    Optional[Stdlib::IP::Address::V4] $cloud_private_supernet = lookup('profile::wmcs::cloud_private_subnet::supernet_v4', {default_value => undef}),
     Stdlib::Fqdn $horizon_hostname = lookup('profile::openstack::base::horizon::webserver_hostname'),
 ) {
 

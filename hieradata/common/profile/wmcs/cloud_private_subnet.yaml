@@ -2,7 +2,7 @@
 ---
 profile::wmcs::cloud_private_subnet::host: "%{facts.hostname}.private.%{::site}.wikimedia.cloud"
 profile::wmcs::cloud_private_subnet::gw_template: 'cloudsw-<%= $rack %>.private.%{::site}.wikimedia.cloud'
-profile::wmcs::cloud_private_subnet::supernet: 172.20.0.0/16
+profile::wmcs::cloud_private_subnet::supernet_v4: 172.20.0.0/16
 profile::wmcs::cloud_private_subnet::vlan_mapping:
   # TODO: generate this from netbox instead of this ugly hardcoding
   #

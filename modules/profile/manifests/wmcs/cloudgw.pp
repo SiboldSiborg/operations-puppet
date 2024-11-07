@@ -24,7 +24,7 @@ class profile::wmcs::cloudgw (
     Optional[Array[Stdlib::IP::Address::V4]]       $cloud_filter              = lookup('profile::wmcs::cloudgw::cloud_filter',             {default_value => []}),
     Array[Stdlib::IP::Address::V4]                 $dmz_cidr                  = lookup('profile::wmcs::cloudgw::dmz_cidr',                 {default_value => []}),
     Array[Stdlib::IP::Address::V4::Cidr]           $public_cidrs              = lookup('profile::wmcs::cloud_private_subnet::public_cidrs',{default_value => []}),
-    Stdlib::IP::Address::V4::Cidr                  $cloud_private_supernet    = lookup('profile::wmcs::cloud_private_subnet::supernet'),
+    Stdlib::IP::Address::V4::Cidr                  $cloud_private_supernet    = lookup('profile::wmcs::cloud_private_subnet::supernet_v4'),
 ) {
     ensure_packages('vlan')
     $nic_virt = "vlan${virt_vlan}"
