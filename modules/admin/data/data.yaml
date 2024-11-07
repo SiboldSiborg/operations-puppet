@@ -6569,6 +6569,10 @@ ldap_only_users:
     ensure: present
     realname: Deborah Tankersley
     email: dtankersley@wikimedia.org
+  deepeshaburse:
+    ensure: present
+    realname: Deepesha Burse
+    email: deepesha.burse@wikimedia.de
   delphinepro:
     ensure: absent
     realname: Delphine Menard
