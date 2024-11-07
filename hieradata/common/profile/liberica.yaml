@@ -4,7 +4,7 @@ profile::liberica::hcforwarder_config:
     network: tcp
     address: 127.0.0.1:1100
   prometheus:
-    address: ":3000"
+    address: "%{facts.networking.ip}:3000"
   hashing_algorithm: jenkins
   interface:
     egress: "%{facts.interface_primary}"
@@ -17,7 +17,7 @@ profile::liberica::healthcheck_config:
     network: tcp
     address: 127.0.0.1:1101
   prometheus:
-    address: ":3001"
+    address: "%{facts.networking.ip}:3001"
 
 profile::liberica::fp_config:
   log_level: info
@@ -25,13 +25,13 @@ profile::liberica::fp_config:
     network: tcp
     address: 127.0.0.1:1102
   prometheus:
-    address: ":3002"
+    address: "%{facts.networking.ip}:3002"
   forwarding_plane: ipvs
 
 profile::liberica::cp_config:
   log_level: info
   prometheus:
-    address: ":3003"
+    address: "%{facts.networking.ip}:3003"
 
 profile::liberica::bgp_config:
   grpc:
