@@ -100,8 +100,6 @@ profile::base::production::role_description: 'upload HAProxy/Varnish/ATS cache s
 
 profile::cache::varnish::frontend::use_etcd_req_filters: true
 
-# T337825
-profile::cache::kafka::certificate::use_pki_settings: true
 profile::cache::kafka::certificate::ssl_key_password: ~
 
 profile::trafficserver::backend::http_settings:
