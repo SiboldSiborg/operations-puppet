@@ -34,6 +34,18 @@ describe 'interface::rule' do
             .with_require('Interface::Routing_table[some-table]')
         end
       end
+
+      context 'with an IPv6 address' do
+        let(:params) { super().merge(from: '3fff::1/128') }
+        it { is_expected.to compile.with_all_deps }
+        it do
+          is_expected.to contain_interface__post_up_command('use-table-for-ip')
+            .with_ensure('present')
+            .with_interface('vlan1234')
+            .with_command('ip -6 rule add from 3fff::1/128 table some-table')
+            .with_require('Interface::Routing_table[some-table]')
+        end
+      end
     end
   end
 end

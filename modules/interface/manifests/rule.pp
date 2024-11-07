@@ -18,12 +18,17 @@ define interface::rule (
     } else {
         $from_cidr = $from
     }
+    $version = $from_cidr ? {
+        Stdlib::IP::Address::V6 => ' -6',
+        default                 => '',
+    }
+
     $from_cmd = " from ${$from_cidr}"
 
     $table_cmd = $table.then |$t| { " table ${t}" }
     $table_require = $table.then |$t| { Interface::Routing_table[$t] }
 
-    $command = "ip rule add${from_cmd}${table_cmd}"
+    $command = "ip${version} rule add${from_cmd}${table_cmd}"
 
     interface::post_up_command { $title:
         ensure    => $ensure,
