@@ -424,7 +424,7 @@ def scrub_mappings(project_id):
         for network in instance.addresses:
             valid_ips.extend(
                 [
-                    address["addr"]
+                    str(ipaddress.ip_address(address["addr"]))
                     for address in instance.addresses[network]
                     if instance.status != "DELETED" and instance.status != "DELETING"
                 ]
@@ -443,7 +443,9 @@ def scrub_mappings(project_id):
             backend_ip = urlparse(backend.url).hostname
 
             try:
-                ipaddress.ip_address(backend_ip)
+                # Validates the address and converts it into a single format
+                # to compare as strings.
+                backend_ip = str(ipaddress.ip_address(backend_ip))
             except ValueError:
                 # There are some weird proxies that refer to service names
                 # instead of IPs. Don't delete them.
