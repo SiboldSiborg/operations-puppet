@@ -242,6 +242,11 @@ node /^aux-k8s-worker100[23]\.eqiad\./ {
     role(aux_k8s::worker)
 }
 
+# temp insetup role while being built T378989
+node /^aux-k8s-worker100[45]\.eqiad\./ {
+    role(insetup::observability)
+}
+
 # Primary bacula director and storage daemon
 node /^backup1001\.eqiad\./ {
     role(backup)
