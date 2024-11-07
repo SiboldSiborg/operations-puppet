@@ -51,13 +51,6 @@ profile::idp::services:
     required_groups:
       - nda
       - wmf
-  logstash:
-    id: 6
-    service_id: 'https://(cas-)?logstash\.wikimedia\.org(/.*)?'
-    required_groups:
-      - nda
-      - wmf
-      - logstash-access
   people:
     id: 7
     service_id: 'https://people\.wikimedia\.org(/.*)?'
