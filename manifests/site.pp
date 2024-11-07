@@ -2680,8 +2680,12 @@ node /^wdqs2025.codfw\./ {
     role(wdqs::test)
 }
 
-node /^wdqs202[67].codfw\./ {
-    role(insetup::search_platform)
+node /^wdqs20(1[8-9]|20).codfw\./ {
+    role(wdqs::internal_main)
+}
+
+node /^wdqs202[6-7].codfw\./ {
+    role(wdqs::internal_scholarly)
 }
 
 node /^wdqs-categories1001.eqiad\./ {

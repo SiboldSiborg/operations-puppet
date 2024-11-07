@@ -396,6 +396,16 @@ wikimedia_clusters:
     sites:
       eqiad: []
       codfw: []
+  wdqs-internal-main:
+    description: "Wikidata Query Service internal - main graph"
+    sites:
+      eqiad: []
+      codfw: []
+  wdqs-internal-scholarly:
+    description: "Wikidata Query Service internal - scholarly graph"
+    sites:
+      eqiad: []
+      codfw: []
   wdqs-test:
     description: "Wikidata Query Service - Test cluster"
     sites:
