@@ -2,3 +2,4 @@
 [global.config]
   as = <%= @config['bgp']['asn'] %>
   router-id = "<%= @facts['networking']['ip'] %>"
+  local-address-list = ["<%= @facts['networking']['ip'] %>"]
