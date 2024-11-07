@@ -18,6 +18,6 @@ class profile::maps::tlsproxy(
     firewall::service { 'maps-proxy-https':
         proto   => 'tcp',
         notrack => true,
-        port    => 443,
+        port    => [443, 6543],
     }
 }
