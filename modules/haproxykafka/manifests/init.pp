@@ -32,8 +32,10 @@ class haproxykafka (
         system => true,
     }
 
+    $socketdir = '/var/run/haproxykafka'
+
     # TODO: from param/hiera
-    file { '/var/run/haproxykafka':
+    file { $socketdir:
         ensure => stdlib::ensure($ensure, 'directory'),
         owner  => $user,
         group  => $user,

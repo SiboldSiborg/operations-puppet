@@ -11,3 +11,22 @@ User=haproxykafka
 Group=haproxykafka
 ExecStart=/usr/bin/haproxykafka -c <%= @conffile_full_path %>
 Restart=on-failure
+# Hardening
+NoNewPrivileges=true
+PrivateTmp=true
+AmbientCapabilities=CAP_CHOWN
+CapabilityBoundingSet=CAP_CHOWN
+ProtectSystem=strict
+ReadWritePaths=<%= @socketdir %>
+PrivateDevices=true
+ProtectKernelModules=true
+ProtectKernelLogs=true
+ProtectHome=true
+<%- if @facts['os']['release']['major'].to_i >= 12 -%>
+ExecPaths=/usr/bin/haproxykafka /lib /lib64
+NoExecPaths=/
+<%- end -%>
+ProtectClock=true
+RestrictNamespaces=true
+RestrictSUIDSGID=true
+LockPersonality=true
