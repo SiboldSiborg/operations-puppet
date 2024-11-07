@@ -221,6 +221,7 @@ profile::idp::services:
     required_groups:
       - nda
       - wmf
+      - logstash-access
   mpic:
     id: 40
     service_class: 'OidcRegisteredService'
