@@ -10,6 +10,11 @@ class liberica(
         content => template('liberica/gobgpd.conf.erb'),
     }
 
+    systemd::service { 'gobgpd':
+        content  => systemd_template('gobgpd'),
+        override => true,
+    }
+
     file { '/etc/liberica':
         ensure => directory,
     }
