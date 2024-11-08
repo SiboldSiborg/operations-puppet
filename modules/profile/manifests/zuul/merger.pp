@@ -1,9 +1,11 @@
 # SPDX-License-Identifier: Apache-2.0
 class profile::zuul::merger(
-    Boolean $enable = lookup('profile::zuul::merger::enable'),
-    Hash $conf_common = lookup('zuul::common'),
-    Hash $conf_merger = lookup('profile::zuul::merger::conf'),
-    String $ferm_srange = lookup('profile::zuul::merger::ferm_srange'),
+    Boolean $enable                               = lookup('profile::zuul::merger::enable'),
+    Hash $conf_common                             = lookup('zuul::common'),
+    Hash $conf_merger                             = lookup('profile::zuul::merger::conf'),
+    Optional[String] $ferm_srange                 = lookup('profile::zuul::merger::ferm_srange'),
+    Optional[Array[Stdlib::Host]] $firewall_hosts = lookup('profile::zuul::merger::firewall_hosts'),
+    Optional[Array[String]] $firewall_src_sets    = lookup('profile::zuul::merger::firewall_src_sets'),
 ) {
     include profile::ci
 
@@ -59,9 +61,27 @@ class profile::zuul::merger(
     # The slaves fetch changes from it over the git:// protocol.
     # It is only meant to be used from slaves, so only accept internal
     # connections.
-    ferm::service { 'git-daemon_internal':
-        proto  => 'tcp',
-        port   => '9418',
-        srange => $ferm_srange,
+    if $ferm_srange {
+        ferm::service { 'git-daemon_internal':
+            proto  => 'tcp',
+            port   => '9418',
+            srange => $ferm_srange,
+        }
+    } else {
+        if $firewall_hosts {
+            firewall::service { 'git_daemon_internal_hosts':
+                proto  => 'tcp',
+                port   => 9418,
+                srange => $firewall_hosts,
+            }
+        }
+
+        if $firewall_src_sets {
+            firewall::service { 'git_daemon_internal_sets':
+                proto    => 'tcp',
+                port     => 9418,
+                src_sets => $firewall_src_sets,
+            }
+        }
     }
 }

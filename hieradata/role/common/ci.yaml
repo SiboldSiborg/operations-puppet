@@ -46,6 +46,9 @@ profile::zuul::merger::ferm_srange: >-
   @resolve((contint1002.wikimedia.org contint2002.wikimedia.org), A)
   @resolve((contint1002.wikimedia.org contint2002.wikimedia.org), AAAA)))
 
+profile::zuul::merger::firewall_hosts: ~
+profile::zuul::merger::firewall_src_sets: ~
+
 # Zuul server
 
 profile::zuul::server::conf:
