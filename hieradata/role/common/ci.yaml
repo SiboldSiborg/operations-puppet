@@ -41,13 +41,12 @@ profile::zuul::merger::conf:
   git_name: "Wikimedia Zuul Merger"
   zuul_url: "git://%{::fqdn}"
 
-profile::zuul::merger::ferm_srange: >-
-  (($LABS_NETWORKS
-  @resolve((contint1002.wikimedia.org contint2002.wikimedia.org), A)
-  @resolve((contint1002.wikimedia.org contint2002.wikimedia.org), AAAA)))
-
-profile::zuul::merger::firewall_hosts: ~
-profile::zuul::merger::firewall_src_sets: ~
+profile::zuul::merger::ferm_srange: ~
+profile::zuul::merger::firewall_hosts:
+  - 'contint1002.wikimedia.org'
+  - 'contint2002.wikimedia.org'
+profile::zuul::merger::firewall_src_sets:
+  - 'LABS_NETWORKS'
 
 # Zuul server
 
