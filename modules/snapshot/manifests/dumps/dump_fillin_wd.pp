@@ -30,12 +30,12 @@ class snapshot::dumps::dump_fillin_wd(
 
     # fixme config file path is hardcoded in, yuck
     # it's not awesome to have the start end days hardcoded in here either
-    # the files needed as input to this script are ready early UTC on the 6th, so starting on the 7th should be
+    # the files needed as input to this script are ready early UTC on the 9th, so starting on the 10th should be
     # ok for some time
     # the end date is chosen depending on the part range we run, leaving a little time for automated
     # reruns in case of transient errors, but finishing up well before the regular dump worker would
     # try to run these same parts
-    $command_args = "--startday 07 --endday 11 --numjobs ${maxjobs} --jobinfo ${parts_startend} --wiki wikidatawiki"
+    $command_args = "--startday 10 --endday 14 --numjobs ${maxjobs} --jobinfo ${parts_startend} --wiki wikidatawiki"
     systemd::timer::job { 'dumps_fillin_wd':
         ensure             => present,
         description        => 'snapshot - full dumps - fillin - wikidata',
