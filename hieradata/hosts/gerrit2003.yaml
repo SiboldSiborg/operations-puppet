@@ -2,6 +2,9 @@
 profile::gerrit::migration::daemon_user: 'gerrit'
 profile::gerrit::daemon_user: 'gerrit'
 
+# review_site dir changes with system user name (T338470)
+profile::gerrit::gerrit_site: "/var/lib/gerrit/review_site"
+
 # Gerrit service is not ready yet - T372804
 profile::gerrit::mask_service: true
 profile::gerrit::enable_monitoring: false
