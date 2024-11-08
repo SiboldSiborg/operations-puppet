@@ -12,12 +12,8 @@
 # which to write the dumps.
 #
 class role::dumps::generation::worker::beta_testbed {
-    include ::profile::base::production
+    include profile::base::production
 
     include profile::dumps::generation::worker::common
     include profile::dumps::generation::worker::crontester
-
-    system::role { 'dumps::generation::worker::beta_testbed':
-        description => 'beta testbed for dumps of XML/SQL wiki content',
-    }
 }

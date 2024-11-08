@@ -10,3 +10,4 @@ profile::admin::groups:
   - dumpsdata-admins
 
 profile::contacts::role_contacts: ['Data Platform']
+profile::base::production::role_description: 'NFS server of xml/sql and misc dumps generation filesystem to dumps producer hosts'
