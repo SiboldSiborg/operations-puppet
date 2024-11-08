@@ -1943,10 +1943,13 @@ infra_devices:
     alarms: true
     site: eqiad
     role: cr
-  pfw3-eqiad:
+  pfw1-eqiad:
     ipv4: 208.80.154.219
     site: eqiad
     role: pfw
+    parents:
+    - cr1-eqiad
+    - cr2-eqiad
   mr1-eqiad:
     ipv4: '208.80.154.199'
     ipv6: '2620:0:861:ffff::6'
