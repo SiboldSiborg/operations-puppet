@@ -448,7 +448,7 @@ groups:
               georgemikesell, bblack, toyofuku, linafaridwmde, yliou, derenrich, sperry-wmf,
               mareikeheuer, hnordeen, rickijay, radimer, dmuthuri, kgraessle, dreamyjazz, jsn, cwylo,
               sharvaniharan, ariel, quiddity, wmdecyn, joelyrookewmde, ifeatunnaobiwmde, cyndywikime,
-              seanleong-wmde, cdobbins]
+              seanleong-wmde, cdobbins, khantstop]
     privileges: ['ALL = (analytics-privatedata) NOPASSWD: ALL']
     system_members: [analytics-search, analytics, analytics-privatedata, analytics-product,
               analytics-research, analytics-platform-eng, analytics-wmde, spark]
@@ -6497,6 +6497,17 @@ users:
     realname: Sean Leong
     email: sean.leong@wikimedia.de
     ssh_keys: []  # Added with no SSH access, for membership in analytics-privatedata-users.
+  khantstop:
+    ensure: present
+    gid: 500
+    uid: 47919
+    realname: Kadeem Khan
+    email: kadeemkhan-ctr@wikimedia.org
+    krb: present
+    expiry_date: "2025-11-04"
+    expiry_contact: osefu@wikimedia.org
+    ssh_keys:
+      - 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEFkrUgMVVji39VP3BbWWZAP5/w2HJmfK5oKUfK21Ozj wmf3032@WMF3032s-MBP'
 
 ldap_only_users:
   adavenport:
