@@ -1432,7 +1432,7 @@ node /^htmldumper1001\.eqiad\./ {
 }
 
 node /^irc[12]002\.wikimedia\./ {
-    role(mw_rc_irc)
+    role(insetup::infrastructure_foundations)
 }
 
 node /^irc[12]003\.wikimedia\./ {
