@@ -112,7 +112,7 @@ class profile::grafana (
     firewall::service { 'grafana_http':
         proto    => 'tcp',
         port     => 80,
-        src_sets => ['CACHES'],
+        src_sets => ['CACHES', 'DEPLOYMENT_HOSTS'],
     }
 
     file { '/usr/share/grafana/public/dashboards/home.json':
