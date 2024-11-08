@@ -19,11 +19,11 @@
 <% if @enable_cas %>
   # User has clicked 'login' on a dashboard.
   # Redirect to the same dashboard on the 'rw' vhost.
-  RewriteCond "%{REQUEST_URI}" "^/login"
-  RewriteCond "%{HTTP_REFERER}" "^https://<%= @domain %>/d/(.*)"
+  RewriteCond "%{REQUEST_URI}" "^/login$"
+  RewriteCond "%{HTTP_REFERER}" "^https://<%= @domain %>/d/([^?]*)\?(.*)$"
   # Add ForceLogin to prevent a redirect loop T269272
   # grafana always adds an orgid QSA so we don't need to worry about '?' vs '&' below
-  RewriteRule "^" "https://<%= @domainrw %>/d/%1&forceLogin=true" [R=302,L,NE]
+  RewriteRule "^" "https://<%= @domainrw %>/d/%1?%2&forceLogin=true" [R=302,L,NE]
 
   # Direct /login visit, redirect to 'rw' homepage
   RewriteCond "%{REQUEST_URI}" "^/login"
