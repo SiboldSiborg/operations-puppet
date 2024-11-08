@@ -238,13 +238,8 @@ node /^aux-k8s-ctrl100[23]\.eqiad\./ {
 }
 
 # worker nodes for aux kubernetes cluster
-node /^aux-k8s-worker100[23]\.eqiad\./ {
+node /^aux-k8s-worker100[2-5]\.eqiad\./ {
     role(aux_k8s::worker)
-}
-
-# temp insetup role while being built T378989
-node /^aux-k8s-worker100[45]\.eqiad\./ {
-    role(insetup::observability)
 }
 
 # Primary bacula director and storage daemon
