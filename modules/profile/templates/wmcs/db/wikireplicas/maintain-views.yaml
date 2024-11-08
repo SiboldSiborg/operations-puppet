@@ -37,7 +37,6 @@ metadata:
 #   are not present on non-FlaggedRevs wikis, but we
 #   still want it present for FlaggedRevs wikis
 fullviews:
-  - abuse_filter_action
   - article_assessment
   - article_assessment_pages
   - article_assessment_ratings
@@ -227,6 +226,13 @@ customviews:
       af_actor, af_timestamp, af_enabled, if(af_hidden,null,af_comments) as af_comments,
       af_public_comments, af_hidden, af_hit_count, af_throttled, af_deleted, af_actions,
       af_global, af_group
+  abuse_filter_action:
+    source:
+     - abuse_filter_action
+     - abuse_filter
+    view: >
+      select afa_filter, afa_consequence, afa_parameters
+    where: af_id = afa_filter AND af_hidden = 0
   abuse_filter_history:
     source:
       - abuse_filter_history
