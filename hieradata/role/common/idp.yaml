@@ -265,6 +265,14 @@ profile::idp::services:
     service_id: 'https://requestctl\.wikimedia\.org(/.*)?'
     # No required_groups is defined for requestctl.wikimedia.org as access is
     # controlled via local mod_auth_cas Apache config for specific subtrees
+  airflow_wmde:
+    id: 46
+    service_class: 'OidcRegisteredService'
+    service_id: 'https://airflow-wmde\.wikimedia\.org(/.*)?'
+    profile_format: 'FLAT'
+    required_groups:
+      - nda
+      - wmf
 
 profile::idp::ldap_attributes:
   - cn
