@@ -13,8 +13,9 @@ from wmflib.idm import LogoutdBase
 
 
 class Tgt:
-    def __init__(self, exists, tgt):
+    def __init__(self, exists, principal, tgt):
         self.exists = exists
+        self.principal = principal
         self.tgt = tgt
 
 
@@ -45,8 +46,7 @@ class IdpLogoutd(LogoutdBase):
             password=self.cfg.get("dummy", "cas.ticket.registry.redis.password")
         )
 
-    def query_tgt(self, cn):
-
+    def list_keys(self, cn=None):
         # Get all TGTs in Redis. If the user have signed in before and after a
         # server switch over, they will have a ticket for each of the IDP hosts,
         # as the host name is embedded in the TGT.
@@ -56,12 +56,25 @@ class IdpLogoutd(LogoutdBase):
         tgts = []
         # Find all the tickets for the given CN.
         for key in keys:
-            principal, tgt = self.r.hmget(key, 'principal', 'ticketId')
-            if principal.decode() != cn:
+
+            # We are only interested in the user TGTs, which are all hashmaps.
+            # There are other keys with a similar naming, which are sets, we do
+            # not need those and accessing them with hmget will throw an type
+            # exception.
+            if self.r.type(key) != b"hash":
                 continue
-            tgts.append(Tgt(True, tgt.decode()))
+
+            principal, tgt = self.r.hmget(key, 'principal', 'ticketId')
+
+            # Check for CN/principal, if provided, otherwise return all keys.
+            if cn is not None and principal.decode() != cn:
+                continue
+            tgts.append(Tgt(True, principal.decode(), tgt.decode()))
 
         return tgts
+
+    def query_tgt(self, cn):
+        return self.list_keys(cn)
 
     # Return codes follow the logout.d semantics, see T283242
     def logout_user(self, user):
@@ -95,16 +108,12 @@ class IdpLogoutd(LogoutdBase):
             return 1
 
     def list(self):
-        keys = self.r.keys("CAS_TICKET:TGT:TGT*")
-        # Find all the tickets for the given CN.
-        for key in keys:
-            principal, tgt = self.r.hmget(key, 'principal', 'ticketId')
-            print(json.dumps(
-                {
-                    'user': principal.decode(),
-                    'TGT': tgt.decode()
-                 }
-            ))
+        tgts = self.list_keys()
+        for tgt in tgts:
+            print(json.dumps({
+                    'user': tgt.principal,
+                    'TGT': tgt.tgt
+                }))
 
     # Return codes follow the logout.d semantics, see T283242
     def query_user(self, user):
