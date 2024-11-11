@@ -5,6 +5,8 @@
 class profile::conftool::hiddenparma (
     Hash[String, String] $api_tokens = lookup('profile::conftool::hiddenparma::api_tokens'),
 ) {
+    # The passwords::etcd class is required by conftool::client, but we want to make the dependency explicit.
+    require passwords::etcd
     require profile::conftool::client
     # Create the /srv/deployment directory if it doesn't exist
     if (!defined(File['/srv/deployment'])) {
@@ -20,6 +22,23 @@ class profile::conftool::hiddenparma (
         group   => 'root',
         mode    => '0444',
         content => template('profile/conftool/hiddenparma-default.erb'),
+    }
+
+    # TODO: maybe create a "requestctl root" user for etcd?
+    $etcd_user = 'root'
+    $etcd_pwd = $passwords::etcd::accounts[$etcd_user]
+
+    file { '/var/lib/deploy-hiddenparma/.etcdrc':
+        ensure  => file,
+        owner   => 'deploy-hiddenparma',
+        group   => 'deploy-hiddenparma',
+        mode    => '0400',
+        content => to_yaml(
+            {
+                'username' => $etcd_user,
+                'password' => $etcd_pwd,
+            }
+        ),
     }
 
     fastapi::application { 'hiddenparma':
