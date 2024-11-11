@@ -27,7 +27,7 @@ define profile::docker::reporter::report(
     systemd::timer::job { "docker-reporter-${title}-images":
         ensure            => $ensure,
         description       => "Report on upgrades to ${title} images.",
-        command           => "/usr/bin/docker-report --minimum-debian-version ${min_debian_version} --filter-file /etc/docker-report/${title}_rules.ini docker-registry.wikimedia.org",
+        command           => "/usr/bin/docker-report --minimum-debian-version ${min_debian_version} --filter-file /etc/docker-report/${title}_rules.ini docker-registry.discovery.wmnet",
         interval          => {'start' => 'OnCalendar', 'interval' => $interval},
         user              => 'root',
         environment       => $environment,
