@@ -195,12 +195,6 @@ def get_args() -> Namespace:
         action="store_true",
         help="If this is provided, the data will be saved to conftool and not just to file.",
     )
-    parser.add_argument(
-        "--repo",
-        "-r",
-        help="The puppet private repository path.",
-        default="/srv/private",
-    )
     return parser.parse_args()
 
 
@@ -295,7 +289,7 @@ def main() -> int:
                 runtime_error = True
 
     if args.conftool:
-        req_api = api.RequestcltApi(api.client(config="/etc/conftool/config.yaml"))
+        req_api = api.RequestctlApi(api.client(config="/etc/conftool/config.yaml"))
         for ipblock_type, ipblocks in data.items():
             for ipblock_name, cidrs in ipblocks.items():
                 slug = f"{ipblock_type}/{ipblock_name.lower()}"

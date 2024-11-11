@@ -15,7 +15,6 @@ class external_clouds_vendors (
     Boolean                   $manage_user  = true,
     Boolean                   $conftool     = false,
     Stdlib::Unixpath          $outfile      = '/srv/external_clouds_vendors/public_clouds.json',
-    Stdlib::Unixpath          $private_repo = '/srv/private',
     Optional[Stdlib::HTTPUrl] $http_proxy   = undef,
 ) {
     ensure_packages(['python3-lxml', 'python3-netaddr', 'python3-requests', 'python3-wmflib', 'python3-conftool', 'python3-git'])
@@ -57,7 +56,7 @@ class external_clouds_vendors (
         content => '{}',
     }
     $opts = $conftool.bool2str('-c', '')
-    $command = "/usr/local/bin/fetch-external-clouds-vendors-nets --repo ${private_repo} ${opts} -vvv ${outfile}"
+    $command = "/usr/local/bin/fetch-external-clouds-vendors-nets ${opts} -vvv ${outfile}"
     systemd::timer::job { 'dump_cloud_ip_ranges':
         ensure            => $ensure,
         command           => $command,

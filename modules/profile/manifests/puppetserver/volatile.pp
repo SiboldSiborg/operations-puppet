@@ -44,12 +44,11 @@ class profile::puppetserver::volatile (
     ensure_packages('pax')
 
     class { 'external_clouds_vendors':
-        user         => 'root',
-        manage_user  => false,
-        outfile      => "${base_path}/external_cloud_vendors/public_clouds.json",
-        conftool     => $profile::puppetserver::enable_ca,
-        http_proxy   => $http_proxy,
-        private_repo => $private_repo_path,
+        user        => 'root',
+        manage_user => false,
+        outfile     => "${base_path}/external_cloud_vendors/public_clouds.json",
+        conftool    => $profile::puppetserver::enable_ca,
+        http_proxy  => $http_proxy,
     }
     class { 'ip_reputation_vendors':
         ensure         => stdlib::ensure(!$ip_reputation_proxies.empty()),
