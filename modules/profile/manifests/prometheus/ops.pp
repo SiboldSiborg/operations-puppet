@@ -951,21 +951,6 @@ class profile::prometheus::ops (
         port       => 9206
     }
 
-    # Job definition for udpmxircecho
-    $udpmxircecho_jobs = [
-        {
-            'job_name'        => 'udpmxircecho',
-            'file_sd_configs' => [
-                { 'files' => [ "${targets_path}/udpmxircecho_*.yaml" ] },
-            ],
-        },
-    ]
-    prometheus::class_config { "udpmxircecho_${::site}":
-        dest       => "${targets_path}/udpmxircecho_${::site}.yaml",
-        class_name => 'mw_rc_irc::irc_echo',
-        port       => 9221
-    }
-
     # Job definition for ircstream
     $ircstream_jobs = [
         {
@@ -2604,7 +2589,7 @@ class profile::prometheus::ops (
             $atlas_exporter_jobs, $cadvisor_jobs,
             $envoy_jobs, $squid_jobs, $nic_saturation_exporter_jobs, $thanos_jobs,
             $wikidough_jobs, $chartmuseum_jobs, $es_exporter_jobs, $alertmanager_jobs, $pushgateway_jobs,
-            $udpmxircecho_jobs, $minio_jobs, $cephadm_jobs, $dragonfly_jobs, $gitlab_jobs, $cfssl_jobs, $cache_haproxy_tls_jobs,
+            $minio_jobs, $cephadm_jobs, $dragonfly_jobs, $gitlab_jobs, $cfssl_jobs, $cache_haproxy_tls_jobs,
             $mini_textfile_jobs, $gitlab_runner_jobs, $netbox_global_jobs, $ipmi_jobs, $ganeti_jobs, $benthos_jobs,
             $pint_jobs, $swagger_exporter_jobs, $fastnetmon_jobs, $liberica_jobs, $gnmi_jobs, $lvs_realserver_jobs,
             $postfix_jobs, $fifo_log_demux_jobs, $sql_exporter_jobs, $haproxykafka_jobs, $gnmic_jobs, $ircstream_jobs

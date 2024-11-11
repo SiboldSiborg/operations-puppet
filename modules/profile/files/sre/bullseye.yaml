@@ -25,8 +25,6 @@ role::pybaltest:
   target-q: TBD
 role::ci:
   target-q: TBD
-role::mw_rc_irc:
-  target-q: TBD
 role::vrts:
   target-q: TBD
 role::logging::mediawiki::udp2log:
@@ -338,8 +336,6 @@ role::search::loader:
 role::chartmuseum:
   target-q: TBD
 role::acme_chief:
-  target-q: TBD
-role::mw_rc_irc:
   target-q: TBD
 role::aphlict:
   target-q: TBD
