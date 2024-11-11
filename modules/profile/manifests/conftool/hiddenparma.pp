@@ -25,7 +25,7 @@ class profile::conftool::hiddenparma (
     }
 
     # TODO: maybe create a "requestctl root" user for etcd?
-    $etcd_user = 'root'
+    $etcd_user = 'conftool'
     $etcd_pwd = $passwords::etcd::accounts[$etcd_user]
 
     file { '/var/lib/deploy-hiddenparma/.etcdrc':
@@ -39,6 +39,7 @@ class profile::conftool::hiddenparma (
                 'password' => $etcd_pwd,
             }
         ),
+        notify  => Service['hiddenparma'],
     }
 
     fastapi::application { 'hiddenparma':
