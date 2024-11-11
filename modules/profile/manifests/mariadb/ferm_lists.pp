@@ -3,10 +3,10 @@
 class profile::mariadb::ferm_lists (
     Stdlib::Fqdn $mailman_primary_host = lookup('lists_primary_host'),
 ) {
-    ferm::service { 'mailman3':
+    firewall::service { 'mailman3':
         proto   => 'tcp',
-        port    => '3306',
+        port    => 3306,
         notrack => true,
-        srange  => "@resolve(${mailman_primary_host})",
+        srange  => [$mailman_primary_host],
     }
 }
