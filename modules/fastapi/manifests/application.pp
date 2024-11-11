@@ -23,7 +23,9 @@ define fastapi::application (
 ) {
     $app_basedir = "/srv/deployment/${title}"
     # Install the application
-    python_deploy::venv { $title: }
+    python_deploy::venv { $title:
+        add_home_dir => true,
+    }
 
     # Install the systemd service
     systemd::service { $title:

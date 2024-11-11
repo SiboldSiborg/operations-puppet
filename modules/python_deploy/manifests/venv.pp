@@ -12,12 +12,22 @@
 #
 # @param project_name String The name of the project to deploy. Defaults to the title of the resource.
 # @param deploy_user String The user that will own the deployment directory. Defaults to "deploy-${title}".
+# @param add_home_dir Boolean Whether to create a home directory for the deploy user. Defaults to false.
 define python_deploy::venv (
     String $project_name = $title,
     String $deploy_user = "deploy-${title}",
+    Boolean $add_home_dir = false,
 ) {
     include python_deploy
-    ensure_resources('systemd::sysuser', { $deploy_user => {} })
+    if $add_home_dir {
+        $home_dir = "/var/lib/${deploy_user}"
+        wmflib::dir::mkdir_p($home_dir)
+        $params = { home_dir => $home_dir }
+    } else {
+        $params = {}
+    }
+
+    ensure_resources('systemd::sysuser', { $deploy_user => $params })
 
     file { "/srv/deployment/${project_name}":
         ensure => directory,
