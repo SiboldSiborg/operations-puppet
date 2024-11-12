@@ -293,6 +293,11 @@ server {
 
       # But cache the _catalog endpoint for a few mins as it's pretty expensive
       location ~ ^/v2/_catalog$ {
+        # Allow only internal clients to fetch the whole
+        # catalog (even if paginated) since it triggers a scan
+        # to the datastore every time (at the time of writing, Swift).
+        allow 10.0.0.0/8;
+        deny all;
         add_header 'Cache-Control' 'public,s-maxage=600,max-age=600' always;
         add_header 'Vary' 'Accept' always;
         proxy_pass http://registry;
