@@ -25,11 +25,6 @@ class haproxykafka (
         ensure => $ensure,
     }
 
-    group { $user:
-        ensure => $ensure,
-        system => true,
-    }
-
     user { $user:
         ensure => $ensure,
         shell  => '/bin/false',

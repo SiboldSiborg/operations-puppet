@@ -72,7 +72,6 @@ describe 'haproxykafka' do
           })
         }
         it { is_expected.to contain_user('haproxykafka') }
-        it { is_expected.to contain_group('haproxykafka') }
         it { is_expected.to contain_service('haproxykafka') }
         it { is_expected.to contain_file('/etc/haproxykafka').with_ensure('directory') }
         it { is_expected.to contain_file('/etc/haproxykafka/config.yaml').with({
