@@ -7338,3 +7338,7 @@ ldap_only_users:
     ensure: present
     realname: Jonathan Tweed
     email: jtweed@wikimedia.org
+  harroyo-wmf:
+    ensure: present
+    realname: Hector Arroyo
+    email: hector.arroyo@wikimedia.org
