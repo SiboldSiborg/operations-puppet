@@ -300,6 +300,11 @@ ACCESS_REQUEST_RULES = {
             'managers': ['slyngshede', 'jmm', 'tarlogic1', 'tarlogic2'],
             'count': 2
         }],
+        'cn=bitu-account-managers,ou=groups,dc=wikimedia,dc=org': [{
+            'module': 'permissions.validators.manager_approval',
+            'managers': ['slyngshede', 'jmm'],
+            'count': 1
+        }],
     }
 }
 <%- end -%>
