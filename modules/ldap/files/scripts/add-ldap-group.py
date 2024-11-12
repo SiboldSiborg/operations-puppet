@@ -15,8 +15,9 @@ def main():
     parser.add_argument("name", help="Name of the group to create")
     parser.add_argument("--gid", action="store", default=0, type=int,
                         help="The group's gid (default: next available gid)")
-    parser.add_argument("--members", action="store", nargs='+', default=None,
-                        help="A list of group members to add to this group (space separated).")
+    parser.add_argument("--members", action="store", nargs='+', default=[],
+                        help="A list of group members (specified as UIDs, not full LDAP DNs)"
+                             + " to add to this group (space separated)")
     parser.add_argument("--ignore-existing", action="store_true",
                         help="If the group exist, do not attempt to create, "
                              + "but do add any members given.")
