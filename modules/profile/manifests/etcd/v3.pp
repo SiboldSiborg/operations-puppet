@@ -159,7 +159,7 @@ class profile::etcd::v3(
     firewall::service { 'etcd_peers_client_port':
         proto  => 'tcp',
         port   => $adv_client_port,
-        srange => $peers,
+        srange => sort($peers),
     }
 
     # Backup
