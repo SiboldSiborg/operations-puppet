@@ -478,7 +478,7 @@ class profile::kubernetes::deployment_server::global_config (
           },
           'instances' => {
             'analytics'      => wmflib::role::ips('analytics_cluster::coordinator'),
-            'analytics_test' => wmflib::role::ips('analytics_cluster_test::coordinator'),
+            'analytics_test' => wmflib::role::ips('analytics_test_cluster::coordinator'),
           }
         }
       },
