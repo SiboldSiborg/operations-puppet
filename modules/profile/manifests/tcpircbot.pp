@@ -77,17 +77,15 @@ class profile::tcpircbot(
         'cloudcumin2001.codfw.wmnet',   # cloud cluster mgmt codfw
     ]
 
-    $allowed_hosts_prod_ferm = join($allowed_hosts_prod, ' ')
-    ferm::service { 'tcpircbot_allowed':
+    firewall::service { 'tcpircbot_allowed':
         proto  => 'tcp',
-        port   => '9200',
-        srange => "(@resolve((${allowed_hosts_prod_ferm})) @resolve((${allowed_hosts_prod_ferm}), AAAA))",
+        port   => 9200,
+        srange => $allowed_hosts_prod,
     }
 
-    $allowed_hosts_cloud_ferm = join($allowed_hosts_cloud, ' ')
-    ferm::service { 'tcpircbot_cloud_allowed':
+    firewall::service { 'tcpircbot_cloud_allowed':
         proto  => 'tcp',
-        port   => '9201',
-        srange => "(@resolve((${allowed_hosts_cloud_ferm})) @resolve((${allowed_hosts_cloud_ferm}), AAAA))",
+        port   => 9201,
+        srange => $allowed_hosts_cloud,
     }
 }
