@@ -9,7 +9,7 @@
 profile::lvs::realserver::pools:
   kartotherian:
     services:
-      - kartotherian
+      - kartotherian-k8s-ssl
 
 profile::admin::groups:
   - maps-roots

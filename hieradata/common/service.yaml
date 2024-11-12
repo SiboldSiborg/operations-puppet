@@ -1097,7 +1097,7 @@ service::catalog:
     sites:
       - codfw
       - eqiad
-    state: lvs_setup
+    state: production
     discovery:
       - dnsdisc: kartotherian
         active_active: true
