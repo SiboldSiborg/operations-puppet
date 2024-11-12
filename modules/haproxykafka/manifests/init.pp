@@ -22,7 +22,7 @@ class haproxykafka (
     String               $user = 'haproxykafka',
 ) {
     package { 'haproxykafka':
-        ensure  => $ensure,
+        ensure => $ensure,
     }
 
     group { $user:
@@ -31,11 +31,10 @@ class haproxykafka (
     }
 
     user { $user:
-        ensure  => $ensure,
-        shell   => '/bin/false',
-        home    => '/nonexistent',
-        system  => true,
-        require => Group[$user],
+        ensure => $ensure,
+        shell  => '/bin/false',
+        home   => '/nonexistent',
+        system => true,
     }
 
     # TODO: from param/hiera
