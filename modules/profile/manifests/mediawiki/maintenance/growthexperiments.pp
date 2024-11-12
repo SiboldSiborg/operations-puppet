@@ -34,6 +34,10 @@ class profile::mediawiki::maintenance::growthexperiments {
       command  => '/usr/local/bin/mwscript extensions/GrowthExperiments/maintenance/fixLinkRecommendationData.php --wiki=frwiki --search-index --db-table --dry-run --statsd',
       interval => '*-*-* *:10:00',
     }
+    profile::mediawiki::periodic_job { 'growthexperiments-fixLinkRecommendationData-dryrun-cswiki':
+      command  => '/usr/local/bin/mwscript extensions/GrowthExperiments/maintenance/fixLinkRecommendationData.php --wiki=cswiki --search-index --db-table --dry-run --statsd',
+      interval => '*-*-* *:10:00',
+    }
 
     # purge expired rows from the database (Mentor dashboard, T280307)
     profile::mediawiki::periodic_job { 'growthexperiments-purgeExpiredMentorStatus':
