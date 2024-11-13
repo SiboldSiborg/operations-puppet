@@ -273,6 +273,14 @@ profile::idp::services:
     required_groups:
       - nda
       - wmf
+  airflow_research:
+    id: 47
+    service_class: 'OidcRegisteredService'
+    service_id: 'https://airflow-research\.wikimedia\.org(/.*)?'
+    profile_format: 'FLAT'
+    required_groups:
+      - nda
+      - wmf
 
 profile::idp::ldap_attributes:
   - cn
