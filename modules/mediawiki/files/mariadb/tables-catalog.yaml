@@ -783,6 +783,188 @@ tables:
       - dbname: testcommonswiki
     canonicality: derivative
     visibility: public
+  - name: campaign_events
+    source: campaignevents
+    databases:
+      - dbname: wikishared
+        cluster: x1
+      - dbname: testwiki
+        cluster: x1
+      - dbname: test2wiki
+        cluster: x1
+      - dbname: officewiki
+        cluster: x1
+    canonicality: canonical
+    visibility: partially public
+  - name: ce_participants
+    source: campaignevents
+    databases:
+      - dbname: wikishared
+        cluster: x1
+      - dbname: testwiki
+        cluster: x1
+      - dbname: test2wiki
+        cluster: x1
+      - dbname: officewiki
+        cluster: x1
+    canonicality: canonical
+    visibility: partially public
+  - name: ce_organizers
+    source: campaignevents
+    databases:
+      - dbname: wikishared
+        cluster: x1
+      - dbname: testwiki
+        cluster: x1
+      - dbname: test2wiki
+        cluster: x1
+      - dbname: officewiki
+        cluster: x1
+    canonicality: canonical
+    visibility: partially public
+  - name: ce_address
+    source: campaignevents
+    databases:
+      - dbname: wikishared
+        cluster: x1
+      - dbname: testwiki
+        cluster: x1
+      - dbname: test2wiki
+        cluster: x1
+      - dbname: officewiki
+        cluster: x1
+    canonicality: canonical
+    visibility: partially public
+  - name: ce_event_address
+    source: campaignevents
+    databases:
+      - dbname: wikishared
+        cluster: x1
+      - dbname: testwiki
+        cluster: x1
+      - dbname: test2wiki
+        cluster: x1
+      - dbname: officewiki
+        cluster: x1
+    canonicality: canonical
+    visibility: public
+  - name: ce_tracking_tools
+    source: campaignevents
+    databases:
+      - dbname: wikishared
+        cluster: x1
+      - dbname: testwiki
+        cluster: x1
+      - dbname: test2wiki
+        cluster: x1
+      - dbname: officewiki
+        cluster: x1
+    canonicality: canonical
+    visibility: partially public
+  - name: ce_event_questions
+    source: campaignevents
+    databases:
+      - dbname: wikishared
+        cluster: x1
+      - dbname: testwiki
+        cluster: x1
+      - dbname: test2wiki
+        cluster: x1
+      - dbname: officewiki
+        cluster: x1
+    canonicality: canonical
+    visibility: partially public
+  - name: ce_question_answers
+    source: campaignevents
+    databases:
+      - dbname: wikishared
+        cluster: x1
+      - dbname: testwiki
+        cluster: x1
+      - dbname: test2wiki
+        cluster: x1
+      - dbname: officewiki
+        cluster: x1
+    canonicality: canonical
+    visibility: private
+  - name: ce_question_aggregation
+    source: campaignevents
+    databases:
+      - dbname: wikishared
+        cluster: x1
+      - dbname: testwiki
+        cluster: x1
+      - dbname: test2wiki
+        cluster: x1
+      - dbname: officewiki
+        cluster: x1
+    canonicality: canonical
+    visibility: private
+  - name: ce_invitation_lists
+    source: campaignevents
+    databases:
+      - dbname: wikishared
+        cluster: x1
+      - dbname: testwiki
+        cluster: x1
+      - dbname: test2wiki
+        cluster: x1
+      - dbname: officewiki
+        cluster: x1
+    canonicality: canonical
+    visibility: private
+  - name: ce_worklist_articles
+    source: campaignevents
+    databases:
+      - dbname: wikishared
+        cluster: x1
+      - dbname: testwiki
+        cluster: x1
+      - dbname: test2wiki
+        cluster: x1
+      - dbname: officewiki
+        cluster: x1
+    canonicality: canonical
+    visibility: private
+  - name: ce_invitation_list_users
+    source: campaignevents
+    databases:
+      - dbname: wikishared
+        cluster: x1
+      - dbname: testwiki
+        cluster: x1
+      - dbname: test2wiki
+        cluster: x1
+      - dbname: officewiki
+        cluster: x1
+    canonicality: canonical
+    visibility: private
+  - name: ce_event_wikis
+    source: campaignevents
+    databases:
+      - dbname: wikishared
+        cluster: x1
+      - dbname: testwiki
+        cluster: x1
+      - dbname: test2wiki
+        cluster: x1
+      - dbname: officewiki
+        cluster: x1
+    canonicality: canonical
+    visibility: partially public
+  - name: wikimedia_campaign_events_grant
+    source: wikimediacampaignevents
+    databases:
+      - dbname: wikishared
+        cluster: x1
+      - dbname: testwiki
+        cluster: x1
+      - dbname: test2wiki
+        cluster: x1
+      - dbname: officewiki
+        cluster: x1
+    canonicality: canonical
+    visibility: private
 sources:
   core:
     - path: maintenance/tables.json
@@ -796,6 +978,9 @@ sources:
   betafeatures:
     - path: extensions/BetaFeatures/sql/tables.json
       gerrit: https://gerrit.wikimedia.org/r/plugins/gitiles/mediawiki/extensions/BetaFeatures/+/master/sql/tables.json
+  campaignevents:
+    - path: extensions/CampaignEvents/db_patches/tables.json
+      gerrit: https://gerrit.wikimedia.org/r/plugins/gitiles/mediawiki/extensions/CampaignEvents/+/master/db_patches/tables.json
   central_notice:
     - path: extensions/CentralNotice/sql/tables.json
       gerrit: https://gerrit.wikimedia.org/r/plugins/gitiles/mediawiki/extensions/CentralNotice/+/master/sql/tables.json
@@ -886,6 +1071,9 @@ sources:
   wikibase_quality_constraints:
     - path: extensions/WikibaseQualityConstraints/sql/tables.json
       gerrit: https://gerrit.wikimedia.org/r/plugins/gitiles/mediawiki/extensions/WikibaseQualityConstraints/+/refs/heads/master/sql/tables.json
+  wikimediacampaignevents:
+    - path: extensions/WikimediaCampaignEvents/db_patches/tables.json
+      gerrit: https://gerrit.wikimedia.org/r/plugins/gitiles/mediawiki/extensions/WikimediaCampaignEvents/+/master/db_patches/tables.json
   entityschema:
     - path: extensions/EntitySchema/sql/tables.json
       gerrit: https://gerrit.wikimedia.org/r/plugins/gitiles/mediawiki/extensions/EntitySchema/+/refs/heads/master/sql/tables.json
