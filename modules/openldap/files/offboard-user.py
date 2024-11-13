@@ -170,6 +170,9 @@ delete: userPassword
                          'cn=dns-admins,ou=groups,dc=wikimedia,dc=org',
                          'cn=superset-admins,ou=groups,dc=wikimedia,dc=org',
                          'cn=project-cloudinfra,ou=groups,dc=wikimedia,dc=org',
+                         'cn=airflow-analytics-ops,ou=groups,dc=wikimedia,dc=org',
+                         'cn=airflow-wmde-ops,ou=groups,dc=wikimedia,dc=org',
+                         'cn=airflow-research-ops,ou=groups,dc=wikimedia,dc=org',
                          'cn=tools.admin,ou=servicegroups,dc=wikimedia,dc=org']
     ldapdata = ldap_conn.search_s(
         base_dn,
