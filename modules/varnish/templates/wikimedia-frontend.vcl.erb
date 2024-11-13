@@ -755,7 +755,7 @@ sub vcl_recv {
     if (req.http.X-Connection-Properties ~ "KA=RSA;"
         && req.url ~ "^/wiki/" && req.url !~ ":" && req.method == "GET"
         && req.url !~ "^/wiki/HTTPS/Browser_Recommendations"
-        && std.random(0,100) < 5.0) {
+        && std.random(0,100) < 10.0) {
         set req.http.Location = "https://" + req.http.Host + "/sec-warning";
         return (synth(302, "Browser RSA certificate connection redirect"));
     }
