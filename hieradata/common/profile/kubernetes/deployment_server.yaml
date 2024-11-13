@@ -443,6 +443,14 @@ profile::kubernetes::deployment_server::services:
         - name: airflow-wmde-deploy
           owner: root
           group: analytics-deployers
+    airflow-research:
+      usernames:
+        - name: airflow-research
+          owner: root
+          group: analytics-search
+        - name: airflow-research-deploy
+          owner: root
+          group: analytics-search
     rdf-streaming-updater:
       usernames:
         - name: rdf-streaming-updater
