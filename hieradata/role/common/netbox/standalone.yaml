@@ -16,6 +16,10 @@ profile::netbox::validators:
   - dcim.poweroutlet
   - dcim.powerport
   - dcim.site
+  - vpn.ikeproposal
+  - vpn.ikepolicy
+  - vpn.ipsecproposal
+  - vpn.ipsecpolicy
 profile::netbox::puppetdb_microservice_fqdn: puppetdb-api.discovery.wmnet
 profile::netbox::discovery_name: netbox-next.discovery.wmnet
 profile::netbox::service_hostname: netbox-next.wikimedia.org

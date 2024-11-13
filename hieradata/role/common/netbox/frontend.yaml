@@ -19,6 +19,10 @@ profile::netbox::validators:
   - dcim.poweroutlet
   - dcim.powerport
   - dcim.site
+  - vpn.ikeproposal
+  - vpn.ikepolicy
+  - vpn.ipsecproposal
+  - vpn.ipsecpolicy
 profile::netbox::ssl_provider: cfssl
 profile::netbox::http_proxy: "%{alias('http_proxy')}"
 profile::netbox::discovery_name: netbox.discovery.wmnet
