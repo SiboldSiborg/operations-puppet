@@ -17,6 +17,8 @@ cache::alternate_domains:
     caching: 'normal'
   airflow-test-k8s.wikimedia.org:
     caching: 'normal'
+  airflow-wmde.wikimedia.org:
+    caching: 'normal'
   analytics.wikimedia.org:
     caching: 'normal'
   annual.wikimedia.org:
