@@ -3,3 +3,4 @@ profile::ganeti::nodes:
   - ganeti7001.magru.wmnet
   - ganeti7003.magru.wmnet
 profile::ganeti::rapi::certificate: ganeti01.svc.magru.wmnet
+profile::firewall::provider: nftables
