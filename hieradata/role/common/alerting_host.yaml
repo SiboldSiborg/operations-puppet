@@ -100,10 +100,11 @@ profile::corto::irc_config::port: 6697
 profile::corto::irc_config::use_tls: true
 profile::corto::irc_config::channels:
   - '#corto-test'
+  - '#wikimedia-sre-onfire'
 
-profile::corto::phabricator_url: 'https://phabricator.wmcloud.org'
+profile::corto::phabricator_url: 'https://phabricator.wikimedia.org'
 profile::corto::phabricator_project: 'Wikimedia-Incident'
-profile::corto::phabricator_user: jhathaway
+profile::corto::phabricator_user: corto
 profile::corto::phabricator_policy::view: '#acl_sre-team'
 profile::corto::phabricator_policy::edit: '#acl_sre-team'
 
