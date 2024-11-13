@@ -44,6 +44,6 @@ class snapshot::dumps::dump_fillin_wd(
         send_mail          => true,
         environment        => {'MAILTO' => 'ops-dumps@wikimedia.org'},
         command            => "/usr/bin/bash /usr/local/bin/dumps_fillin_wd.sh ${command_args} --config /etc/dumps/confs/wikidump.conf.dumps:wd",
-        interval           => {'start' => 'OnCalendar', 'interval' => '*-*-07..11 08,20:05:00'},
+        interval           => {'start' => 'OnCalendar', 'interval' => '*-*-10..14 08,20:05:00'},
     }
 }
