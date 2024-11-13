@@ -24,7 +24,7 @@ profile::tlsproxy::envoy::global_cert_name: 'ticket.discovery.wmnet'
 profile::tlsproxy::envoy::cfssl_options:
   hosts:
     - ticket.wikimedia.org
-profile::tlsproxy::envoy::firewall_srange: []
+profile::tlsproxy::envoy::firewall_global: true
 profile::tlsproxy::envoy::upstream_response_timeout: 130.0
 profile::tlsproxy::envoy::tls_port: 1443
 

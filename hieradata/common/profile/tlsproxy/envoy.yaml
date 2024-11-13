@@ -20,6 +20,7 @@ profile::tlsproxy::envoy::stream_idle_timeout: ~
 profile::tlsproxy::envoy::downstream_idle_timeout: ~
 profile::tlsproxy::envoy::upstream_idle_timeout: ~
 profile::tlsproxy::envoy::ferm_srange: ~
+profile::tlsproxy::envoy::firewall_global: false
 profile::tlsproxy::envoy::firewall_srange: ~
 profile::tlsproxy::envoy::firewall_src_sets: ~
 profile::tlsproxy::envoy::max_requests: ~

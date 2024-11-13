@@ -18,8 +18,6 @@ profile::tlsproxy::envoy::cfssl_options:
     - piwik.wikimedia.org
 profile::tlsproxy::envoy::global_cert_name: "piwik.wikimedia.org"
 
-profile::tlsproxy::envoy::firewall_srange: []
-
 profile::analytics::backup::database::db_instance: 'piwik'
 
 profile::matomo::database::backup_hosts:

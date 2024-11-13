@@ -1,2 +1,2 @@
 profile::firewall::provider: nftables
-profile::tlsproxy::envoy::firewall_srange: [CACHES]
+profile::tlsproxy::envoy::firewall_global: true

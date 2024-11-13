@@ -60,7 +60,7 @@ profile::lists::renamed_lists:
 profile::firewall::provider: nftables
 
 profile::tlsproxy::envoy::ssl_provider: cfssl
-profile::tlsproxy::envoy::firewall_srange: []
+profile::tlsproxy::envoy::firewall_global: true
 profile::tlsproxy::envoy::services:
   - server_names: ["*"]
     port: 443

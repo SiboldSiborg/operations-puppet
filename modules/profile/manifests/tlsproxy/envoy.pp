@@ -61,9 +61,15 @@
 # @param upstream_idle_timeout Idle timeout for upstream connections
 # @param error_page  boolean true if an error page should be added; false by default.
 # @param local_otel_reporting_pct float, the percentage (e.g. 37.5) of traffic to be sampled for tracing
-# @param ferm_srange A group of hosts and/or ferm macros to grant access to Envoy (if firewall_srange is set, this has no effect)
-# @param firewall_srange: An array of hosts/IPs to grant access to Envoy (takes precedence over $ferm_srange)
-# @param firewall_src_sets An array of nftables sets to grant access to Envoy (only active is firewall_srange is also used)
+#
+# @param ferm_srange A group of hosts and/or ferm macros to grant access to Envoy specified in Ferm syntax
+# @param firewall_global If true, the firewall config is written out in nftables-compatible firewall::service
+#        syntax and access if granted globally. If this parameter is set, it takes precedence over ferm_srange,
+#        firewall_srange and firewall_src_sets.
+# @param firewall_srange: An array of hosts/IPs to grant access to Envoy. If this parameter is set, it takes
+#        precedence over ferm_srange
+# @param firewall_src_sets An array of nftables sets to grant access to Envoy. If this parameter is set, it
+#        takes precedence over ferm_srange
 class profile::tlsproxy::envoy(
     Profile::Tlsproxy::Envoy::Sni    $sni_support               = lookup('profile::tlsproxy::envoy::sni_support'),
     Stdlib::Port                     $tls_port                  = lookup('profile::tlsproxy::envoy::tls_port'),
@@ -82,6 +88,7 @@ class profile::tlsproxy::envoy(
     Optional[Float]                  $idle_timeout              = lookup('profile::tlsproxy::envoy::idle_timeout'),
     Optional[Float]                  $stream_idle_timeout       = lookup('profile::tlsproxy::envoy::stream_idle_timeout'),
     Optional[String]                 $ferm_srange               = lookup('profile::tlsproxy::envoy::ferm_srange'),
+    Optional[Boolean]                $firewall_global           = lookup('profile::tlsproxy::envoy::firewall_global'),
     Optional[Firewall::Range]        $firewall_srange           = lookup('profile::tlsproxy::envoy::firewall_srange'),
     Optional[Array[String[1]]]       $firewall_src_sets         = lookup('profile::tlsproxy::envoy::firewall_src_sets'),
     Optional[Integer]                $max_requests              = lookup('profile::tlsproxy::envoy::max_requests'),
@@ -274,17 +281,19 @@ class profile::tlsproxy::envoy(
             }
         }
 
-        # If $firewall_srange is configured for a service, don't populate the service
-        # based on the $ferm_srange
-        # We check for NotUndef here as an empty list (which is false'y) is valid
-        if $firewall_srange =~ NotUndef {
-            if $firewall_srange == [] {
-                firewall::service { 'envoy_tls_termination':
-                    proto   => 'tcp',
-                    notrack => true,
-                    port    => $tls_port,
-                }
-            } else {
+        if $firewall_global {
+            # Unrestricted access to the Envoy port has been configured and written
+            # out in nftables-compatible syntax
+            firewall::service { 'envoy_tls_termination':
+                proto   => 'tcp',
+                notrack => true,
+                port    => $tls_port,
+            }
+        } elsif ($firewall_src_sets or $firewall_srange) {
+            # Access to the Envoy port should be restricted to a list of
+            # hosts and/or host sets and written out in nftables-compatible
+            # syntax
+            if $firewall_srange {
                 firewall::service { 'envoy_tls_termination':
                     proto   => 'tcp',
                     notrack => true,
@@ -292,21 +301,31 @@ class profile::tlsproxy::envoy(
                     srange  => $firewall_srange,
                 }
             }
-        } else {
+
+            if $firewall_src_sets {
+                firewall::service { 'envoy_tls_termination_src_sets':
+                    proto    => 'tcp',
+                    notrack  => true,
+                    port     => $tls_port,
+                    src_sets => $firewall_src_sets,
+                }
+            }
+        } elsif $ferm_srange {
+            # Access to the Envoy port should be restricted and written out in
+            # legacy Ferm syntax
             ferm::service { 'envoy_tls_termination':
                 proto   => 'tcp',
                 notrack => true,
                 port    => $tls_port,
                 srange  => $ferm_srange,
             }
-        }
-
-        if $firewall_src_sets {
-            firewall::service { 'envoy_tls_termination_src_sets':
-                proto    => 'tcp',
-                notrack  => true,
-                port     => $tls_port,
-                src_sets => $firewall_src_sets,
+        } else {
+            # Access to the Envoy port should not be restricted and written out in
+            # legacy Ferm syntax
+            ferm::service { 'envoy_tls_termination':
+                proto   => 'tcp',
+                notrack => true,
+                port    => $tls_port,
             }
         }
     }
