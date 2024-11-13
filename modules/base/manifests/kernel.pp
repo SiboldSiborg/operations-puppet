@@ -68,6 +68,7 @@ class base::kernel(
         modules => [
             'exfat',
             'f2fs',
+            'jfs',
             'nilfs2',
         ],
     }
