@@ -138,6 +138,9 @@ profile::druid::coordinator::properties:
   druid.emitter: composing
   druid.emitter.composing.emitters: ["logging","http"]
   druid.emitter.http.recipientBaseUrl: "http://127.0.0.1:8000/"
+  druid.coordinator.kill.on: true
+  druid.coordinator.kill.maxSegments: 100
+  druid.coordinator.kill.durationToRetain: P90D
 profile::druid::coordinator::env:
   DRUID_HEAP_OPTS: "-Xmx2g -Xms2g"
   DRUID_EXTRA_JVM_OPTS: "-XX:NewSize=512m -XX:MaxNewSize=512m -XX:+UseG1GC -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -Djava.io.tmpdir=/srv/druid/tmp"
