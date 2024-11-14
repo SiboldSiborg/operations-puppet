@@ -63,7 +63,7 @@ class profile::puppetmaster::frontend(
         }
     }
 
-    class { 'puppetmaster::ca_monitoring':
+    class { 'puppetserver::ca_monitoring':
         ensure  => $ca.bool2str('present', 'absent'),
         ca_root => "${facts['puppet_config']['master']['ssldir']}/ca",
     }

@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: Apache-2.0
 # @summary generate Prometheus metrics about Puppet CA state
-class puppetmaster::ca_monitoring (
+class puppetserver::ca_monitoring (
   Stdlib::Unixpath $ca_root,
   Wmflib::Ensure   $ensure = present,
 ) {
@@ -11,9 +11,7 @@ class puppetmaster::ca_monitoring (
 
   file { '/usr/local/sbin/prometheus-puppet-ca-exporter':
     ensure => file,
-    source => 'puppet:///modules/puppetmaster/ca_monitoring/prometheus-puppet-ca-exporter.py',
-    owner  => 'root',
-    group  => 'root',
+    source => 'puppet:///modules/puppetserver/prometheus-puppet-ca-exporter.py',
     mode   => '0544',
   }
 

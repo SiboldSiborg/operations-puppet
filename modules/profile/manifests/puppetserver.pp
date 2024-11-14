@@ -124,8 +124,7 @@ class profile::puppetserver (
         ca_private_key  => $ca_private_key,
     }
 
-    # TODO: move to puppetserver class
-    class { 'puppetmaster::ca_monitoring':
+    class { 'puppetserver::ca_monitoring':
         ensure  => $enable_ca.bool2str('present', 'absent'),
         ca_root => $puppetserver::ca_dir,
     }
