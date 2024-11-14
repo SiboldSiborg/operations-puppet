@@ -221,6 +221,14 @@ profile::services_proxy::envoy::listeners:
     timeout: "30s"
     keepalive: "4s"
     sets_sni: true
+  - name: wdqs-internal-main
+    port: 6040
+    service: wdqs-internal-main
+    timeout: "10s"
+  - name: wdqs-internal-scholarly
+    port: 6041
+    service: wdqs-internal-scholarly
+    timeout: "10s"
 
   # Non-discovery records
   # Eqiad ports are at 61xx
@@ -411,6 +419,8 @@ profile::services_proxy::envoy::enabled_listeners:
   - ipoid
   - mpic
   - chart-renderer
+  - wdqs-internal-main
+  - wdqs-internal-scholarly
 
 # Tracing percentage
 profile::services_proxy::envoy::local_otel_reporting_pct: 0.0
