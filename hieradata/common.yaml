@@ -1985,12 +1985,6 @@ infra_devices:
     ipv4: 10.65.0.27
     site: eqiad
     role: l2sw
-  fasw-c-eqiad:
-    ipv4: 10.65.0.30
-    parents:
-    - msw1-eqiad
-    site: eqiad
-    role: l2sw
   fasw2-c1a-eqiad:
     ipv4: 10.65.4.92
     parents:
