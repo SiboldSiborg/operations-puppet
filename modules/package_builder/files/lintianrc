@@ -12,7 +12,7 @@
 # shell/environment variables.
 
 # Use WMF vendor profile by default
-LINTIAN_PROFILE = wikimedia
+profile = wikimedia
 
 # Enable info tags by default (--display info)
 #display-info = yes
