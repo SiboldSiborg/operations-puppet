@@ -268,7 +268,7 @@ kubernetes::clusters:
         - wikikube-worker1031.eqiad.wmnet
         - wikikube-worker1032.eqiad.wmnet
         - wikikube-worker1033.eqiad.wmnet
-          # This space intentionally left blank
+        # This space intentionally left blank
         - wikikube-worker1240.eqiad.wmnet
         - wikikube-worker1241.eqiad.wmnet
         - wikikube-worker1242.eqiad.wmnet
@@ -334,6 +334,14 @@ kubernetes::clusters:
         - wikikube-worker1302.eqiad.wmnet
         - wikikube-worker1303.eqiad.wmnet
         - wikikube-worker1304.eqiad.wmnet
+        - wikikube-worker1305.eqiad.wmnet
+        - wikikube-worker1306.eqiad.wmnet
+        - wikikube-worker1307.eqiad.wmnet
+        - wikikube-worker1308.eqiad.wmnet
+        - wikikube-worker1309.eqiad.wmnet
+        - wikikube-worker1310.eqiad.wmnet
+        - wikikube-worker1311.eqiad.wmnet
+        - wikikube-worker1312.eqiad.wmnet
       apparmor_profiles: &wikikube_apparmor_profiles
         - wikifunctions-orchestrator
         - wikifunctions-evaluator
