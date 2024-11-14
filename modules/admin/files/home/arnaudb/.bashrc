@@ -6,6 +6,8 @@ esac
 
 ### Aliasing
 alias grep='rg'
+alias find='fdfind'
+alias fd='fdfind'
 alias cp='cp -i'
 alias l="ls -l --color"
 alias la="ls -al --color"
@@ -23,6 +25,10 @@ function prompt_return_code_handle(){
     else
         echo "$(tput setaf 196)\$ $(tput sgr0)"
     fi
+}
+
+function dbctl_check_comments(){
+    sudo dbctl instance all get | jq '.[] | select(type == "object" and .note != "")'
 }
 
 function my() {
