@@ -41,11 +41,18 @@ class resolvconf (
     }
 
     if $manage_resolv_conf {
-        file { '/etc/resolv.conf':
-            owner   => 'root',
-            group   => 'root',
-            mode    => '0444',
-            content => template('resolvconf/resolv.conf.erb'),
+        $local_ips = [$facts['networking']['ip'], $facts['networking']['ip6']]
+        $_nameserver_ips = $nameserver_ips.filter |$x| { !($x in $local_ips) }
+
+        unless $_nameserver_ips.empty {
+            file { '/etc/resolv.conf':
+                owner   => 'root',
+                group   => 'root',
+                mode    => '0444',
+                content => template('resolvconf/resolv.conf.erb'),
+            }
+        } else {
+            fail('Not updating resolv.conf because no nameservers are defined.')
         }
     }
 }
