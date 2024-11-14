@@ -447,10 +447,10 @@ profile::kubernetes::deployment_server::services:
       usernames:
         - name: airflow-research
           owner: root
-          group: analytics-search
+          group: analytics-deployers
         - name: airflow-research-deploy
           owner: root
-          group: analytics-search
+          group: analytics-deployers
     rdf-streaming-updater:
       usernames:
         - name: rdf-streaming-updater
