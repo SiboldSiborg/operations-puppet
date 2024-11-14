@@ -28,3 +28,5 @@ syslog_log_facility = LOG_LOCAL0
 
 connection =  mysql+pymysql://<%= @db_user %>:<%= @db_pass %>@<%= @db_host %>/<%= @db_name %>
 
+[oslo_policy]
+policy_file = policy.yaml
