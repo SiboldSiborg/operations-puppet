@@ -50,3 +50,5 @@ profile::lvs::interface_tweaks:
 
 profile::lvs::ipip_enabled: true
 profile::pybal::ipip_enabled: true
+
+profile::lvs::do_ipv6_ra_primary: true  # temporary override till we roll out T358260
