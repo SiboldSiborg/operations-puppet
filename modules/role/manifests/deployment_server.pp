@@ -1,10 +1,6 @@
 # MediaWiki Deployment Server (prod). This role DOES NOT include the kubernetes stuff.
 class role::deployment_server {
 
-    system::role { 'deployment_server':
-        description => 'Deployment server for MediaWiki and related code',
-    }
-
     # standards
     include profile::base::production
     include profile::firewall

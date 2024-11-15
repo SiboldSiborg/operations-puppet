@@ -28,3 +28,4 @@ profile::mediawiki::mcrouter_wancache::num_proxies: 5
 # Enable icu67 component - T345561
 profile::mediawiki::php::icu67: true
 profile::contacts::role_contacts: ["ServiceOps"]
+profile::base::production::role_description: 'MediaWiki maintenance systemd timer job server'

@@ -1,5 +1,4 @@
 class role::mediawiki::appserver::api {
-    system::role { 'mediawiki::appserver::api': }
     include ::profile::base::production
     include ::role::mediawiki::common
 
