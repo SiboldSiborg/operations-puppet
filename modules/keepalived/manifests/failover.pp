@@ -16,6 +16,13 @@ class keepalived::failover (
   Integer                    $priority          = fqdn_rand(100),
   Integer                    $virtual_router_id = 51,
 ) {
+  $vips_v4 = $vips.filter |$vip| { $vip =~ Stdlib::IP::Address::V4 }
+  $vips_v6 = $vips.filter |$vip| { $vip =~ Stdlib::IP::Address::V6 }
+
+  $peer_ips = $peers.map |$peer| { dnsquery::lookup($peer, true) }.flatten
+  $peers_v4 = $peer_ips.filter |$peer| { $peer =~ Stdlib::IP::Address::V4 }
+  $peers_v6 = $peer_ips.filter |$peer| { $peer =~ Stdlib::IP::Address::V6 }
+
   class { 'keepalived':
     config => template('keepalived/keepalived.conf.erb'),
   }

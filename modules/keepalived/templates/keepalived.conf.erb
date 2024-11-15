@@ -4,7 +4,8 @@
 global_defs {
 }
 
-vrrp_instance VRRP1 {
+<%- unless @vips_v4.empty? -%>
+vrrp_instance vrrp_ipv4 {
   state <%= @default_state %>
   interface <%= @interface %>
   virtual_router_id <%= @virtual_router_id %>
@@ -15,14 +16,38 @@ vrrp_instance VRRP1 {
     auth_pass <%= @auth_pass %>
   }
   virtual_ipaddress {
-<% @vips.each do |vip| -%>
+<% @vips_v4.each do |vip| -%>
     <%= vip %>
 <% end -%>
   }
   unicast_peer {
-<% @peers.each do |peer| -%>
-    <%= scope.function_ipresolve([peer]) %>
+<% @peers_v4.each do |peer| -%>
+    <%= peer %>
 <% end -%>
   }
 }
+<%- end -%>
 
+<%- unless @vips_v6.empty? -%>
+vrrp_instance vrrp_ipv6 {
+  state <%= @default_state %>
+  interface <%= @interface %>
+  virtual_router_id <%= @virtual_router_id %>
+  priority <%= @priority %>
+  advert_int 1
+  authentication {
+    auth_type PASS
+    auth_pass <%= @auth_pass %>
+  }
+  virtual_ipaddress {
+<% @vips_v6.each do |vip| -%>
+    <%= vip %>
+<% end -%>
+  }
+  unicast_peer {
+<% @peers_v6.each do |peer| -%>
+    <%= peer %>
+<% end -%>
+  }
+}
+<%- end -%>
