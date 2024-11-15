@@ -5,7 +5,6 @@ export OS_PASSWORD="<%= @password %>"
 export OS_REGION_NAME="<%= @region %>"
 /usr/local/sbin/nova-fullstack \
     --ssh-timeout <%= @ssh_timeout %> \
-    --puppet-timeout <%= @puppet_timeout %> \
     --creation-timeout <%= @creation_timeout %> \
     --interval <%= @interval %> \
     --max-pool <%= @max_pool %>  \
@@ -15,8 +14,10 @@ export OS_REGION_NAME="<%= @region %>"
     --image debian-12.0-bookworm \
     --flavor g4.cores1.ram2.disk20 \
     --keyfile <%= @keyfile %> \
-    --puppetmaster <%= @puppetmaster %> \
     --bastion-ip <%= @bastion_ip %> \
     --deployment <%= @deployment %> \
     --dns-resolvers <%= @resolvers.join(',') %> \
+<% if @ipv6 -%>
+    --ipv6 \
+<% end -%>
     --debug

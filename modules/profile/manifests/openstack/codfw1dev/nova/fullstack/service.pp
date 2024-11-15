@@ -18,5 +18,6 @@ class profile::openstack::codfw1dev::nova::fullstack::service(
         puppetmaster            => $puppetmaster,
         bastion_ip              => $bastion_ip,
         deployment              => 'codfw1dev',
+        ipv6                    => true,
     }
 }
