@@ -173,6 +173,8 @@ delete: userPassword
                          'cn=airflow-analytics-ops,ou=groups,dc=wikimedia,dc=org',
                          'cn=airflow-wmde-ops,ou=groups,dc=wikimedia,dc=org',
                          'cn=airflow-research-ops,ou=groups,dc=wikimedia,dc=org',
+                         'cn=airflow-search-ops,ou=groups,dc=wikimedia,dc=org',
+                         'cn=airflow-platform-eng-ops,ou=groups,dc=wikimedia,dc=org',
                          'cn=tools.admin,ou=servicegroups,dc=wikimedia,dc=org']
     ldapdata = ldap_conn.search_s(
         base_dn,
