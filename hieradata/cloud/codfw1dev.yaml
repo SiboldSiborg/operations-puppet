@@ -60,8 +60,11 @@ bastion_hosts:
   - 172.16.129.181 # bastion-codfw1dev-04.bastioninfra-codfw1dev.codfw1dev.wikimedia.cloud
 
 cache_hosts:
-  - 172.16.128.60 # proxy-02.proxy-codfw1dev.codfw1dev.wikimedia.cloud
-  - 172.16.128.51 # proxy-03.proxy-codfw1dev.codfw1dev.wikimedia.cloud
+  - 172.16.128.60         # proxy-02.proxy-codfw1dev.codfw1dev.wikimedia.cloud
+  - 172.16.129.229        # proxy-04.proxy-codfw1dev.codfw1dev.wikimedia.cloud
+  - 2a02:ec80:a100:1::2bb # proxy-04.proxy-codfw1dev.codfw1dev.wikimedia.cloud
+  - 172.16.129.220        # proxy-05.proxy-codfw1dev.codfw1dev.wikimedia.cloud
+  - 2a02:ec80:a100:1::208 # proxy-05.proxy-codfw1dev.codfw1dev.wikimedia.cloud
 
 profile::openstack::base::keystone::auth_protocol: https
 profile::openstack::base::keystone::public_port: 25000
