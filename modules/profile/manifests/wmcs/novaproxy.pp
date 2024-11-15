@@ -125,7 +125,7 @@ class profile::wmcs::novaproxy (
             default => 0,
         }
 
-        class { 'keepalived':
+        class { 'keepalived::failover':
             auth_pass => $keepalived_password,
             peers     => $all_proxies - $::facts['networking']['fqdn'],
             vips      => $keepalived_vips,

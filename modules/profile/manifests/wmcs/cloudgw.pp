@@ -178,10 +178,7 @@ class profile::wmcs::cloudgw (
     }
 
     class { 'keepalived':
-        peers     => ['example.com'], # overriden by config template
-        auth_pass => 'ignored',       # overriden by config template
-        vips      => ['127.0.0.1'],   # overriden by config template
-        config    => template('profile/wmcs/cloudgw/keepalived.conf.erb'),
+        config => template('profile/wmcs/cloudgw/keepalived.conf.erb'),
     }
 
     nftables::file { 'keepalived_vrrp':

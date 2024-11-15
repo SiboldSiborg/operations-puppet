@@ -42,7 +42,7 @@ class profile::toolforge::k8s::haproxy (
     class { 'prometheus::haproxy_exporter': }
 
     if !$keepalived_vips.empty() and $facts['networking']['fqdn'] in $keepalived_peers {
-        class { 'keepalived':
+        class { 'keepalived::failover':
             auth_pass => $keepalived_password,
             peers     => delete($keepalived_peers, $facts['networking']['fqdn']),
             vips      => $keepalived_vips.map |$host| { dnsquery::lookup($host, true) }.flatten,

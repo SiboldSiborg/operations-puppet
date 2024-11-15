@@ -7,7 +7,7 @@ class profile::toolforge::elasticsearch::keepalived(
 ) {
     $peers = delete($elastic_settings['cluster_hosts'], $::fqdn)
 
-    class { 'keepalived':
+    class { 'keepalived::failover':
         auth_pass         => $auth_pass,
         default_state     => 'BACKUP',
         interface         => $keepalived_interface,

@@ -131,9 +131,6 @@ class profile::toolforge::redis_sentinel (
     $interface = $::facts['networking']['primary']
     $keepalived_peers = delete($redis_hosts, $::fqdn)
     class { 'keepalived':
-        peers     => [],        # overriden by config template
-        auth_pass => 'ignored', # overriden by config template
-        vips      => [],        # overriden by config template
-        config    => template('profile/toolforge/redis/keepalived.conf.erb'),
+        config => template('profile/toolforge/redis/keepalived.conf.erb'),
     }
 }
