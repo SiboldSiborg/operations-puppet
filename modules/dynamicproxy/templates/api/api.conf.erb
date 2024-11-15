@@ -1,5 +1,6 @@
 server {
-    listen 5668 <%- if @acme_certname %> ssl <%- end -%>;
+    listen 5668 <%- if @acme_certname %> ssl<%- end -%>;
+    listen [::]:5668 <%- if @acme_certname %> ssl<%- end -%>;
 
     <%- if @acme_certname -%>
     ssl_certificate /etc/acmecerts/<%= @acme_certname %>/live/ec-prime256v1.chained.crt;
