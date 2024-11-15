@@ -369,6 +369,10 @@ node /^build2001\.codfw\./ {
     role(builder)
 }
 
+node /^build2002\.codfw\./ {
+    role(insetup::infrastructure_foundations)
+}
+
 node /^centrallog[0-9]{4}\.(eqiad|codfw)\./ {
     role(syslog::centralserver)
 }
