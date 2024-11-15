@@ -23,7 +23,7 @@
 "create_network": "rule:admin_only"
 "get_network": "rule:regular_user"
 "get_network:queue_id": "rule:admin_only"
-"get_network_ip_availabilities": ""
+"get_network_ip_availability": ""
 "update_network": "rule:admin_only"
 "delete_network": "rule:admin_only"
 "create_port": "rule:admin_or_member"
