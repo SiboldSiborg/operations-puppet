@@ -164,6 +164,8 @@ define airflow::instance(
         create_resources('scap::target', $scap_targets)
     }
 
+    $title_dash = regsubst($title, '_', '-', 'G')
+
     # First, construct smart default values and merge them together
     # to build $_airflow_config.  The $_airflow_config Hash will be usd
     # to render airflow.cfg.
@@ -187,6 +189,9 @@ define airflow::instance(
             'expose_config'     => 'non-sensitive-only',
             'expose_hostname'   => 'True',
             'expose_stacktrace' => 'True',
+            # This will allow us to get working links in alert emails, pointing to the webserver
+            # running in Kubernetes, exposed by a wikimedia.org subdomain.
+            'base_url'          => "https://airflow-${title_dash}.wikimedia.org",
         },
         'scheduler' => {
             'parsing_processes' => $::processors['count'],
