@@ -563,10 +563,10 @@ profile::kubernetes::deployment_server::services:
       usernames:
         - name: mw-dump-rev-content-reconcile-enrich
         - name: mw-dump-rev-content-reconcile-enrich-deploy
-    hdfs-synchronizer:
+    blunderbuss:
       usernames:
-        - name: hdfs-synchronizer
-        - name: hdfs-synchronizer-deploy
+        - name: blunderbuss
+        - name: blunderbuss-deploy
   aux-k8s:
     jaeger:
       usernames:
