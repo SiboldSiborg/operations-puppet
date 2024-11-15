@@ -65,7 +65,7 @@ http {
   ##
 
 
-  lua_package_path "/etc/nginx/lua/?.lua";
+  lua_package_path "<%= @lua_path %>";
 
   map $http_upgrade $connection_upgrade {
     default upgrade;

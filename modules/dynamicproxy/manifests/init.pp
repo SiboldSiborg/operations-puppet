@@ -72,6 +72,11 @@ class dynamicproxy (
         interval    => {'start' => 'OnCalendar', 'interval' => '*-*-* 00/1:00:00'}
     }
 
+    $lua_path = debian::codename::ge('bookworm').bool2str(
+        '/etc/nginx/lua/?.lua;;',
+        '/etc/nginx/lua/?.lua'
+    )
+
     file { '/etc/nginx/nginx.conf':
         ensure  => file,
         content => template('dynamicproxy/nginx.conf.erb'),
