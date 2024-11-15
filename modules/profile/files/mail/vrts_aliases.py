@@ -72,7 +72,13 @@ def verify_emails(mysql_conf, smtp_host, valid_domains, aliases):
                 LOG.error("Skipping, email is handled by an alias: %s", row[0])
                 alias_matches.append(row)
                 continue
-            elif verify_email(row[0], smtp_conn):
+            # This is causing an issue in https://phabricator.wikimedia.org/T380009
+            # It seems like gmail has started responding with a 250 for any address
+            # in wikimedia.org, whereas previously it would reject anything that
+            # wasn't handled by gsuite
+            elif row[0].split("@")[1] != "wikimedia.org" and verify_email(
+                row[0], smtp_conn
+            ):
                 LOG.error("Skipping, email is handled by gsuite: %s", row[0])
                 gsuite_matches.append(row)
                 continue
