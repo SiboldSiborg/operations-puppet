@@ -289,6 +289,14 @@ profile::idp::services:
     required_groups:
       - nda
       - wmf
+  airflow_analytics:
+    id: 50
+    service_class: 'OidcRegisteredService'
+    service_id: 'https://airflow-analytics\.wikimedia\.org(/.*)?'
+    profile_format: 'FLAT'
+    required_groups:
+      - nda
+      - wmf
 
 profile::idp::ldap_attributes:
   - cn
