@@ -1776,12 +1776,8 @@ node /^kubestage100[3-6]\.eqiad\./ {
     role(kubernetes::staging::worker)
 }
 
-node /^kubestage200[12]\.codfw\./ {
+node /^kubestage200[1234]\.codfw\./ {
     role(kubernetes::staging::worker)
-}
-
-node /^kubestage200[34]\.codfw\./ {
-    role(insetup::serviceops)
 }
 
 node /^cloudcontrol100[567]\.eqiad\./ {

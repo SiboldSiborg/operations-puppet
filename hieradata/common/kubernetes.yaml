@@ -704,6 +704,8 @@ kubernetes::clusters:
         - kubestagemaster2005.codfw.wmnet
         - kubestage2001.codfw.wmnet
         - kubestage2002.codfw.wmnet
+        - kubestage2003.codfw.wmnet
+        - kubestage2004.codfw.wmnet
       apparmor_profiles: *wikikube_apparmor_profiles
   ml-serve:
     ml-serve-eqiad:
