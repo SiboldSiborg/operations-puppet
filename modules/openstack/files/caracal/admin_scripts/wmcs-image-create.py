@@ -18,7 +18,7 @@ import mwopenstackclients
 
 LOGGER = logging.getLogger("wmcs-image-create")
 
-clients = mwopenstackclients.clients()
+clients = mwopenstackclients.clients(oscloud="novaadmin")
 nova = clients.novaclient()
 glance = clients.glanceclient()
 
