@@ -43,7 +43,8 @@ class dynamicproxy (
         settings => {
             # Protected by iptables  / ferm rules from elsewhere
             # We need to allow this so we can replicate
-            bind           => '0.0.0.0',
+            bind           => '* -::*',
+            protected-mode => 'no',
             appendonly     => 'yes',
             appendfilename => "${::hostname}-${redis_port}.aof",
             maxmemory      => $redis_maxmemory,
