@@ -19,7 +19,7 @@ profile::openstack::base::nutcracker::redis::shards:
 
 # Horizon things
 profile::base::overlayfs: true
-profile::openstack::codfw1dev::horizon::docker_version: 2024-11-15-203900
+profile::openstack::codfw1dev::horizon::docker_version: 2024-11-16-115718
 profile::openstack::codfw1dev::horizon::port: 8084
 
 labsldapconfig:
