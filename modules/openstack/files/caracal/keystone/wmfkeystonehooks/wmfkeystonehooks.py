@@ -90,9 +90,6 @@ class KeystoneHooks(notifier.Driver):
     def __init__(self, conf, topics, transport, version=1.0):
         self.page_editor = pageeditor.PageEditor()
 
-    def _get_project_name_by_id(self, project_id):
-        return PROVIDERS.resource_api.get_project(project_id)["name"]
-
     def _get_role_dict(self):
         rolelist = PROVIDERS.role_api.list_roles()
         roledict = {}
@@ -141,7 +138,7 @@ class KeystoneHooks(notifier.Driver):
             roledict[CONF.wmfhooks.user_role_name])
 
     def _on_project_delete(self, project_id):
-        project_name = self._get_project_name_by_id(project_id)
+        project_name = PROVIDERS.resource_api.get_project(project_id)["name"]
         LOG.warning("Beginning wmf hooks for project deletion: %s (%s)", project_id, project_name)
 
         ldapgroups.delete_ldap_project_group(project_id)
@@ -171,7 +168,9 @@ class KeystoneHooks(notifier.Driver):
                                    template='Nova Resource')
 
     def _on_project_create(self, project_id):
-        project_name = self._get_project_name_by_id(project_id)
+        project = PROVIDERS.resource_api.get_project(project_id)
+        project_name = project["name"]
+        project_domain = project["domain_id"]
         LOG.warning("Beginning wmf hooks for project creation: %s (%s)", project_id, project_name)
 
         LOG.warning("Syncing membership with ldap for project %s" % project_id)
@@ -184,8 +183,7 @@ class KeystoneHooks(notifier.Driver):
         ldapgroups.create_sudo_defaults(project_id)
         self._create_project_page(project_id, project_name)
 
-        # This bit will take a while:
-        if CONF.wmfhooks.region.endswith('-r'):
+        if project_domain == "default":
             deployment = CONF.wmfhooks.region[:-2]
 
             LOG.warning(
@@ -215,25 +213,20 @@ class KeystoneHooks(notifier.Driver):
                 CONF.wmfhooks.wmcloud_domain_owner,
                 CONF.wmfhooks.region
             )
-        else:
-            LOG.warning(
-                "Unfamiliar region format; unable to create .wmcloud.org domain for %s (%s)",
-                project_name, project_id
-            )
 
-        if CONF.wmfhooks.region == 'eqiad1-r':
-            # Special case shortcut domains for eqiad1
-            LOG.warning("Creating shortcut .wmcloud.org domain for project %s (%s) in eqiad1-r",
-                        project_name, project_id)
-            designatemakedomain.createDomain(
-                CONF.wmfhooks.auth_url,
-                CONF.wmfhooks.admin_user,
-                CONF.wmfhooks.admin_pass,
-                project_id,
-                '{}.wmcloud.org.'.format(project_name),
-                CONF.wmfhooks.wmcloud_domain_owner,
-                CONF.wmfhooks.region
-            )
+            if CONF.wmfhooks.region == 'eqiad1-r':
+                # Special case shortcut domains for eqiad1
+                LOG.warning("Creating shortcut .wmcloud.org domain for project %s (%s) in eqiad1-r",
+                            project_name, project_id)
+                designatemakedomain.createDomain(
+                    CONF.wmfhooks.auth_url,
+                    CONF.wmfhooks.admin_user,
+                    CONF.wmfhooks.admin_pass,
+                    project_id,
+                    '{}.wmcloud.org.'.format(project_name),
+                    CONF.wmfhooks.wmcloud_domain_owner,
+                    CONF.wmfhooks.region
+                )
 
         LOG.warning("Completed wmf hooks for project creation: %s" % project_id)
 
