@@ -670,9 +670,9 @@ mediawiki::sites:
               "zh-sg",
               "zh-tw",
             ]
-      - name: sso
+      - name: auth
         params:
-          server_aliases: ["sso.wikimedia.beta.wmflabs.org"]
+          server_aliases: ["auth.wikimedia.beta.wmflabs.org"]
           additional_rewrites:
             early:
               - "    # T365162 strip the prefix used to identify the wiki"
