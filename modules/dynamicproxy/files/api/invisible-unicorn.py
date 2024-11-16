@@ -617,7 +617,8 @@ def update_redis_from_db():
             redis_store.refresh_route(route)
 
 
-update_redis_from_db()
+with app.app_context():
+    update_redis_from_db()
 
 
 if __name__ == "__main__":
