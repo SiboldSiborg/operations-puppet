@@ -231,6 +231,7 @@ Components: main
  component/tomcat9
  component/wmf-laptop
  thirdparty/amd-rocm61
+ thirdparty/bigtop15
  thirdparty/ceph-reef
  thirdparty/elastic710
  thirdparty/elasticsearch-curator5
