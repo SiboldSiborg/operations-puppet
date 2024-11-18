@@ -2016,7 +2016,7 @@ node /^mc-gp200[1-3]\.codfw\./ {
 
 # T376968
 node /^mc-gp200[4-6]\.codfw\./ {
-    role(insetup::serviceops)
+    role(mediawiki::memcached::gutter)
 }
 
 node /^mc-misc100[1-2]\.eqiad\./ {
