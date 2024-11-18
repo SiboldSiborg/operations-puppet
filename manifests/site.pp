@@ -2461,13 +2461,8 @@ node /^restbase10(2[8-9]|3[0-9]|4[0-2])\.eqiad\./ {
 }
 
 # restbase codfw cluster
-node /^restbase20(2[1-9]|3[0-5])\.codfw\./ {
+node /^restbase20(2[1-9]|3[0-8])\.codfw\./ {
     role(restbase::production)
-}
-
-# restbase refresh (temporary)
-node /^restbase203[6-8]\.codfw\./ {
-    role(insetup::data_persistence)
 }
 
 # New cassandra dev nodes T324113
