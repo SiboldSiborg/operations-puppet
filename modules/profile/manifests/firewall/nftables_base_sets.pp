@@ -99,6 +99,10 @@ class profile::firewall::nftables_base_sets (
         hosts => $network::constants::dse_kubepods_networks,
     }
 
+    nftables::set { 'AUX_KUBEPODS_NETWORKS':
+        hosts => $network::constants::aux_kubepods_networks,
+    }
+
     nftables::set { 'MGMT_NETWORKS':
         hosts => $network::constants::mgmt_networks,
     }
