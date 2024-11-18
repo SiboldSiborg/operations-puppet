@@ -97,6 +97,7 @@ class openstack::nova::fullstack::service(
         subscribe => [
             File['/usr/local/bin/nova-fullstack'],
             File['/usr/local/sbin/nova-fullstack'],
+            Git::Clone['nova_fullstack_git_clone'],
         ],
     }
 }
