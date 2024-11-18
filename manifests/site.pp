@@ -2003,7 +2003,7 @@ node /^mc-gp100[1-3]\.eqiad\./ {
 
 # T376186
 node /^mc-gp100[4-6]\.eqiad\./ {
-    role(insetup::serviceops)
+    role(mediawiki::memcached::gutter)
 }
 
 node /^mc-gp200[1-3]\.codfw\./ {
