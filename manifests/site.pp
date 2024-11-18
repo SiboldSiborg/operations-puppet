@@ -1974,6 +1974,10 @@ node /^maps20(0[5-8]|10)\.codfw\./ {
     role(maps::replica)
 }
 
+node /^maps-test200[1-6]\.codfw\./ {
+    role(insetup::infrastructure_foundations)
+}
+
 # testing buster master - maps2.0 migration
 node /^maps2009\.codfw\./ {
     role(maps::master)
