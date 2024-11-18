@@ -9,11 +9,11 @@ profile::mediawiki::mcrouter_wancache::shards:
   gutter:
     eqiad:
       shard01:
-        host: 10.64.0.53    # mc-gp1001.eqiad.wmnet
+        host: 10.64.0.21    # mc-gp1004.eqiad.wmnet
       shard02:
-        host: 10.64.32.101  # mc-gp1002.eqiad.wmnet
+        host: 10.64.32.126  # mc-gp1005.eqiad.wmnet
       shard03:
-        host: 10.64.48.32   # mc-gp1003.eqiad.wmnet
+        host: 10.64.48.182  # mc-gp1006.eqiad.wmnet
     codfw:
       shard01:
         host: 10.192.0.156  # mc-gp2001.codfw.wmnet
