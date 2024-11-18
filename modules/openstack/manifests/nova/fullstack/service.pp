@@ -37,15 +37,23 @@ class openstack::nova::fullstack::service(
         require    => Group['osstackcanary'],
     }
 
-    $repo = 'https://gitlab.wikimedia.org/repos/cloud/cloud-vps/nova_fullstack_test'
-    $nova_fullstack_git_source = "${repo}/-/raw/main/nova_fullstack_test/nova_fullstack_test.py?ref_type=heads"
+    $nova_fullstack_git_clone_dir = '/srv/git/nova_fullstack_test'
+    wmflib::dir::mkdir_p($nova_fullstack_git_clone_dir)
+
+    git::clone { 'nova_fullstack_git_clone':
+        ensure    => latest,
+        origin    => 'https://gitlab.wikimedia.org/repos/cloud/cloud-vps/nova_fullstack_test',
+        directory => $nova_fullstack_git_clone_dir,
+        branch    => 'main',
+    }
+
+    $nova_fullstack_file_src = "${nova_fullstack_git_clone_dir}/nova_fullstack_test/nova_fullstack_test.py"
 
     file { '/usr/local/sbin/nova-fullstack':
-        ensure => 'present',
-        mode   => '0755',
+        ensure => 'link',
         owner  => 'osstackcanary',
         group  => 'osstackcanary',
-        source => $nova_fullstack_git_source,
+        source => $nova_fullstack_file_src,
     }
 
     # Cleanup outfile only on acvive=false, since on active=true the file gets created by the nova-fullstack service.
