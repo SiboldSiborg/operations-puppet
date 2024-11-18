@@ -181,13 +181,16 @@ SELECT DISTINCT CONCAT("https://phabricator.wikimedia.org/p/", u.userName) AS us
     AND u.isDisabled = 0
     AND t.ownerOrdering IS NOT NULL
     AND t.closerPHID IS NULL
+    AND t.phid NOT IN
+        (SELECT e.src FROM phabricator_maniphest.edge e
+        WHERE e.type = 41 AND e.dst = "PHID-PROJ-onnxucoedheq3jevknyr") 
     AND t.ownerOrdering IN
         (SELECT t.ownerOrdering FROM phabricator_maniphest.maniphest_task t
         JOIN phabricator_user.user u
         WHERE u.userName = t.ownerOrdering
         AND u.dateCreated > UNIX_TIMESTAMP(DATE_SUB(NOW(), INTERVAL 8 WEEK))
         GROUP BY t.ownerOrdering HAVING COUNT(t.ownerOrdering) < 4)
-    ORDER BY userName, claimedOn;
+    ORDER BY claimedOn, userName;
 
 END
 )
@@ -589,7 +592,8 @@ EDIT ENGINE / FORM CREATIONS AND CHANGES
 ${result_editengine_changes}
 
 
-USER ACCOUNTS WHO BECAME AN ASSIGNEE RECENTLY AND HAD LESS THAN 5 TASKS EVER ASSIGNED
+USER ACCOUNTS WHO BECAME AN ASSIGNEE RECENTLY AND HAD LESS THAN
+5 TASKS EVER ASSIGNED AND THE TASK IS NOT TAGGED WITH PATCH-FOR-REVIEW
 (to ping after a month whether they need help, and to potentially unassign again):
 ${result_new_user_assignees}
 
