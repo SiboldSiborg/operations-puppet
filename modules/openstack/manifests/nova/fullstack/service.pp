@@ -50,10 +50,11 @@ class openstack::nova::fullstack::service(
     $nova_fullstack_file_src = "${nova_fullstack_git_clone_dir}/nova_fullstack_test/nova_fullstack_test.py"
 
     file { '/usr/local/sbin/nova-fullstack':
-        ensure => 'link',
-        owner  => 'osstackcanary',
-        group  => 'osstackcanary',
-        source => $nova_fullstack_file_src,
+        ensure  => 'link',
+        owner   => 'osstackcanary',
+        group   => 'osstackcanary',
+        source  => $nova_fullstack_file_src,
+        require => Git::Clone['nova_fullstack_git_clone'],
     }
 
     # Cleanup outfile only on acvive=false, since on active=true the file gets created by the nova-fullstack service.
