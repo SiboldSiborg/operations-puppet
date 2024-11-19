@@ -7,6 +7,7 @@ class profile::parsoid::testreduce(
     }
 
     profile::auto_restarts::service { 'envoyproxy': }
+    profile::auto_restarts::service { 'mariadb': }
 
     ensure_packages(['make', 'g++'])
 }
