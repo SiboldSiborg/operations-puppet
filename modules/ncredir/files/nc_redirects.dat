@@ -598,3 +598,4 @@ rewrite	*wikiquote.lv	https://lv.wikiquote.org
 rewrite	*wikipediasearch.org	https://www.wikipedia.org
 rewrite	*wikipedia.or.id	https://id.wikipedia.org
 rewrite	*wikipedia.org.tr	https://tr.wikipedia.org
+rewrite	*wikiquotes.org	https://www.wikiquote.org
