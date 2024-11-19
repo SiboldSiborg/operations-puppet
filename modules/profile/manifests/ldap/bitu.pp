@@ -11,12 +11,6 @@ class profile::ldap::bitu (
     Hash      $ldap = lookup('ldap'),
     String[0] $group = lookup('profile::ldap::bitu::group'),
 ) {
-    if debian::codename::eq('buster') {
-        apt::package_from_component { 'python3-ldap3':
-        component => 'component/python3-ldap3',
-        }
-    }
-
     ensure_packages([
         'python3-bitu-ldap',
     ])
@@ -37,13 +31,11 @@ class profile::ldap::bitu (
 
     file { '/etc/bitu/':
         ensure => directory,
-        owner  => 'root',
         group  => $group,
         mode   => '0770',
     }
 
     file { '/etc/bitu/ldap.json':
-        owner   => 'root',
         group   => $group,
         mode    => '0550',
         content => $bitu_config.to_json_pretty,
