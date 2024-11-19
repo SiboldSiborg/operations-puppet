@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 [DEFAULT]
-interface_driver = <%= @interface_driver %>
+interface_driver = openvswitch
 dhcp_driver = neutron.agent.linux.dhcp.Dnsmasq
 dnsmasq_config_file = /etc/neutron/dnsmasq-neutron.conf
 

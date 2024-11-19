@@ -10,7 +10,6 @@ class profile::openstack::codfw1dev::neutron::l3_agent(
     Boolean $legacy_vlan_naming    = lookup('profile::openstack::codfw1dev::neutron::legacy_vlan_naming'),
     Hash[String[1], OpenStack::Neutron::ProviderNetwork] $provider_networks_internal = lookup('profile::openstack::codfw1dev::neutron::provider_networks_internal', {default_value => {}}),
     Hash[String[1], OpenStack::Neutron::ProviderNetwork] $provider_networks_external = lookup('profile::openstack::codfw1dev::neutron::provider_networks_external', {default_value => {}}),
-    Boolean $use_ovs = lookup('profile::openstack::codfw1dev::neutron::use_ovs', {default_value => false}),
 ) {
     require ::profile::openstack::codfw1dev::clientpackages
     require ::profile::openstack::codfw1dev::neutron::common
@@ -37,22 +36,11 @@ class profile::openstack::codfw1dev::neutron::l3_agent(
         network_flat_interface_vlan          => $network_flat_interface_vlan,
         network_flat_interface_vlan_external => $network_flat_interface_vlan_external,
         legacy_vlan_naming                   => $legacy_vlan_naming,
-        interface_driver                     => $use_ovs.bool2str('openvswitch', 'linuxbridge'),
     }
     contain '::profile::openstack::base::neutron::l3_agent'
 
-    if $use_ovs {
-        class { 'profile::openstack::base::neutron::ovs_agent':
-            version           => $version,
-            provider_networks => $provider_networks_internal + $provider_networks_external,
-        }
-    } else {
-        class {'::profile::openstack::base::neutron::linuxbridge_agent':
-            version         => $version,
-            bridges         => $bridges,
-            bridge_mappings => $bridge_mappings,
-            report_interval => $report_interval,
-        }
-        contain '::profile::openstack::base::neutron::linuxbridge_agent'
+    class { 'profile::openstack::base::neutron::ovs_agent':
+        version           => $version,
+        provider_networks => $provider_networks_internal + $provider_networks_external,
     }
 }

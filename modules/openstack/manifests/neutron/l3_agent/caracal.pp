@@ -2,7 +2,6 @@
 
 class openstack::neutron::l3_agent::caracal(
     $report_interval,
-    Enum['linuxbridge', 'openvswitch'] $interface_driver,
 ) {
     class { "openstack::neutron::l3_agent::caracal::${::lsbdistcodename}": }
 

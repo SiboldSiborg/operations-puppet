@@ -42,7 +42,7 @@ neutron subnet-create --no-gateway --name cloud-eqiad1-floating --ip-version 4 \
 	--disable-dhcp --allocation-pool start=185.15.56.10,end=185.15.56.30 wan-transport-eqiad 185.15.56.0/25
 
 # on net servers
-systemctl restart neutron-linuxbridge-agent
+systemctl restart neutron-openvswitch-agent
 systemctl restart neutron-l3-agent
 systemctl restart neutron-dhcp-agent
 systemctl restart neutron-metadata-agent

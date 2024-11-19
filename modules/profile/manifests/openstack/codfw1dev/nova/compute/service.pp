@@ -8,23 +8,13 @@ class profile::openstack::codfw1dev::nova::compute::service(
     $physical_interface_mappings = lookup('profile::openstack::codfw1dev::nova::physical_interface_mappings'),
     String $libvirt_cpu_model = lookup('profile::openstack::codfw1dev::nova::libvirt_cpu_model'),
     Hash[String[1], OpenStack::Neutron::ProviderNetwork] $provider_networks_internal = lookup('profile::openstack::codfw1dev::neutron::provider_networks_internal', {default_value => {}}),
-    Boolean $use_ovs = lookup('profile::openstack::codfw1dev::neutron::use_ovs', {default_value => false}),
 ) {
 
     require ::profile::openstack::codfw1dev::neutron::common
-    if $use_ovs {
-        class { 'profile::openstack::base::neutron::ovs_agent':
-            version           => $version,
-            provider_networks => $provider_networks_internal,
-            before            => Class['profile::openstack::base::nova::compute::service'],
-        }
-    } else {
-        class {'::profile::openstack::base::neutron::linuxbridge_agent':
-            version                     => $version,
-            physical_interface_mappings => $physical_interface_mappings,
-            before                      => Class['profile::openstack::base::nova::compute::service'],
-        }
-        contain '::profile::openstack::base::neutron::linuxbridge_agent'
+    class { 'profile::openstack::base::neutron::ovs_agent':
+        version           => $version,
+        provider_networks => $provider_networks_internal,
+        before            => Class['profile::openstack::base::nova::compute::service'],
     }
 
     require ::profile::openstack::codfw1dev::nova::common

@@ -16,7 +16,6 @@ class profile::openstack::codfw1dev::neutron::common(
     Stdlib::Port $bind_port = lookup('profile::openstack::codfw1dev::neutron::bind_port'),
     Boolean $enforce_policy_scope = lookup('profile::openstack::codfw1dev::keystone::enforce_policy_scope'),
     Boolean $enforce_new_policy_defaults = lookup('profile::openstack::codfw1dev::keystone::enforce_new_policy_defaults'),
-    Boolean $use_ovs = lookup('profile::openstack::codfw1dev::neutron::use_ovs', {default_value => false}),
 ) {
     class {'::profile::openstack::base::neutron::common':
         version                     => $version,
@@ -35,7 +34,6 @@ class profile::openstack::codfw1dev::neutron::common(
         bind_port                   => $bind_port,
         enforce_policy_scope        => $enforce_policy_scope,
         enforce_new_policy_defaults => $enforce_new_policy_defaults,
-        use_ovs                     => $use_ovs,
     }
     contain '::profile::openstack::base::neutron::common'
 }
