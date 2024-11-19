@@ -90,8 +90,15 @@ class profile::kubernetes::master (
         'outdir'          => $cert_dir,
         'notify_services' => ['kube-apiserver-safe-restart', 'kube-publish-sa-cert'],
     })
-
+    # The prefix in etcd where the sa certs are stored
     $confd_prefix = '/kube-apiserver-sa-certs'
+    # Install a script that publishes the public sa_cert to etcd
+    $command = '/usr/local/sbin/kubernetes-publish-sa-cert'
+    file { $command:
+        ensure => file,
+        mode   => '0544',
+        source => 'puppet:///modules/profile/kubernetes/master/kubernetes-publish-sa-cert.sh',
+    }
     # Add a one-shot service that writes the public sa_cert to etcd for all control-planes to fetch
     systemd::service { 'kube-publish-sa-cert':
         content => systemd_template('kubernetes-publish-sa-cert'),
@@ -115,8 +122,7 @@ class profile::kubernetes::master (
         ensure     => present,
         instance   => 'k8s',
         watch_keys => ['/'],
-        # Add all but the local cert to the file (the local one will be used unconditionally)
-        content    => "{{range gets \"/*\"}}{{if ne .Key \"/${facts['networking']['fqdn']}\"}}{{.Value}}{{end}}{{end}}",
+        content    => "{{range gets \"/*\"}}{{.Value}}{{end}}",
         reload     => '/bin/systemctl restart kube-apiserver-safe-restart.service',
     }
 
