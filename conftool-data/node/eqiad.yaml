@@ -174,6 +174,7 @@ eqiad:
     wikikube-ctrl1001.eqiad.wmnet: [kubemaster]
     wikikube-ctrl1002.eqiad.wmnet: [kubemaster]
     wikikube-ctrl1003.eqiad.wmnet: [kubemaster]
+    wikikube-ctrl1004.eqiad.wmnet: [kubemaster]
     kubernetes1059.eqiad.wmnet: [kubesvc]
     kubernetes1060.eqiad.wmnet: [kubesvc]
     kubernetes1061.eqiad.wmnet: [kubesvc]
@@ -388,7 +389,7 @@ eqiad:
     wikikube-worker1287.eqiad.wmnet: [kubesvc]
     wikikube-worker1288.eqiad.wmnet: [kubesvc]
     wikikube-worker1289.eqiad.wmnet: [kubesvc]
-    wikikube-worker1290.eqiad.wmnet: [kubesvc]
+    # wikikube-worker1290 reimaged as wikikube-ctrl1004 T379790
     wikikube-worker1291.eqiad.wmnet: [kubesvc]
     wikikube-worker1292.eqiad.wmnet: [kubesvc]
     wikikube-worker1293.eqiad.wmnet: [kubesvc]

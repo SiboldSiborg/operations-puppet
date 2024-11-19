@@ -81,6 +81,7 @@ kubernetes::clusters:
         - wikikube-ctrl1001.eqiad.wmnet
         - wikikube-ctrl1002.eqiad.wmnet
         - wikikube-ctrl1003.eqiad.wmnet
+        - wikikube-ctrl1004.eqiad.wmnet
       cluster_dns:
         - "10.64.72.3"
       service_cluster_cidr:
@@ -307,7 +308,7 @@ kubernetes::clusters:
         - wikikube-worker1287.eqiad.wmnet
         - wikikube-worker1288.eqiad.wmnet
         - wikikube-worker1289.eqiad.wmnet
-        - wikikube-worker1290.eqiad.wmnet
+        # wikikube-worker1290 reimaged as wikikube-ctrl1004 T379790
         - wikikube-worker1291.eqiad.wmnet
         - wikikube-worker1292.eqiad.wmnet
         - wikikube-worker1293.eqiad.wmnet

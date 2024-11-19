@@ -1339,7 +1339,7 @@ node /^kubestagemaster[12]00[345]\.(eqiad|codfw)\./ {
     role(kubernetes::staging::master_stacked)
 }
 
-node /^wikikube-ctrl[12]00[1-3]\.(eqiad|codfw)\./ {
+node /^wikikube-ctrl[12]00[1-4]\.(eqiad|codfw)\./ {
     role(kubernetes::master_stacked)
 }
 
