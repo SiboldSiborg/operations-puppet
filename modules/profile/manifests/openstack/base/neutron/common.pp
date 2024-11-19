@@ -21,7 +21,7 @@ class profile::openstack::base::neutron::common(
     Stdlib::Port $bind_port = lookup('profile::openstack::base::neutron::bind_port'),
     Array[String[1]] $type_drivers = lookup('profile::openstack::base::neutron::type_drivers', {default_value => ['flat', 'vlan', 'vxlan']}),
     Array[String[1]] $tenant_network_types = lookup('profile::openstack::base::neutron::tenant_network_types', {default_value => ['vxlan']}),
-    Array[String[1]] $mechanism_drivers = lookup('profile::openstack::base::neutron::mechanism_drivers', {default_value => ['linuxbridge', 'openvswitch', 'l2population']}),
+    Array[String[1]] $mechanism_drivers = lookup('profile::openstack::base::neutron::mechanism_drivers', {default_value => ['openvswitch', 'l2population']}),
     ) {
 
     class {'::openstack::neutron::common':
