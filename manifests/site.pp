@@ -1695,13 +1695,8 @@ node /^wikikube-worker20(0[1-47-9]|[1-9][0-9])\.codfw\./ {
     role(kubernetes::worker)
 }
 
-node /^wikikube-worker21([0-4][0-9]|5[0-5])\.codfw\./ {
+node /^wikikube-worker21([0-6][0-9]|70)\.codfw\./ {
     role(kubernetes::worker)
-}
-
-# T376665
-node /^wikikube-worker21(5[6-9]|6[0-9]|70)\.codfw\./ {
-    role(insetup::serviceops)
 }
 
 # T376307
