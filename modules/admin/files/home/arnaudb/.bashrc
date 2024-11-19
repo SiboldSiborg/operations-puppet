@@ -95,3 +95,19 @@ else
 #    export PS1="\[\e[38;5;47m\]\u\[\e[38;5;156m\]@\[\e[38;5;227m\]\h \[\e[38;5;231m\]\w \$(prompt_return_code_handle)"
    export PS1='\[\033[0;94m\]\u@\h\[\033[1m\]:\[\033[0;35m\]\W\[\033[0m\] $ '
 fi
+
+capture_tmux_pane() {
+  # If an argument is provided, use it as the filename; otherwise, generate a default name
+  local filename="${1:-tmux_capture_$(date +%Y%m%d%H%M%S).log}"
+
+  # If no argument is passed, prompt the user to confirm or change the filename
+  if [[ -z "$1" ]]; then
+    read -p "Enter the capture file name (default: $filename): " input
+    filename="${input:-$filename}"
+  fi
+
+  # Capture the tmux pane content and save it to the file
+  tmux capture-pane -pS - > "$filename"
+
+  echo "The tmux pane capture has been saved to: $filename"
+}
