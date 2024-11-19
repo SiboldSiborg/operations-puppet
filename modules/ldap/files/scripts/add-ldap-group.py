@@ -15,6 +15,8 @@ def main():
     parser.add_argument("name", help="Name of the group to create")
     parser.add_argument("--gid", action="store", default=0, type=int,
                         help="The group's gid (default: next available gid)")
+    parser.add_argument("--description", action="store",
+                        help="A description of the purpose of the group (shown in Bitu)")
     parser.add_argument("--members", action="store", nargs='+', default=[],
                         help="A list of group members (specified as UIDs, not full LDAP DNs)"
                              + " to add to this group (space separated)")
@@ -49,6 +51,9 @@ def main():
             elif member_dn not in group.member:
                 group.member += member_dn
                 store = True  # Note that we need to call commit.
+
+        if args.description:
+            group.description = args.description
 
         # One or more members where added, commit to LDAP.
         if store:
