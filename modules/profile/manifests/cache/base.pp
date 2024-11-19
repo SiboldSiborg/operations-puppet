@@ -30,6 +30,12 @@ class profile::cache::base(
     $wikimedia_nets = flatten(concat($::network::constants::aggregate_networks, '172.16.0.0/12'))
     $wikimedia_trust = flatten(concat($::network::constants::aggregate_networks, $extra_trust))
 
+    if debian::codename::eq('bullseye') {
+        apt::package_from_bpo { 'lshw':
+            distro => 'bullseye',
+        }
+    }
+
     # Needed profiles
     require ::profile::conftool::client
     require ::profile::prometheus::cadvisor
