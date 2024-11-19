@@ -232,14 +232,26 @@ node /^aux-k8s-etcd100[3-5]\.eqiad\./ {
     role(etcd::v3::aux_k8s_etcd)
 }
 
+node /^aux-k8s-etcd100[3-5]\.codfw\./ {
+    role(insetup::observability)
+}
+
 # control-plane servers for aux kubernetes cluster
 node /^aux-k8s-ctrl100[23]\.eqiad\./ {
     role(aux_k8s::master)
 }
 
+node /^aux-k8s-ctrl100[23]\.codfw\./ {
+    role(insetup::observability)
+}
+
 # worker nodes for aux kubernetes cluster
 node /^aux-k8s-worker100[2-5]\.eqiad\./ {
     role(aux_k8s::worker)
+}
+
+node /^aux-k8s-worker100[2-5]\.codfw\./ {
+    role(insetup::observability)
 }
 
 # Primary bacula director and storage daemon
