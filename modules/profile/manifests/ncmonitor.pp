@@ -14,6 +14,7 @@ class profile::ncmonitor(
     String                    $ncredir_remote_url       = lookup('profile::ncmonitor::ncredir::remote_url'),
     Array[String]             $reviewers                = lookup('profile::ncmonitor::reviewers'),
     Stdlib::Absolutepath      $suffix_list_path         = lookup('profile::ncmonitor::suffix_list_path'),
+    Array[Stdlib::Fqdn]       $wikimedia_domains        = lookup('wikimedia_domains'),
     Optional[Stdlib::HTTPUrl] $http_proxy               = lookup('http_proxy'),
     Optional[String]          $gerrit_ssh_pubkey        = lookup('profile::ncmonitor::gerrit_ssh_pubkey'),
 ) {
@@ -27,7 +28,7 @@ class profile::ncmonitor(
         gerrit_ssh_pubkey        => $gerrit_ssh_pubkey,
         markmon_api_user         => $mm_api_user,
         markmon_api_pass         => $mm_api_pass,
-        markmon_ignored_domains  => $mm_ignored_domains,
+        markmon_ignored_domains  => $mm_ignored_domains + $wikimedia_domains,
         ncredir_datfile_path     => $ncredir_datfile_path,
         ncredir_remote_url       => $ncredir_remote_url,
         reviewers                => $reviewers,
