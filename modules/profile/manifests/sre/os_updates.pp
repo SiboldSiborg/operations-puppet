@@ -72,14 +72,28 @@ class profile::sre::os_updates (
         class {'rsync::server':
             ensure_service => stdlib::ensure($os_reports_timer_ensure, 'service')
         }
-        # Allow miscweb hosts to pull reports for serving them via HTTP
-        $miscweb_rsync_clients = wmflib::role::hosts('miscweb')
+
+        # Expose reports via rsync for serving via miscweb and
+        # the aux-k8s cluster
         rsync::server::module { 'osreports':
-            ensure        => $os_reports_timer_ensure,
-            path          => '/srv/os-reports',
-            read_only     => 'yes',
-            hosts_allow   => $miscweb_rsync_clients,
-            auto_firewall => true,
+            ensure    => $os_reports_timer_ensure,
+            path      => '/srv/os-reports',
+            read_only => 'yes',
+        }
+
+        $miscweb_rsync_clients = wmflib::role::hosts('miscweb')
+        firewall::service { 'rsyncd_access_miscweb':
+            ensure => $os_reports_timer_ensure,
+            proto  => 'tcp',
+            port   => [873, 1873],
+            srange => $miscweb_rsync_clients,
+        }
+
+        firewall::service { 'rsyncd_access_aux_pods':
+            ensure   => $os_reports_timer_ensure,
+            proto    => 'tcp',
+            port     => [873, 1873],
+            src_sets => ['AUX_KUBEPODS_NETWORKS'],
         }
     }
 }
