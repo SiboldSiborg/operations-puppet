@@ -1,0 +1,22 @@
+profile::cache::haproxy::use_benthos: true
+profile::cache::haproxy::benthos_socket_address: &benthos_address "127.0.0.1:1221"
+profile::benthos::use_geoip: false
+profile::benthos::instances:
+  haproxy_debug:
+    # Prometheus exporter port
+    port: 4153
+    env_variables:
+      enable_debug: true
+      socket_address: *benthos_address
+      msg_topic: haproxy_reqctl
+      root_cas_file: /etc/ssl/certs/wmf-ca-certificates.crt
+      pipeline_threads: 2
+      benthos_fqdn: '%{facts.fqdn}'
+      buffer_memory_limit_bytes: 134217728
+    kafka:
+      cluster: main
+      site: eqiad
+      # Topics listed here are for kafka message ingestion
+      # Not needed in this case
+      topics:
+        - "none"

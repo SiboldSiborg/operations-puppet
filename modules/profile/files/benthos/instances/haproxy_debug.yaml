@@ -1,0 +1,78 @@
+# SPDX-License-Identifier: Apache-2.0
+# Any value that needs to be injected in the template should be passed
+# as environment variable (see https://www.benthos.dev/docs/configuration/interpolation/)
+#
+http:
+  enabled: true
+  address: "0.0.0.0:${PORT}"
+  debug_endpoints: ${ENABLE_DEBUG}
+
+input:
+  label: "syslog"
+  socket_server:
+    network: tcp
+    address: "${SOCKET_ADDRESS}"
+    codec: lines
+
+buffer:
+ memory:
+   limit: ${BUFFER_MEMORY_LIMIT_BYTES}
+   batch_policy:
+     enabled: false
+
+pipeline:
+  threads: ${PIPELINE_THREADS}
+  processors:
+    - grok:
+        expressions:
+          - "%{HPDATA}"
+        pattern_definitions:
+          HPDATA: |-
+            [%{NOTSPACE:debug}] %{NOTSPACE:id}: type=%{NOTSPACE:type} <%{DATA:payload}>
+    - mapping: |
+        root = this.payload.parse_json()
+        root.meta.id = this.id
+
+logger:
+  level: WARN
+  format: logfmt
+
+output:
+  switch:
+    cases:
+      - check: errored()
+        output:
+          label: "dlq"
+          kafka_franz:
+            seed_brokers: [ "${KAFKA_BROKERS}" ]
+            topic: "${MSG_TOPIC}_error"
+            compression: "snappy"
+            tls:
+              enabled: true
+              root_cas_file: "${ROOT_CAS_FILE}"
+              skip_cert_verify: false
+          processors:
+            - mapping: |
+                root = this
+                root.error = error()
+      - output:
+          label: "out"
+          kafka_franz:
+            seed_brokers: [ "${KAFKA_BROKERS}" ]
+            topic: "${MSG_TOPIC}"
+            compression: "snappy"
+            tls:
+              enabled: true
+              root_cas_file: "${ROOT_CAS_FILE}"
+              skip_cert_verify: false
+
+tests:
+  - name: simple parsing
+    target_processors: /pipeline/processors
+    environment: {}
+    input_batch:
+      - content: '[debug] test-reqctl: type=str <{"host":"localhost","src":"127.0.0.1","path":"/"}>'
+    output_batches:
+      -
+        - content_equals:  '{"host":"localhost","meta":{"id":"test-reqctl"},"path":"/","src":"127.0.0.1"}'
+

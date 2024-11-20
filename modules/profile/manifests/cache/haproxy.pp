@@ -45,6 +45,8 @@ class profile::cache::haproxy(
     Optional[Integer] $log_length = lookup('profile::cache::haproxy::log_length', {'default_value'                                               => 8192}),
     Boolean $use_etcd_req_filters = lookup('profile::cache::haproxy::use_etcd_req_filters', {'default_value'                                     => false}),
     Boolean $numa_networking = lookup('profile::cache::haproxy::numa_networking', {'default_value'                                               => true}),
+    Boolean $use_benthos = lookup('profile::cache::haproxy::use_benthos', {'default_value'                                                       => false}),
+    String $benthos_socket = lookup('profile::cache::haproxy::benthos_socket_address', {'default_value'                                          => '127.0.0.1:1221'}),
     String $conftool_prefix = lookup('conftool_prefix'),
     Optional[Array[Haproxy::Ring, 1]] $rings = lookup('profile::cache::haproxy::rings', {'default_value'                                         => undef}),
 ) {
@@ -300,5 +302,12 @@ class profile::cache::haproxy(
         owner   => 'root',
         group   => 'root',
         content => file('profile/cache/haproxy_restart.sh'),
+    }
+
+    ###########
+    # Benthos #
+    ###########
+    if $use_benthos {
+        include ::profile::benthos
     }
 }
