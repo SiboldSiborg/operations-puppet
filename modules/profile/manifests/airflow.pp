@@ -87,7 +87,7 @@ class profile::airflow(
         'libsasl2-modules-gssapi-mit',
     ])
 
-    if $airflow_instances {
+    if $airflow_instances != {} {
         # If use_wmf_defaults, merge in smart per instance wmf defaults.
         $airflow_instances_with_defaults = $use_wmf_defaults ? {
             # Not $use_wmf_defaults, keep $airflow_instances as provided.
