@@ -209,6 +209,8 @@ profile::contacts::role_contacts: ['Data Platform']
 
 profile::puppet::agent::force_puppet7: true
 
+profile::firewall::provider: nftables
+
 # TLS Terminator settings
 profile::envoy::ensure: present
 profile::tlsproxy::envoy::services:
@@ -217,11 +219,8 @@ profile::tlsproxy::envoy::services:
 profile::tlsproxy::envoy::ssl_provider: cfssl
 profile::tlsproxy::envoy::global_cert_name: rgw.%{::site}.dpe.anycast.wmnet
 profile::tlsproxy::envoy::listen_ipv6: true
-# Temporaily reverting to ferm because of an issue with the firewall_src_sets
-profile::tlsproxy::envoy::ferm_srange: (($ANALYTICS_NETWORKS $DSE_KUBEPODS_NETWORKS (@resolve((db1208.eqiad.wmnet)) @resolve((db1208.eqiad.wmnet), AAAA))))
-# profile::firewall::provider: nftables
-# profile::tlsproxy::envoy::firewall_src_sets:
-#   - ANALYTICS_NETWORKS
-#   - DSE_KUBEPODS_NETWORKS
-# profile::tlsproxy::envoy::firewall_srange:
-#   - db1208.eqiad.wmnet
+profile::tlsproxy::envoy::firewall_src_sets:
+  - ANALYTICS_NETWORKS
+  - DSE_KUBEPODS_NETWORKS
+profile::tlsproxy::envoy::firewall_srange:
+  - db1208.eqiad.wmnet
