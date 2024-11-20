@@ -598,8 +598,12 @@ node /^db2173\.codfw\./ {
 
 # s2 (large wikis) core production dbs on eqiad
 # See also db1146 below
-node /^db1(162|182|188|197|222|229|233|246)\.eqiad\./ {
+node /^db1(162|182|188|197|222|229|233)\.eqiad\./ {
     role(mariadb::core)
+}
+# s2 (large wikis) db1246 snowflake moment - T374215
+node /^db1246\.eqiad\./ {
+    role(insetup::data_persistence)
 }
 
 # eqiad sanitarium master
