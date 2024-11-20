@@ -10,7 +10,7 @@ Type=oneshot
 User=kube
 SyslogIdentifier=%N
 Environment="ETCDCTL_ENDPOINTS=<%= @etcd_servers_string %>"
-ExecStart="<%= @command %> <%= @confd_prefix %> <%= @sa_cert['cert'] %>"
+ExecStart=<%= @command %> "<%= @confd_prefix %>" "<%= @sa_cert['cert'] %>"
 # Service shall be considered active even when the processes exited to not raise alerts.
 RemainAfterExit=yes
 # Restart the service on failure after 30 seconds (limited to 5 restarts, see StartLimit*)

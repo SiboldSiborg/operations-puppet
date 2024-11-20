@@ -93,11 +93,12 @@ class profile::kubernetes::master (
     # The prefix in etcd where the sa certs are stored
     $confd_prefix = '/kube-apiserver-sa-certs'
     # Install a script that publishes the public sa_cert to etcd
-    $command = '/usr/local/sbin/kubernetes-publish-sa-cert'
+    $command = '/usr/local/bin/kubernetes-publish-sa-cert'
     file { $command:
         ensure => file,
-        mode   => '0544',
+        mode   => '0555',
         source => 'puppet:///modules/profile/kubernetes/master/kubernetes-publish-sa-cert.sh',
+        notify => Service['kube-publish-sa-cert'],
     }
     # Add a one-shot service that writes the public sa_cert to etcd for all control-planes to fetch
     systemd::service { 'kube-publish-sa-cert':
