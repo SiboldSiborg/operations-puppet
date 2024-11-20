@@ -68,17 +68,9 @@ class profile::toolforge::k8s::haproxy (
             timeout            => '15s',
             body_regex_matches => ['The URL you have requested'],
             status_matches     => [404];
-    }
-
-    prometheus::blackbox::check::http {
-        default:
-            port                => $api_gateway_port,
-            ip_families         => ['ip4'],
-            prometheus_instance => 'tools',
-            team                => 'wmcs',
-            severity            => 'warning';
 
         "api.svc.${web_domain}":
+            port               => '443',
             path               => '/healthz',
             body_regex_matches => ['ok'],
             # making it explicit
