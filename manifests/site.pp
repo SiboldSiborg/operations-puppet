@@ -315,17 +315,11 @@ node /^backup2003\.codfw\./ {
 node /^backup200[4567]\.codfw\./ {
     role(mediabackup::storage)
 }
-
-# Intended for T326965, setup as mediabackup storage
-node /^backup2010\.codfw\./ {
+node /^backup201[01]\.codfw\./ {
     role(mediabackup::storage)
 }
 
-# codfw media backup expansion
-node /^backup2011\.codfw\./ {
-    role(mediabackup::storage)
-}
-# pending to be setup as codfw media backup expansion
+# pending to be setup as bacula expansion
 node /^backup2012\.codfw\./ {
     role(insetup::data_persistence)
 }

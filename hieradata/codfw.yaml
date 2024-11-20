@@ -71,6 +71,7 @@ mediabackup:
     - backup2006.codfw.wmnet
     - backup2007.codfw.wmnet
     - backup2011.codfw.wmnet
+    - backup2010.codfw.wmnet
 
 # Cephadm cluster details
 # This is an instance of the Cephadm::Clusters type
