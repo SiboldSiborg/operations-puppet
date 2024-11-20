@@ -272,13 +272,7 @@ node /^backup1003\.eqiad\./ {
 node /^backup100[4567]\.eqiad\./ {
     role(mediabackup::storage)
 }
-# intended for T326684, setup as mediabackup
-node /^backup1010\.eqiad\./ {
-    role(mediabackup::storage)
-}
-
-# eqiad media backup expansion
-node /^backup101[12]\.eqiad\./ {
+node /^backup101[01]\.eqiad\./ {
     role(mediabackup::storage)
 }
 
@@ -290,6 +284,11 @@ node /^backup1008\.eqiad\./ {
 # new backup storage eqiad T307048
 node /^backup1009\.eqiad\./ {
     role(backup::production)
+}
+
+# reallocated for bacula expansion, TODO
+node /^backup1012\.eqiad\./ {
+    role(insetup::data_persistence)
 }
 
 
