@@ -1601,11 +1601,11 @@ node /^kafka-logging200[1-5]\.codfw\./ {
     role(kafka::logging)
 }
 
-node /^kafka-main100[1-5]\.eqiad\./ {
+node /^kafka-main100[1-6]\.eqiad\./ {
     role(kafka::main)
 }
 
-node /^kafka-main10(0[6-9]|10)\.eqiad\./ {
+node /^kafka-main10(0[7-9]|10)\.eqiad\./ {
     role(insetup::serviceops)
 }
 

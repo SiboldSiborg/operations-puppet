@@ -792,7 +792,7 @@ kafka_clusters:
   main-eqiad:
     zookeeper_cluster_name: main-eqiad
     brokers:
-      kafka-main1001.eqiad.wmnet:
+      kafka-main1006.eqiad.wmnet:
         id: 1001
         rack: A
       kafka-main1002.eqiad.wmnet:
