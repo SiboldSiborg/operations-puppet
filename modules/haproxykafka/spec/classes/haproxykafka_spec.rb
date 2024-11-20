@@ -37,8 +37,6 @@ describe 'haproxykafka' do
                   'client.id': "test-hostname",
                   'security.protocol': "SSL",
                   'ssl.ca.location': "/etc/ssl/certs/wmf-ca-certificates.crt",
-                  'ssl.certificate.location': "/tmp/test.file",
-                  'ssl.key.location': "/tmp/test.file",
                   'ssl.cipher.suites': "ECDHE-ECDSA-AES256-GCM-SHA384",
                   'ssl.curves.list': "P-256",
                   'ssl.sigalgs.list': "ECDSA+SHA256",
@@ -108,8 +106,6 @@ kafka:
     client.id: test-hostname
     security.protocol: SSL
     ssl.ca.location: "/etc/ssl/certs/wmf-ca-certificates.crt"
-    ssl.certificate.location: "/tmp/test.file"
-    ssl.key.location: "/tmp/test.file"
     ssl.cipher.suites: ECDHE-ECDSA-AES256-GCM-SHA384
     ssl.curves.list: P-256
     ssl.sigalgs.list: ECDSA+SHA256

@@ -32,36 +32,13 @@ class profile::cache::haproxykafka(
         },
     }
 
-    $ssl_dir = '/etc/haproxykafka/ssl'
-
-    file { $ssl_dir:
-        ensure => stdlib::ensure($ensure, 'directory'),
-        force  => true,
-    }
-
-    $ssl_files = profile::pki::get_cert('kafka', 'haproxykafka', {
-        'outdir'  => $ssl_dir,
-        'owner'   => 'root',
-        'group'   => 'root',
-        'profile' => 'kafka_11',
-        notify    => Service['haproxykafka'],
-        require   => File[$ssl_dir],
-    })
-
-    $ssl_conf = {
-        'rdkafka' => {
-            'ssl.key.location' => $ssl_files['key'],
-            'ssl.certificate.location' => $ssl_files['chained'],
-        },
-    }
-
     $config = {
         workers         => $workers,
         message_buffer  => $message_buffer,
         sdid            => $sdid,
         socket          => $socket,
         logparser       => $logparser,
-        kafka           => deep_merge($kafka, $bootstrap_servers, $ssl_conf),
+        kafka           => deep_merge($kafka, $bootstrap_servers),
         monitoring      => $monitoring,
         transform_rules => $transform_rules,
     }
