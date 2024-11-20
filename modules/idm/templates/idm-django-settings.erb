@@ -305,6 +305,16 @@ ACCESS_REQUEST_RULES = {
             'managers': ['slyngshede', 'jmm'],
             'count': 1
         }],
+	'cn=wmf,ou=groups,dc=wikimedia,dc=org': [
+	{
+	    'module': 'permissions.validators.manager_approval',
+	    'managers': ['slyngshede', 'jmm'],
+	    'count': 1
+	},{
+	    'module': 'permissions.validators.email_domain',
+	    'domain': 'wikimedia.org',
+	    'prevalidate': True
+	}
     }
 }
 <%- end -%>
