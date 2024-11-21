@@ -7,6 +7,7 @@ class profile::toolforge::harbor (
     Stdlib::Host $harbor_db_host = lookup('profile::toolforge::harbor::db_primary', {default_value => 'dummy.db.host'}),
     Stdlib::Fqdn $harbor_url = lookup('profile::toolforge::harbor::url', {default_value => 'dummy.harbor.fqdn'}),
     Profile::Toolforge::Harbor::Robot_accounts $robot_accounts = lookup('profile::toolforge::harbor::robot_accounts', {default_value => {}}),
+    Optional[Profile::Toolforge::Harbor::S3_config] $s3_config = lookup('profile::toolforge::harbor::s3_config', {default_value => undef}),
 ) {
     ensure_packages(['docker.io'])
     service { 'docker':
@@ -52,6 +53,7 @@ class profile::toolforge::harbor (
                     harbor_db_host   => $harbor_db_host,
                     data_volume      => $data_volume,
                     robot_accounts   => $robot_accounts,
+                    s3_config        => $s3_config,
                 }
             ),
         } -> file { '/srv/ops/harbor/data':

@@ -6,6 +6,7 @@
     Stdlib::Host $harbor_db_host,
     Stdlib::Unixpath $data_volume,
     Profile::Toolforge::Harbor::Robot_accounts $robot_accounts = {},
+    Optional[Profile::Toolforge::Harbor::S3_config] $s3_config = undef,
 | -%>
 # Configuration file of Harbor
 
@@ -72,6 +73,21 @@ data_volume: <%= $data_volume %>
 #   # set disable to true when you want to disable registry redirect
 #   redirect:
 #     disable: false
+
+<%- if $s3_config { %>
+storage_service:
+  s3:
+    region: "<%= $s3_config['region'] %>"
+    bucket: "<%= $s3_config['bucket'] %>"
+    accesskey: "<%= $s3_config['accesskey'] %>"
+    secretkey: "<%= $s3_config['secretkey'] %>"
+    regionendpoint: "<%= $s3_config['regionendpoint'] %>"
+    secure: true
+    skipverify: false
+    v4auth: true
+  redirect:
+    disable: true
+<% } -%>
 
 # Trivy configuration
 #
