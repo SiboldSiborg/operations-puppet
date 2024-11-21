@@ -276,6 +276,7 @@ Update:
  thirdparty/kubeadm-k8s-1-28
  thirdparty/tofu
  thirdparty/yarn
+ vopsbot
 Description: Wikimedia packages for Debian bookworm
 SignWith: 9D392D3FFADF18FB
 DebOverride: deb-override
