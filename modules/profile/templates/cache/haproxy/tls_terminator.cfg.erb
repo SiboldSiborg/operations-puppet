@@ -148,7 +148,6 @@ listen tls
 
     option forwardfor
 <%- if @use_etcd_req_filters  -%>
-    http-request set-header x-requestctl " "
     <%- if @wikimedia_trust %>
     use_backend requestctl_filters if !wikimedia_trust
     <%- else %>

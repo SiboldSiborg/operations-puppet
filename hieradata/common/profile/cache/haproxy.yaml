@@ -152,6 +152,10 @@ profile::cache::haproxy::add_headers:
     - direction: request
       name: 'X-Analytics-TLS'
       value: 'vers=%[ssl_fc_protocol];keyx=UNKNOWN;auth=%[var(req.auth)];ciph=%[var(req.ciph)];prot=%[var(req.h2s)];sess=%[var(req.sess)]'
+    - direction: request
+      name: 'X-Requestctl'
+      value: ' '
+
 
 profile::cache::haproxy::del_headers:
   tls:

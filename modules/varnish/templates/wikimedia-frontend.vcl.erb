@@ -360,10 +360,11 @@ sub recv_fe_ip_processing {
     // it. We don't set or use this header internally (we use X-Client-IP)
     unset req.http.X-Real-IP;
 
-    // unset the X-Requestctl request header. This should be handled by the
-    // VCL fragments coming from requestctl and not be in the request.
-    unset req.http.X-Requestctl;
-    // Same for the *request* header Retry-After, also managed by requestctl.
+    if (req.http.X-Requestctl ~ "^[ ]*$") {
+        unset req.http.X-Requestctl;
+    }
+    // Unset the incoming *request* header Retry-After. This should be handled
+    // by the VCL fragments coming from requestctl and not be in the request.
     unset req.http.Retry-After;
 
     if (client.ip !~ local_host && remote.ip !~ local_tls_terminator) {
