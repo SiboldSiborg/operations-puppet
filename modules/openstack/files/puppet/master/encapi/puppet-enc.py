@@ -175,8 +175,8 @@ def project_name_for_id(project_id: str):
 def get_git_path(project: str, path: str, extension: str) -> str:
     if path == "":
         path = "_"
-    project_name = project_name_for_id(project)
-    return f"{project_name}/{path}.{extension}"
+
+    return f"{project}/{path}.{extension}"
 
 
 def add_git_commit(*, cursor, files: Dict[str, Optional[str]], message: str):
@@ -327,10 +327,12 @@ def set_roles(project, prefix):
             [(prefix_id, role) for role in roles],
         )
 
+        project_name = project_name_for_id(project)
+        name_prefix = prefix.replace(project, project_name)
         add_git_commit(
             cursor=cur,
-            files={get_git_path(project, prefix, "roles"): request.data},
-            message=f"Update roles for {project} {prefix}",
+            files={get_git_path(project_name, name_prefix, "roles"): request.data},
+            message=f"Update roles for {project_name} {name_prefix}",
         )
 
         g.db.commit()
@@ -415,10 +417,12 @@ def set_hiera(project, prefix):
             (prefix_id, request.data, request.data),
         )
 
+        project_name = project_name_for_id(project)
+        name_prefix = prefix.replace(project, project_name)
         add_git_commit(
             cursor=cur,
-            files={get_git_path(project, prefix, "yaml"): request.data},
-            message=f"Update Hiera for {project} {prefix}",
+            files={get_git_path(project_name, name_prefix, "yaml"): request.data},
+            message=f"Update Hiera for {project_name} {name_prefix}",
         )
 
         g.db.commit()
@@ -623,7 +627,9 @@ def update_prefix_by_id(project: str, prefix_id: int):
                 (prefix_id, hiera_str, hiera_str),
             )
 
-            git_update.update({get_git_path(project, prefix, "yaml"): hiera_str})
+            project_name = project_name_for_id(project)
+            name_prefix = prefix.replace(project, project_name)
+            git_update.update({get_git_path(project_name, name_prefix, "yaml"): hiera_str})
         else:
             hiera = yaml.safe_load(result[2]) if result[2] else {}
 
@@ -645,16 +651,24 @@ def update_prefix_by_id(project: str, prefix_id: int):
                     [(prefix_id, role) for role in to_add],
                 )
 
+            project_name = project_name_for_id(project)
+            name_prefix = prefix.replace(project, project_name)
             git_update.update(
-                {get_git_path(project, prefix, "roles"): yaml.safe_dump(roles) if roles else None}
+                {
+                    get_git_path(project_name, name_prefix, "roles"): (
+                        yaml.safe_dump(roles) if roles else None
+                    )
+                }
             )
         else:
             roles = current_roles
 
+        project_name = project_name_for_id(project)
+        name_prefix = prefix.replace(project, project_name)
         add_git_commit(
             cursor=cur,
             files=git_update,
-            message=request.json.get("message", f"Updating {project} {prefix}"),
+            message=request.json.get("message", f"Updating {project_name} {name_prefix}"),
         )
 
         g.db.commit()
@@ -746,13 +760,15 @@ def delete_prefix(project, prefix):
             (prefix_id,),
         )
 
+        project_name = project_name_for_id(project)
+        name_prefix = prefix.replace(project, project_name)
         add_git_commit(
             cursor=cur,
             files={
-                get_git_path(project, prefix, "yaml"): None,
-                get_git_path(project, prefix, "roles"): None,
+                get_git_path(project_name, name_prefix, "yaml"): None,
+                get_git_path(project_name, name_prefix, "roles"): None,
             },
-            message=f"Delete data for {project} {prefix}",
+            message=f"Delete data for {project_name} {name_prefix}",
         )
 
         g.db.commit()
@@ -771,10 +787,11 @@ def delete_project(project):
 
         cur.execute("DELETE FROM prefix WHERE project = %s", (project,))
 
+        project_name = project_name_for_id(project)
         add_git_commit(
             cursor=cur,
-            files={project: None},
-            message=f"Delete project {project}",
+            files={project_name: None},
+            message=f"Delete project {project_name}",
         )
 
         g.db.commit()
