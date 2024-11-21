@@ -1492,11 +1492,6 @@ node /^cloudnet200[5-6]-dev\.codfw\./ {
     role(wmcs::openstack::codfw1dev::net)
 }
 
-# New clouddb node T306854
-node /^clouddb2002-dev\.codfw\./ {
-    role(wmcs::openstack::codfw1dev::db)
-}
-
 node /^cloudcontrol200[456]-dev\.codfw\./ {
     role(wmcs::openstack::codfw1dev::control)
 }
