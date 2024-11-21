@@ -4,6 +4,7 @@ import json
 import re
 from typing import Dict, List, Optional, Tuple
 
+import openstack
 import pymysql
 import yaml
 from flask import Flask, Response, abort, g, has_request_context, jsonify, request
@@ -165,10 +166,17 @@ def get_git_author() -> str:
     return current_user.user_id
 
 
+def project_name_for_id(project_id: str):
+    conn = openstack.connect(cloud="novaobserver")
+    convertDict = {projectobj.id: projectobj.name for projectobj in conn.identity.projects()}
+    return convertDict[project_id]
+
+
 def get_git_path(project: str, path: str, extension: str) -> str:
     if path == "":
         path = "_"
-    return f"{project}/{path}.{extension}"
+    project_name = project_name_for_id(project)
+    return f"{project_name}/{path}.{extension}"
 
 
 def add_git_commit(*, cursor, files: Dict[str, Optional[str]], message: str):
