@@ -11,9 +11,8 @@ class role::wdqs::internal_main {
     require profile::nginx
     require profile::query_service::wikidata
     require profile::query_service::monitor::wikidata_internal
-    # TODO uncomment when ready to create pybal pools
-    # # Production specific profiles
-    # include profile::lvs::realserver
+    # Production specific profiles
+    include profile::lvs::realserver
 
     # wdqs-internal specific profiles
     include profile::tlsproxy::envoy # TLS termination

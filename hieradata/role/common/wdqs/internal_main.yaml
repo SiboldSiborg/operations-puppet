@@ -19,11 +19,11 @@ profile::admin::groups:
   - wdqs-admins
 cluster: wdqs-internal-main
 contactgroups: 'team-data-platform,wdqs-admins'
-#profile::lvs::realserver::pools:
-#  wdqs-internal-main:
-#    services:
-#      - wdqs-blazegraph
-#      - nginx
+profile::lvs::realserver::pools:
+ wdqs-internal-main:
+   services:
+     - wdqs-blazegraph
+     - nginx
 profile::query_service::use_revisions: true
 
 profile::tlsproxy::envoy::ssl_provider: 'cfssl'
