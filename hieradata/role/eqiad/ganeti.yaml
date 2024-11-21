@@ -1,7 +1,6 @@
 cluster: ganeti
 profile::ganeti::nodes:
   - ganeti1009.eqiad.wmnet
-  - ganeti1017.eqiad.wmnet
   - ganeti1018.eqiad.wmnet
   - ganeti1020.eqiad.wmnet
   - ganeti1022.eqiad.wmnet
