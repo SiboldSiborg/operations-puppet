@@ -100,17 +100,16 @@ echo "running gitlab-ctl reconfigure"
 /usr/bin/gitlab-ctl reconfigure
 /usr/bin/gitlab-ctl status
 
-/usr/bin/systemctl stop ssh-gitlab
-if [[ $? -ne 0 ]]; then
-    echo "something went wrong stopping ssh-gitlab"
-    exit 1
-fi
 
-# just a sanity check to see if the service is not running
-SSH_GITLAB_STATUS=$(/usr/bin/systemctl show -p SubState --value ssh-gitlab)
-if [ "${SSH_GITLAB_STATUS}" = "running" ]; then
-    echo "ssh-gitlab service still running. please kill it before proceeding"
-    exit 1
+if /usr/bin/systemctl is-active --quiet ssh-gitlab.service; then
+    echo "stopping ssh-gitlab.service"
+    /usr/bin/systemctl stop ssh-gitlab.service
+    if [[ $? -ne 0 ]]; then
+        echo "Failed to stopping ssh-gitlab.service"
+        exit 1
+    fi
+else
+    echo "ssh-gitlab.service already stopped."
 fi
 
 if /usr/bin/gitlab-ctl graceful-kill puma && /usr/bin/gitlab-ctl stop sidekiq; then
