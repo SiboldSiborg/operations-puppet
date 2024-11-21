@@ -1,5 +1,4 @@
 profile::cache::haproxykafka::ensure: absent
-profile::cache::haproxykafka::user: haproxykafka
 profile::cache::haproxykafka::kafka_cluster_name: jumbo-eqiad
 profile::cache::haproxykafka::workers: 2
 profile::cache::haproxykafka::message_buffer: 1.0e+6

@@ -6,7 +6,6 @@
 #
 class profile::cache::haproxykafka(
     Wmflib::Ensure $ensure                        = lookup('profile::cache::haproxykafka::ensure'),
-    String $haproxykafka_user                     = lookup('profile::cache::haproxykafka::user'),
     String $kafka_cluster_name                    = lookup('profile::cache::haproxykafka::kafka_cluster_name'),
     Integer $workers                              = lookup('profile::cache::haproxykafka::workers'),
     Float $message_buffer                         = lookup('profile::cache::haproxykafka::message_buffer'),
@@ -33,29 +32,6 @@ class profile::cache::haproxykafka(
         },
     }
 
-    $ssl_dir = '/etc/haproxykafka/ssl'
-
-    file { $ssl_dir:
-        ensure => stdlib::ensure($ensure, 'directory'),
-        force  => true,
-    }
-
-    $ssl_files = profile::pki::get_cert('kafka', 'haproxykafka', {
-        'outdir'  => $ssl_dir,
-        'owner'   => $haproxykafka_user,
-        'group'   => 'root',
-        'profile' => 'kafka_11',
-        notify    => Service['haproxykafka'],
-        require   => [File[$ssl_dir], User[$haproxykafka_user]],
-    })
-
-    $ssl_conf = {
-        'rdkafka' => {
-            'ssl.key.location' => $ssl_files['key'],
-            'ssl.certificate.location' => $ssl_files['chained'],
-        },
-    }
-
     $config = {
         workers         => $workers,
         message_buffer  => $message_buffer,
@@ -70,6 +46,5 @@ class profile::cache::haproxykafka(
     class { 'haproxykafka':
         ensure => $ensure,
         config => $config,
-        user   => $haproxykafka_user,
     }
 }
