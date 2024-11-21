@@ -171,8 +171,6 @@ eqiad:
     wikikube-ctrl1003.eqiad.wmnet: [kubemaster]
     kubernetes1005.eqiad.wmnet: [kubesvc]
     kubernetes1006.eqiad.wmnet: [kubesvc]
-    kubernetes1007.eqiad.wmnet: [kubesvc]
-    kubernetes1008.eqiad.wmnet: [kubesvc]
     kubernetes1009.eqiad.wmnet: [kubesvc]
     kubernetes1010.eqiad.wmnet: [kubesvc]
     kubernetes1011.eqiad.wmnet: [kubesvc]
