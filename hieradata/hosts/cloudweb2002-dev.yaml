@@ -19,7 +19,7 @@ profile::openstack::base::nutcracker::redis::shards:
 
 # Horizon things
 profile::base::overlayfs: true
-profile::openstack::codfw1dev::horizon::docker_version: 2024-11-16-131149
+profile::openstack::codfw1dev::horizon::docker_version: 2024-11-16-132956
 profile::openstack::codfw1dev::horizon::port: 8084
 
 labsldapconfig:
@@ -33,12 +33,12 @@ ldap:
   rw-server-fallback: ns1.openstack.codfw1dev.wikimediacloud.org
 
 # Apereo CAS / IDP
-profile::idp::tomcat_version: 'tomcat9'
-profile::idp::web_authn_signing_key: ''
-profile::idp::web_authn_encryption_key: ''
+profile::idp::tomcat_version: "tomcat9"
+profile::idp::web_authn_signing_key: ""
+profile::idp::web_authn_encryption_key: ""
 
 profile::idp::enable_cors: false
-profile::idp::tgc_cookie_same_site: 'strict'
+profile::idp::tgc_cookie_same_site: "strict"
 profile::idp::tgc_cookie_pin_to_session: false
 profile::idp::envoy_termination: false
 profile::idp::memcached_enable: true
@@ -61,10 +61,10 @@ profile::idp::idp_nodes: []
 profile::idp::is_staging_host: true
 profile::idp::u2f_jpa_enable: false
 profile::idp::expose_tomcat: false
-profile::prometheus::memcached_exporter::arguments: '--memcached.address=localhost:11000'
-profile::java::egd_source: '/dev/urandom'
+profile::prometheus::memcached_exporter::arguments: "--memcached.address=localhost:11000"
+profile::java::egd_source: "/dev/urandom"
 profile::idp::u2f_token_expiry_days: 3650
-profile::idp::oidc_issuers_pattern: '.*'
+profile::idp::oidc_issuers_pattern: ".*"
 profile::java::java_packages:
   - version: "17"
     variant: "jdk"
@@ -72,7 +72,7 @@ profile::java::java_packages:
 profile::idp::services:
   keystone:
     id: 1
-    service_class: 'OidcRegisteredService'
-    service_id: 'https://openstack.*.wikimediacloud.org:25000.*'
-    profile_format: 'FLAT'
-    response_type: 'id_token token'
+    service_class: "OidcRegisteredService"
+    service_id: "https://openstack.*.wikimediacloud.org:25000.*"
+    profile_format: "FLAT"
+    response_type: "id_token token"
