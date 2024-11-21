@@ -4,15 +4,28 @@
 # This define can be used to add an automatic restart for a stateless service.
 # wmf-auto-restart checks whether any dependent library has been refreshed and
 # if that's the case, a restart is triggered. The restarts are spread out over
-# the course of the day via fqdn_rand().
+# the course of the day via fqdn_rand() if not set explicitly using $restart_hour
+# and $restart_minute.
 #
+# @param $restart_hour optional sets the hours when the restart should happen
+# @param $restart_minute optional sets the minutes when the restart should happen
 define profile::auto_restarts::service(
     Wmflib::Ensure $ensure  = present,
+    Optional[String] $restart_hour = undef,
+    Optional[String] $restart_minute = undef,
 ) {
     include profile::auto_restarts
 
-    $hour = fqdn_rand(23, "${title}_auto_restart")
-    $minute = fqdn_rand(59, "${title}_auto_restart")
+    $hour = $restart_hour ? {
+      undef   => fqdn_rand(23, "${title}_auto_restart"),
+      default => $restart_hour,
+    }
+
+    $minute = $restart_minute ? {
+      undef   => fqdn_rand(59, "${title}_auto_restart"),
+      default => $restart_minute,
+    }
+
     systemd::timer::job { "wmf_auto_restart_${title}":
         ensure      => $ensure,
         user        => 'root',

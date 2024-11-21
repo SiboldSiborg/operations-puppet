@@ -105,5 +105,9 @@ class gitlab::ssh (
         service_params => { 'restart' => 'systemctl reload sshd-gitlab' },
     }
 
-    profile::auto_restarts::service { 'ssh-gitlab': }
+    profile::auto_restarts::service { 'ssh-gitlab':
+        # make sure the auto restart does not overlap with restore
+        restart_hour   => '14',
+        restart_minute => '00',
+    }
 }
