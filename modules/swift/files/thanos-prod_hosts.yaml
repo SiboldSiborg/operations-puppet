@@ -11,7 +11,17 @@ schemes:
       objects: 4000
       accounts: &acw 100
       containers: *acw
-      ssds: 300
+      ssds: &ssdw 300
+  prod24_ng:
+    objects: [objects0, objects1, objects2, objects3, objects4, objects5, objects6, objects7, objects8, objects9, objects10, objects11, objects12, objects13, objects14, objects15, objects16, objects17, objects18, objects19, objects20, objects21, objects22, objects23]
+    accounts: &accounts [accounts0, accounts1]
+    containers: *accounts
+    ssds: &ssds [container0, container1]
+    weight:
+      objects: 8000
+      accounts: *acw
+      containers: *acw
+      ssds: *ssdw
 
 hosts:
   prod:
@@ -23,3 +33,6 @@ hosts:
     - thanos-be2002
     - thanos-be2003
     - thanos-be2004
+  prod24_ng:
+    - thanos-be1005
+    - thanos-be2005
