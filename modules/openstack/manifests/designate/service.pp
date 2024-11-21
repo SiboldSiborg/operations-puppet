@@ -96,7 +96,7 @@ class openstack::designate::service(
     }
 
     $wmcs_nova_fixed_ptr_copy_src = "${wmcs_nova_fixed_ptr_git_clone}/wmcs_nova_fixed_ptr*/"
-    $wmcs_nova_fixed_ptr_copy_dst = '/usr/local/lib/python3/dist-packages/'
+    $wmcs_nova_fixed_ptr_copy_dst = '/usr/lib/python3/dist-packages/'
 
     wmflib::dir::mkdir_p($wmcs_nova_fixed_ptr_copy_dst)
 
