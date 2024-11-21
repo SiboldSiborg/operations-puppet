@@ -673,6 +673,8 @@ kubernetes::clusters:
         - kubestagemaster1005.eqiad.wmnet
         - kubestage1003.eqiad.wmnet
         - kubestage1004.eqiad.wmnet
+        - kubestage1005.eqiad.wmnet
+        - kubestage1006.eqiad.wmnet
       apparmor_profiles: *wikikube_apparmor_profiles
     staging-codfw:
       dc: codfw

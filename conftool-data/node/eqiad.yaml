@@ -424,6 +424,8 @@ eqiad:
     kubestagemaster1005.eqiad.wmnet: [kubemaster]
     kubestage1003.eqiad.wmnet: [kubesvc]
     kubestage1004.eqiad.wmnet: [kubesvc]
+    kubestage1005.eqiad.wmnet: [kubesvc]
+    kubestage1006.eqiad.wmnet: [kubesvc]
   druid-public:
     druid1007.eqiad.wmnet: [druid-public-broker]
     druid1008.eqiad.wmnet: [druid-public-broker]
