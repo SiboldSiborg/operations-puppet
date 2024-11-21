@@ -47,19 +47,20 @@ class vrts::mail(
         ],
     }
     class { '::spamassassin':
-        required_score        => '3.5',# (5.0)
-        use_bayes             => '1',  # 0|(1)
-        bayes_auto_learn      => '0',  # 0|(1)
-        short_report_template => true, # true|(false)
-        trusted_networks      => $trusted_networks,
-        custom_scores         => {
+        required_score                 => '3.5',# (5.0)
+        use_bayes                      => '1',  # 0|(1)
+        bayes_auto_learn               => '0',  # 0|(1)
+        short_report_template          => true, # true|(false)
+        trusted_networks               => $trusted_networks,
+        custom_scores                  => {
             'RP_MATCHES_RCVD'   => '-0.500',
             'SPF_SOFTFAIL'      => '2.000',
             'SUSPICIOUS_RECIPS' => '2.000',
             'DEAR_SOMETHING'    => '1.500',
         },
-        debug_logging         => '--debug spf',
-        proxy                 => "webproxy.${::site}.wmnet:8080",
+        debug_logging                  => '--debug spf',
+        proxy                          => "webproxy.${::site}.wmnet:8080",
+        disable_bondedsender_rbl_check => true,
     }
 
     mailalias { 'root':

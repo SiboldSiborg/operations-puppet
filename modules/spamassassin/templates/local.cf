@@ -62,7 +62,7 @@ bayes_ignore_header X-Spam-Status
 
 
 #   Some shortcircuiting, if the plugin is enabled
-# 
+#
 ifplugin Mail::SpamAssassin::Plugin::Shortcircuit
 #
 #   default: strongly-whitelisted mails are *really* whitelisted now, if the
@@ -95,3 +95,7 @@ endif # Mail::SpamAssassin::Plugin::Shortcircuit
 <% @custom_scores.sort.each do |name, score| -%>
 score <%= name %> <%= score %>
 <%- end -%>
+
+<% if @disable_bondedsender_rbl_check %>
+dns_query_restriction deny sa-trusted.bondedsender.org
+<% end %>
