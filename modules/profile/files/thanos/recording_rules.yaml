@@ -129,13 +129,6 @@ groups:
 
       - record: exporter:up:avail
         expr: label_replace(
-          sum(nutcracker_up) without (instance) / count(nutcracker_up) without (instance),
-          "exporter", "nutcracker",
-          "", ""
-          )
-
-      - record: exporter:up:avail
-        expr: label_replace(
           sum(redis_up) without (instance) / count(redis_up) without (instance),
           "exporter", "redis",
           "", ""

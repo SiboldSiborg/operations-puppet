@@ -27,12 +27,12 @@ function is_installed() {
 which decommission && decommission
 
 # Let's first stop and mask the web servers
-for service in apache2 nginx prometheus-apache-exporter prometheus-php-fpm-exporter prometheus-nutcracker-exporter prometheus-mcrouter-exporter;
+for service in apache2 nginx prometheus-apache-exporter prometheus-php-fpm-exporter prometheus-mcrouter-exporter;
 do
   stop_and_mask "${service}"
 done
 
-# Now let's check for nutcracker, mcrouter and php-fpm
+# Now let's check for mcrouter and php-fpm
 for service in mcrouter php7.4-fpm;
 do
   is_installed "${service}" && stop_and_mask "${service}"

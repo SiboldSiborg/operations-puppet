@@ -1868,19 +1868,8 @@ class profile::prometheus::ops (
         port             => 9112,
     }
 
-    $nutcracker_jobs = [
-        {
-            'job_name'        => 'nutcracker',
-            'scheme'          => 'http',
-            'file_sd_configs' => [
-                { 'files' => [ "${targets_path}/nutcracker_*.yaml" ]}
-            ],
-        },
-    ]
-    prometheus::class_config { "nutcracker_${::site}":
-        dest       => "${targets_path}/nutcracker_${::site}.yaml",
-        class_name => 'profile::prometheus::nutcracker_exporter',
-        port       => 9191,
+    file { "${targets_path}/nutcracker_${::site}.yaml":
+        ensure => absent,
     }
 
     # Gather postgresql metrics from hosts having the
@@ -2581,7 +2570,7 @@ class profile::prometheus::ops (
             $pybal_jobs, $blackbox_jobs, $probes_jobs, $jmx_exporter_jobs,
             $redis_jobs, $mtail_jobs, $ldap_jobs, $pdns_rec_jobs,
             $etherpad_jobs, $elasticsearch_jobs, $wmf_elasticsearch_jobs,
-            $blazegraph_jobs, $nutcracker_jobs, $postgresql_jobs,
+            $blazegraph_jobs, $postgresql_jobs,
             $kafka_burrow_jobs, $logstash_jobs, $haproxy_jobs, $statsd_exporter_jobs,
             $mjolnir_jobs, $rsyslog_jobs, $php_jobs, $icinga_jobs, $docker_registry_jobs,
             $gerrit_jobs, $routinator_jobs, $varnishkafka_jobs, $bird_jobs,
