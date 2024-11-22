@@ -9,7 +9,6 @@ class role::wdqs::internal_scholarly {
     include profile::firewall
     # Standard wdqs installation
     require profile::nginx
-    require profile::query_service::categories
     require profile::query_service::wikidata
     require profile::query_service::monitor::wikidata_internal
     # TODO uncomment when ready to create pybal pools
