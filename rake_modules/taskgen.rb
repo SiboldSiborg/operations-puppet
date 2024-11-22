@@ -30,6 +30,7 @@ class TaskGen < ::Rake::TaskLib
       :rubocop,
       :common_yaml,
       :hiera_defaults,
+      :kubernetes_hiera,
       :shellcheck,
       :python_extensions,
       :spec,
@@ -411,6 +412,30 @@ class TaskGen < ::Rake::TaskLib
       puts "hieradata/common.yaml: OK".green
     end
     [:common_yaml]
+  end
+
+  def setup_kubernetes_hiera
+    # validate a few kubernetes keys from common.yaml
+    k8s_common_yaml = filter_files_by("hieradata/common/kubernetes.yaml")
+    return [] if k8s_common_yaml.empty?
+    desc 'Check kubernetes cluster hiera keys'
+    task :kubernetes_hiera do
+      failures = false
+      k8s_common = YAML.safe_load(File.open(k8s_common_yaml[0]), aliases: true)
+      groups = k8s_common['kubernetes::clusters']
+      groups.each do |group, clusters|
+        clusters.each do |cluster, data|
+          nodes = data['cluster_nodes']
+          next if nodes.length < 255
+          $stderr.puts "k8s #{group} #{cluster} has >=255 nodes".red
+          $stderr.puts "\tYou cannot do this until https://phabricator.wikimedia.org/T375845 is fixed".red
+          failures = true
+          end
+      end
+      abort("hieradata/common/kubernetes.yaml: FAILED".red) if failures
+      puts "hieradata/common/kubernetes.yaml: OK".green
+    end
+    [:kubernetes_hiera]
   end
 
   def setup_spec
