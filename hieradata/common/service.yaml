@@ -3311,7 +3311,7 @@ service::catalog:
     sites:
       - eqiad
       - codfw
-    state: lvs_setup
+    state: production
     discovery:
       - dnsdisc: wdqs-internal-main
         active_active: true
@@ -3347,7 +3347,7 @@ service::catalog:
     sites:
       - eqiad
       - codfw
-    state: lvs_setup
+    state: production
     discovery:
       - dnsdisc: wdqs-internal-scholarly
         active_active: true
