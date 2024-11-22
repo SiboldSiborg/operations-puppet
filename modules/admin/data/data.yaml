@@ -69,7 +69,8 @@ groups:
               dcaro, legoktm, cmooney, jelto, btullis,
               rook, mvernon, ladsgroup, aokoth, jhathaway, bking, denisse, slyngshede,
               brett, fnegri, cgoubert, eevans, stevemunene, eoghan, kamila,
-              fabfur, taavi, arnaudb, brouberol, swfrench, aborrero, cdobbins, tappof]
+              fabfur, taavi, arnaudb, brouberol, swfrench, aborrero, cdobbins, tappof,
+              jasmine]
     privileges: ['ALL = (ALL) NOPASSWD: ALL']
     # Approved by the person's manager:
     approval:
@@ -116,7 +117,7 @@ groups:
     # with the extra tools that we allow.
     gid: 724
     description: 'Used for SREs without full root privileges'
-    members: &ops_limited [*datacenter_ops, jasmine]
+    members: &ops_limited [*datacenter_ops]
     privileges: ['ALL = NOPASSWD: /usr/sbin/dmidecode',
                  'ALL = NOPASSWD: /usr/bin/dmesg *',
                  'ALL = NOPASSWD: /usr/sbin/lldpctl *',
