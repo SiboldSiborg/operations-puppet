@@ -1358,7 +1358,7 @@ node /^ganeti10(09|1[89]|2[023456789]|3[0-9]|4[0-9]|5[0-2])\.eqiad\./ {
 }
 
 # Old servers, to be decommed
-node /^ganeti10(1[124567]|2[1])\.eqiad\./ {
+node /^ganeti10(1[2567]|2[1])\.eqiad\./ {
     role(insetup::infrastructure_foundations)
 }
 
