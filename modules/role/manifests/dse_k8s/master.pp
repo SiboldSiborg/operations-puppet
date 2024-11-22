@@ -15,8 +15,4 @@ class role::dse_k8s::master {
 
     # LVS configuration (VIP)
     include profile::lvs::realserver
-
-    system::role { 'kubernetes::master':
-        description => 'DSE Kubernetes master server',
-    }
 }

@@ -59,6 +59,7 @@ profile::java::java_packages:
 profile::java::extra_args:
   JAVA_TOOL_OPTIONS: "-Dfile.encoding=UTF-8"
 profile::contacts::role_contacts: ['Data Platform']
+profile::base::production::role_description: 'Statistics & Analytics cluster explorer (private data access, no local compute)'
 
 # Temporarily test spark3 install on all stat boxes.
 profile::hadoop::spark3::test_spark_3_install: true

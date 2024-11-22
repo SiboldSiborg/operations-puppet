@@ -11,6 +11,7 @@ profile::lvs::realserver::pools:
 profile::contacts::role_contacts:
   - 'Data Platform'
   - 'Machine Learning'
+profile::base::production::role_description: 'DSE Kubernetes master server'
 
 # Configuration to add the Kubelet to Master nodes for limited use cases
 # (like running bird for Calico, see T285927)

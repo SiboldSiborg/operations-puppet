@@ -2,10 +2,6 @@
 # Access to analytics Hadoop cluster with private data.
 #
 class role::statistics::explorer {
-    system::role { 'statistics::explorer':
-        description => 'Statistics & Analytics cluster explorer (private data access, no local compute)'
-    }
-
     include profile::base::production
     include profile::firewall
 

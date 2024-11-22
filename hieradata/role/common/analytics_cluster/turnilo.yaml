@@ -34,5 +34,6 @@ profile::tlsproxy::envoy::cfssl_options:
     - turnilo.wikimedia.org
 profile::tlsproxy::envoy::global_cert_name: "turnilo.wikimedia.org"
 profile::contacts::role_contacts: ['Data Platform']
+profile::base::production::role_description: 'Turnilo web GUI for Druid'
 
 profile::puppet::agent::force_puppet7: true

@@ -2,11 +2,6 @@
 # == Class: role::matomo
 #
 class role::matomo {
-
-    system::role { 'matomo':
-        description => 'Matomo analytics server',
-    }
-
     include profile::base::production
     include profile::firewall
 

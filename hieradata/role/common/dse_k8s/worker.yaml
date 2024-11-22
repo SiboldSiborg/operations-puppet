@@ -26,5 +26,6 @@ prometheus::node_exporter::collectors_extra:
 profile::contacts::role_contacts:
   - 'Data Platform'
   - 'Machine Learning'
+profile::base::production::role_description: 'DSE Kubernetes worker node'
 
 profile::puppet::agent::force_puppet7: true

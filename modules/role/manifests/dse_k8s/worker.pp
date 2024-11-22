@@ -10,12 +10,8 @@ class role::dse_k8s::worker {
     # Setup calico
     include profile::calico::kubernetes
     # Support for AMD GPUs
-    include ::profile::amd_gpu
+    include profile::amd_gpu
 
     # Setup LVS
     include profile::lvs::realserver
-
-    system::role { 'kubernetes::worker':
-        description => 'DSE Kubernetes worker node',
-    }
 }
