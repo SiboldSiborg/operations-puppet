@@ -921,7 +921,7 @@ groups:
     description: Group of users that have access to ML Team lab/experimentation machines
     members: &ml-lab-users [chrisalbon, kevinbazira, aikochou, isaranto,
                             klausman, dsaez, fab, isaacj, leizi, mgerlach,
-                            mirrys, mnz, paragon, trokhymovych, xiaoxiao]
+                            mirrys, mnz, paragon, trokhymovych, xiaoxiao, bearloga]
     posix_name: render
     privileges: []
     approval:
