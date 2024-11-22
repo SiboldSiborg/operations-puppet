@@ -5,25 +5,11 @@ cluster: wmcs
 
 profile::puppet::agent::force_puppet7: true
 
-# Currently unused:
-profile::openstack::base::nutcracker::memcached::size: 6000
-
 profile::openstack::codfw1dev::cloudweb_memcached_size: 6000
 profile::openstack::codfw1dev::cloudweb::mcrouter_port: 11213
 profile::openstack::codfw1dev::cloudweb::memcached_user: 'nobody'
 
 profile::prometheus::memcached_exporter::arguments: '--memcached.address=localhost:11000'
-profile::openstack::base::nutcracker::redis::shards:
-  jobqueue:
-    eqiad:
-      cloudweb2002-dev:
-        host: 208.80.153.41
-        port: 6378
-  sessions:
-    eqiad:
-      cloudweb2002-dev:
-        host: 208.80.153.41
-        port: 6378
 
 profile::contacts::role_contacts: ['WMCS']
 

@@ -5,18 +5,6 @@ profile::openstack::codfw1dev::horizon::puppet_git_repo_name: instance-puppet-de
 profile::openstack::codfw1dev::cloudweb_hosts:
   - cloudweb2002-dev.wikimedia.org
 
-profile::openstack::base::nutcracker::redis::shards:
-  jobqueue:
-    eqiad:
-      cloudweb2002-dev: #rdb1001
-        host: 208.80.153.41
-        port: 6378
-  sessions:
-    eqiad:
-      cloudweb2002-dev: #rdb1001
-        host: 208.80.153.41
-        port: 6378
-
 # Horizon things
 profile::base::overlayfs: true
 profile::openstack::codfw1dev::horizon::docker_version: 2024-11-16-132956
