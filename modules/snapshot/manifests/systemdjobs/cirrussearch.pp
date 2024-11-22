@@ -25,7 +25,7 @@ class snapshot::systemdjobs::cirrussearch(
         # shards, but this is a convenient split of wikis with small wikis
         # grouped together and large wikis separated out. Shards 9 and 10 do
         # not exist (as of nov 2022).
-        (range(1, 8) + [11]).each |$shard| {
+        (range(1, 8)).each |$shard| {
             $dblist = "${apachedir}/dblists/s${shard}.dblist"
             systemd::timer::job { "cirrussearch-dump-s${shard}":
                 ensure             => present,
