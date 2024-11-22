@@ -33,6 +33,9 @@ profile::tlsproxy::envoy::cfssl_options:
   hosts:
     - turnilo.wikimedia.org
 profile::tlsproxy::envoy::global_cert_name: "turnilo.wikimedia.org"
+profile::tlsproxy::envoy::firewall_src_sets:
+  - CACHES
+
 profile::contacts::role_contacts: ['Data Platform']
 profile::base::production::role_description: 'Turnilo web GUI for Druid'
 
