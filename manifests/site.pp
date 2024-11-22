@@ -1755,9 +1755,6 @@ node /^mw245[01]\.codfw\./ {
 node /^parse10(0[1-9]|1[0-9]|2[01234])\.eqiad\./ {
   role(kubernetes::worker)
 }
-node /^parse20(0[1-9]|1[0-9]|20)\.codfw\./ {
-  role(kubernetes::worker)
-}
 # END Kubernetes workers that used to be mw app/api/jobrunner/parsoid servers
 
 node /^kubestage100[3-6]\.eqiad\./ {
