@@ -3,7 +3,6 @@
 # Nova hypervisors with ceph for instance storage and a cinder/lvm client
 #
 class role::wmcs::openstack::eqiad1::virt_ceph_local_cinder {
-    system::role { $name: }
     include profile::base::production
     # include profile::firewall
     include profile::base::cloud_production

@@ -2,7 +2,6 @@
 # Most of the differences (if not all) will come from hiera parameters
 # see role/eqiad/wmcs/openstack/eqiad1/virt.yaml
 class role::wmcs::openstack::eqiad1::virt {
-    system::role { $name: }
     include profile::base::production
     # include profile::firewall
     include profile::base::cloud_production
