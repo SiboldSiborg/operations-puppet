@@ -49,7 +49,7 @@
 # [*monitoring_ensure*]
 #  Determines whether to include the nrpe monitor for spamd. Defaults to 'present'
 #
-# [*disable_bondedsender_rbl_check*]
+# [*disable_validity_rbl_check*]
 #  Whether to disable the RBL check from bondedsender.org. This started green-lighting all
 #  mails regardless of spam status. See https://lwn.net/Articles/987566/ and
 #  https://phabricator.wikimedia.org/T380396 for more details
@@ -68,7 +68,7 @@ class spamassassin(
     $debug_logging = '',
     $proxy = undef,
     $monitoring_ensure = 'present',
-    $disable_bondedsender_rbl_check = false,
+    $disable_validity_rbl_check = false,
 ) {
     if debian::codename::ge('bookworm') {
         $sa_daemon='spamd'
