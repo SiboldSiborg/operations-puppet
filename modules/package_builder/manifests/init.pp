@@ -75,10 +75,12 @@ class package_builder(
         'lintian',
         'maven-debian-helper',
         'maven-repo-helper',
+        'node-babel7',
         'openstack-pkg-tools',
         'patchutils',
         'php-dev',
         'piuparts',
+        'pkg-js-tools',
         'pkg-kde-tools',
         'pkg-php-tools',
         'postgresql-server-dev-all',
@@ -95,40 +97,28 @@ class package_builder(
         'zip',
     ])
 
-    if !debian::codename::ge('bookworm') {
+    if debian::codename::eq('bullseye') {
         ensure_packages(['python-all'])
     }
 
     file { '/etc/pbuilderrc':
         ensure  => file,
-        owner   => 'root',
-        group   => 'root',
         mode    => '0444',
         content => template('package_builder/pbuilderrc.erb'),
     }
 
-    if debian::codename::ge('bullseye') {
-        ensure_packages(['node-babel7', 'pkg-js-tools'])
-    }
-
     file { '/usr/share/lintian/profiles/wikimedia':
         ensure => directory,
-        owner  => 'root',
-        group  => 'root',
     }
 
     file { '/usr/share/lintian/profiles/wikimedia/main.profile':
         ensure => file,
-        owner  => 'root',
-        group  => 'root',
         mode   => '0444',
         source => 'puppet:///modules/package_builder/wikimedia.profile',
     }
 
     file { '/usr/share/lintian/vendors/wikimedia':
         ensure  => directory,
-        owner   => 'root',
-        group   => 'root',
         recurse => remote,
         source  => 'puppet:///modules/package_builder/lintian-wikimedia',
     }
@@ -169,8 +159,6 @@ class package_builder(
 
     file { '/etc/lintianrc':
         ensure => file,
-        owner  => 'root',
-        group  => 'root',
         mode   => '0444',
         source => 'puppet:///modules/package_builder/lintianrc',
     }
