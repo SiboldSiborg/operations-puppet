@@ -25,6 +25,7 @@ class docker::baseimages(
     Optional[Stdlib::Port] $proxy_port = undef,
     Array[String] $distributions = ['bullseye'],
     Array[String] $skip_distro = [],
+    Boolean $enabled = false,
 ) {
     # We need docker running
     Service[docker] -> Class[docker::baseimages]
@@ -33,31 +34,24 @@ class docker::baseimages(
 
     file { '/srv/images':
         ensure => directory,
-        owner  => 'root',
-        group  => 'root',
         mode   => '0755',
     }
 
     file { '/srv/images/base':
         ensure => directory,
-        owner  => 'root',
-        group  => 'root',
         mode   => '0755',
     }
 
     $keyring = '/srv/images/base/wikimedia.pub.gpg'
     file { $keyring:
-        ensure => present,
+        ensure => stdlib::ensure($enabled, 'file'),
         source => 'puppet:///modules/docker/wikimedia.pub.gpg',
-        owner  => 'root',
-        group  => 'root',
         mode   => '0444',
     }
 
     file { '/usr/local/bin/build-base-images':
+        ensure  => stdlib::ensure($enabled, 'file'),
         content => template('docker/images/build-base-images.erb'),
-        owner   => 'root',
-        group   => 'root',
         mode    => '0544',
     }
 
@@ -78,6 +72,7 @@ class docker::baseimages(
     }
     # Cronjob to refresh the base images every week on sunday.
     systemd::timer::job { 'debian-weekly-rebuild':
+        ensure              => stdlib::ensure($enabled),
         description         => 'Weekly job to rebuild the debian base images',
         command             => '/usr/local/bin/build-base-images',
         environment         => $env,
@@ -89,45 +84,37 @@ class docker::baseimages(
     # Add a script to build the bare minimum images using
     # debuerreotype.
     file { '/usr/local/bin/build-bare-slim':
-        ensure => present,
+        ensure => stdlib::ensure($enabled, 'file'),
         source => 'puppet:///modules/docker/build-bare-slim.sh',
         mode   => '0500',
     }
 
     # Basic dockerfile to build base images.
     file { '/srv/images/base/Dockerfile':
-        ensure => present,
+        ensure => stdlib::ensure($enabled, 'file'),
         source => 'puppet:///modules/docker/Dockerfile.slim'
     }
 
     # Generate the apt sources lists for all supported distros
     file {'/srv/images/base/sources':
         ensure => 'directory',
-        owner  => 'root',
-        group  => 'root',
         mode   => '0755',
     }
 
     $distributions.each |$distro| {
         file { "/srv/images/base/sources/${distro}":
-            ensure => directory,
-            owner  => 'root',
-            group  => 'root',
+            ensure => stdlib::ensure($enabled, 'directory'),
             mode   => '0755',
         }
 
         file { "/srv/images/base/sources/${distro}.sources.list":
-            ensure  => present,
-            owner   => 'root',
-            group   => 'root',
+            ensure  => stdlib::ensure($enabled, 'file'),
             mode    => '0755',
             content => template('docker/images/sourceslist.base.erb')
         }
     }
     file { '/srv/images/base/wikimedia.preferences':
-        ensure => present,
-        owner  => 'root',
-        group  => 'root',
+        ensure => stdlib::ensure($enabled, 'file'),
         mode   => '0444',
         source => 'puppet:///modules/docker/wikimedia-apt-preferences'
     }
