@@ -23,7 +23,6 @@ qualify_domain = PRIMARY_DOMAIN
 smtp_banner = $smtp_active_hostname ESMTP
 
 domainlist local_domains = <%= @mail_domains.join(' : ') %> : \
-                           *.INSTANCEPROJECT.eqiad.wmflabs : \
                            *.INSTANCEPROJECT.eqiad1.wikimedia.cloud
 # The <; at the beginning tells exim to use ';' as the delimiter instead of the default ':' (which interferes with ipv6)
 hostlist toolforge_hosts = <; <%= @all_toolforge_servers.join(' ; ') %>
@@ -349,5 +348,4 @@ begin retry
 
 begin rewrite
 
-*@*.INSTANCEPROJECT.eqiad.wmflabs  root@PRIMARY_DOMAIN  F
 *@*.INSTANCEPROJECT.eqiad1.wikimedia.cloud  root@PRIMARY_DOMAIN  F
