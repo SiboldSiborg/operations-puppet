@@ -576,6 +576,12 @@ define airflow::instance(
         src_sets => [$scheduler_srange],
     }
 
+    firewall::service { 'webserver-port':
+        proto    => 'tcp',
+        port     => $webserver_port,
+        src_sets => [$scheduler_srange],
+    }
+
     $skein_cert_path = "${airflow_home}/.skein/skein.crt"
     prometheus::node_textfile { 'prometheus-check-certificate-expiry':
         ensure         => 'present',
