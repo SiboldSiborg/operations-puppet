@@ -45,7 +45,6 @@ Components: main
  component/python35
  component/python39
  component/python3-ldap3
- component/pyall
  component/redis2
  component/rsyslog
  component/rsyslog-k8s
@@ -81,7 +80,6 @@ Components: main
  thirdparty/otel-cli
  thirdparty/php56
  thirdparty/postgres96
- thirdparty/pyall
  thirdparty/terraform
 UDebComponents: main
 Update:
@@ -102,7 +100,6 @@ Update:
  hwraid-megacli
  postgres
  matomo
- pyall
  thirdparty/ceph-octopus
  thirdparty/conda
  thirdparty/docker-ci-buster
