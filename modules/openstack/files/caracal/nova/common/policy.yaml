@@ -46,6 +46,7 @@
 "os_compute_api:os-create-backup": "rule:admin_or_member"
 "os_compute_api:os-deferred-delete": "rule:admin_or_member"
 "os_compute_api:os-extended-server-attributes": ""
+"os_compute_api:os-aggregates:index": ""
 "os_compute_api:os-floating-ips": ""
 "os_compute_api:os-hypervisors:list": ""
 "os_compute_api:os-hypervisors:statistics": ""
