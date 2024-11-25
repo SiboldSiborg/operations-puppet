@@ -3,7 +3,7 @@ class profile::query_service::monitor::ldf {
     prometheus::blackbox::check::http { 'query.wikidata.org-ldf':
         instance_label     => $facts['hostname'],
         server_name        => 'query.wikidata.org',
-        team               => 'search-platform',
+        team               => 'data-platform-sre',
         severity           => 'task',
         path               => '/bigdata/ldf?subject=wd%3AQ42&predicate=wdt%3AP31&object=',
         body_regex_matches => ['wd:Q42\s+wdt:P31\s+wd:Q5\s+\.'],
