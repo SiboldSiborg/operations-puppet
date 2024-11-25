@@ -63,6 +63,9 @@ class profile::toolforge::prometheus (
         require => Package['prometheus'], # group is defined by the package?
         notify  => Service['prometheus@tools'],
     }
+    class { 'prometheus::node_toolforge_prometheus_k8s_cert_exporter':
+        certificate_path => $cert_pub,
+    }
 
     $k8s_tls_config = {
         'insecure_skip_verify' => true,
