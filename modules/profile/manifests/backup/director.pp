@@ -74,14 +74,14 @@ class profile::backup::director(
     $databases_sd_codfw = 'backup2008'
     # Database dumps-only pool
     bacula::director::pool { 'DatabasesEqiad':
-        max_vols         => 95,  # increase if size > 50 TB
+        max_vols         => 150,
         storage          => "${databases_sd_eqiad}-FileStorageDumpsEqiad",
         volume_retention => '90 days',
         label_fmt        => 'databases-eqiad',
         max_vol_bytes    => '536870912000',
     }
     bacula::director::pool { 'DatabasesCodfw':
-        max_vols         => 95,  # increase if size > 50 TB
+        max_vols         => 150,
         storage          => "${databases_sd_codfw}-FileStorageDumpsCodfw",
         volume_retention => '90 days',
         label_fmt        => 'databases-codfw',
