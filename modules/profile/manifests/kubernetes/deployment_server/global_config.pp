@@ -454,6 +454,10 @@ class profile::kubernetes::deployment_server::global_config (
               {
                 'name' => 'worker',
                 'port' => 8793
+              },
+              {
+                'name' => 'webserver',
+                'port' => 8600
               }
             ]
           },
