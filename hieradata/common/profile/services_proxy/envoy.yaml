@@ -221,6 +221,12 @@ profile::services_proxy::envoy::listeners:
     timeout: "30s"
     keepalive: "4s"
     sets_sni: true
+  - name: tegola-vector-tiles
+    port: 6040
+    service: tegola-vector-tiles
+    timeout: "10s"
+    keepalive: "4s"
+    sets_sni: true
 
   # Non-discovery records
   # Eqiad ports are at 61xx
