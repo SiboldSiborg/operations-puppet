@@ -90,10 +90,6 @@ kubernetes::clusters:
         v4: "10.67.128.0/18"
         v6: "2620:0:861:cabe::/64"
       cluster_nodes:
-        - kubernetes1005.eqiad.wmnet
-        - kubernetes1006.eqiad.wmnet
-        - kubernetes1015.eqiad.wmnet
-        - kubernetes1016.eqiad.wmnet
         - kubernetes1017.eqiad.wmnet
         - kubernetes1018.eqiad.wmnet
         - kubernetes1019.eqiad.wmnet
@@ -360,14 +356,10 @@ kubernetes::clusters:
         v4: "10.194.128.0/18"
         v6: "2620:0:860:cabe::/64"
       cluster_nodes:
-        - kubernetes2005.codfw.wmnet
-        - kubernetes2006.codfw.wmnet
         - kubernetes2011.codfw.wmnet
         - kubernetes2012.codfw.wmnet
         - kubernetes2013.codfw.wmnet
         - kubernetes2014.codfw.wmnet
-        - kubernetes2015.codfw.wmnet
-        - kubernetes2016.codfw.wmnet
         - kubernetes2017.codfw.wmnet
         - kubernetes2021.codfw.wmnet
         - kubernetes2022.codfw.wmnet
