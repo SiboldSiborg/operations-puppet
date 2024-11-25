@@ -92,12 +92,6 @@ kubernetes::clusters:
       cluster_nodes:
         - kubernetes1005.eqiad.wmnet
         - kubernetes1006.eqiad.wmnet
-        - kubernetes1009.eqiad.wmnet
-        - kubernetes1010.eqiad.wmnet
-        - kubernetes1011.eqiad.wmnet
-        - kubernetes1012.eqiad.wmnet
-        - kubernetes1013.eqiad.wmnet
-        - kubernetes1014.eqiad.wmnet
         - kubernetes1015.eqiad.wmnet
         - kubernetes1016.eqiad.wmnet
         - kubernetes1017.eqiad.wmnet
