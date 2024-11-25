@@ -240,7 +240,7 @@ scap::sources:
     repository: search-platform/mjolnir-deploy
     origin: gitlab
   statsv/statsv:
-    repository: analytics/statsv
+    repository: performance/statsv
   performance/arc-lamp: {}
   performance/asoranking: {}
   performance/navtiming: {}

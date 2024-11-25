@@ -289,7 +289,7 @@ scap::sources:
 
   # webperf
   statsv/statsv:
-    repository: analytics/statsv
+    repository: performance/statsv
   performance/navtiming:
     repository: performance/navtiming
 
