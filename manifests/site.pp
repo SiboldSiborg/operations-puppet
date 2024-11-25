@@ -2463,7 +2463,7 @@ node /^restbase10(2[8-9]|3[0-9]|4[0-2])\.eqiad\./ {
 }
 
 # restbase codfw cluster
-node /^restbase20(2[1-9]|3[0-8])\.codfw\./ {
+node /^restbase20(2[4-9]|3[0-8])\.codfw\./ {
     role(restbase::production)
 }
 

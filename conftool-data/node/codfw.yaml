@@ -105,9 +105,6 @@ codfw:
     elastic2108.codfw.wmnet: [elasticsearch, elasticsearch-ssl, elasticsearch-psi-ssl]
     elastic2109.codfw.wmnet: [elasticsearch, elasticsearch-ssl, elasticsearch-psi-ssl]
   restbase:
-    restbase2021.codfw.wmnet: [restbase, restbase-ssl, restbase-backend]
-    restbase2022.codfw.wmnet: [restbase, restbase-ssl, restbase-backend]
-    restbase2023.codfw.wmnet: [restbase, restbase-ssl, restbase-backend]
     restbase2024.codfw.wmnet: [restbase, restbase-ssl, restbase-backend]
     restbase2025.codfw.wmnet: [restbase, restbase-ssl, restbase-backend]
     restbase2026.codfw.wmnet: [restbase, restbase-ssl, restbase-backend]
