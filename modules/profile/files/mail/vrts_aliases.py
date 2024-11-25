@@ -22,6 +22,7 @@ def get_args():
     parser = ArgumentParser(description=__doc__)
     parser.add_argument("-c", "--config", default=Path("/etc/exim4/vrts.conf"))
     parser.add_argument("-v", "--verbose", action="count")
+    parser.add_argument("-f", "--force", action="store_true")
     return parser.parse_args()
 
 
@@ -46,8 +47,10 @@ def get_log_level(args_level):
     ),
 )
 def verify_emails(mysql_conf, smtp_host, valid_domains, aliases):
+    # Lowercase the email address to match postfix's behavior in
+    # its alias maps
     query = '''
-    SELECT value0, create_time, change_time
+    SELECT LOWER(value0), create_time, change_time
     FROM system_address
     WHERE valid_id = 1
     ORDER BY value0
@@ -88,6 +91,26 @@ def verify_emails(mysql_conf, smtp_host, valid_domains, aliases):
     return available, no_auth_matches, gsuite_matches, alias_matches
 
 
+def read_aliases_file(config, f):
+    aliases = set()
+    if config["DEFAULT"]["aliases_format"] == "exim":
+        domain = f.name
+        # filter comments empty lines
+        lines = filter(
+            lambda line: line and line[0] != "#", f.read_text().splitlines()
+        )
+        # build email address from userpart and domain
+        aliases.update({f"{line.split(':')[0]}@{domain}" for line in lines})
+    elif config["DEFAULT"]["aliases_format"] == "postfix":
+        # strip the .db extension to make dbm.open happy
+        db_path = str(f.with_suffix(""))
+        with dbm.open(db_path, "r") as db:
+            for key in db.keys():
+                # postfix keys are NUL terminated, so we need to strip
+                aliases.add(key.decode(encoding="UTF-8").rstrip("\x00"))
+    return aliases
+
+
 def verify_email(email, smtp):
     """Ensure email is a gsuite email address at smtp server"""
     LOG.debug("Test: %s", email)
@@ -103,6 +126,18 @@ def verify_email(email, smtp):
         return True
     LOG.debug("Invalid (%d): %s", status, email)
     return False
+
+
+def get_existing_aliases(config):
+    """Read the existing mail aliases so that we can calculate how
+    many changes there are going to be"""
+    existing_aliases_file = Path(config["DEFAULT"]["aliases_file"])
+    existing_aliases = set()
+
+    if existing_aliases_file.with_suffix('.db').exists():
+        existing_aliases.update(read_aliases_file(config, existing_aliases_file))
+
+    return existing_aliases
 
 
 def main():
@@ -132,23 +167,13 @@ def main():
 
     if config["DEFAULT"]["aliases_format"] == "exim":
         for f in Path(config["DEFAULT"]["aliases_folder"]).iterdir():
-            if not f.is_file:
+            if not f.is_file():
                 continue
-            domain = f.name
-            # filter comments empty lines
-            lines = filter(
-                lambda line: line and line[0] != "#", f.read_text().splitlines()
-            )
-            # build email address from userpart and domain
-            aliases.update({f"{line.split(':')[0]}@{domain}" for line in lines})
+            aliases.update(read_aliases_file(config, f))
     elif config["DEFAULT"]["aliases_format"] == "postfix":
         for f in Path(config["DEFAULT"]["aliases_folder"]).glob("*.db"):
-            # strip the .db extension to make dbm.open happy
-            db_path = str(f.with_suffix(""))
-            with dbm.open(db_path, "r") as db:
-                for key in db.keys():
-                    # postfix keys are NUL terminated, so we need to strip
-                    aliases.add(key.decode(encoding="UTF-8").rstrip("\x00"))
+            aliases.update(read_aliases_file(config, f))
+
     with Path(config["DEFAULT"]["valid_domains"]).open() as config_fh:
         valid_domains = [
             line.strip()
@@ -173,6 +198,21 @@ def main():
     if len(alias_matches) > 0:
         LOG.error("Found VRTS emails already handled by aliases")
         return_code = 1
+
+    existing_aliases = get_existing_aliases(config)
+    proposed_aliases = set(available)
+    alias_diff = existing_aliases.symmetric_difference(proposed_aliases)
+    if len(alias_diff) > 5 and not args.force:
+        LOG.error(
+            "Making %d changes, which is a lot. Something might be broken.",
+            len(alias_diff),
+        )
+        LOG.error("Review the expected changes, and run again with --force")
+        LOG.error("Would change the following:")
+        LOG.error("  - Removed from existing aliases: %s", existing_aliases - proposed_aliases)
+        LOG.error("  - Added to existing aliases: %s", proposed_aliases - existing_aliases)
+        return 1
+
     with Path(config["DEFAULT"]["aliases_file"]).open("w") as aliases_fh:
         if config["DEFAULT"]["aliases_format"] == "exim":
             aliases_fh.writelines([f"{address}: {address}\n" for address in available])
