@@ -83,6 +83,16 @@ html_to_plain_text_command: /usr/bin/lynx -dump $filename
 # unpredictable.
 listname_chars: [-_.0-9a-z]
 
+# Change the mailman task runner to be every 12 hours instead of hourly. We
+# think there might be a race condition in the task runner that's causing
+# the content of some mail to go missing.
+#
+# The mailman documentation says that changing the task runner should be safe
+# to run at different intervals (e.g., daily), so we'll start at 12 hours and
+# see if this improves things.
+#
+# The problem is outlined in https://phabricator.wikimedia.org/T377045
+run_tasks_every: 12h
 
 [shell]
 # `mailman shell` (also `withlist`) gives you an interactive prompt that you
