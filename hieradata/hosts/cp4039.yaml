@@ -20,3 +20,12 @@ profile::benthos::instances:
       # Not needed in this case
       topics:
         - "none"
+
+profile::cache::haproxy::rings:
+  - name: reqctl-ring
+    format: raw
+    timeout_connect_ms: 5
+    timeout_server_ms: 100
+    backend_name: benthos
+    backend_address: *benthos_address
+    backend_log_proto: legacy
