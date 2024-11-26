@@ -42,15 +42,6 @@ profile::wmcs::backy2::cluster_name: ceph
 profile::wmcs::backy2::postgres_root_dir: '/srv/cinder-backups/postgresql'
 
 profile::cloudceph::mon::hosts:
-  "cloudcephmon1001.eqiad.wmnet":
-    public:
-      addr: "10.64.20.67"
-  "cloudcephmon1002.eqiad.wmnet":
-    public:
-      addr: "10.64.20.68"
-  "cloudcephmon1003.eqiad.wmnet":
-    public:
-      addr: "10.64.20.69"
   "cloudcephmon1004.eqiad.wmnet":
     public:
       addr: "10.64.151.5"

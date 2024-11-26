@@ -442,9 +442,6 @@ eqiad:
     ncredir1001.eqiad.wmnet: [nginx]
     ncredir1002.eqiad.wmnet: [nginx]
   cloudceph:
-    cloudcephmon1001.eqiad.wmnet: [cloudceph]
-    cloudcephmon1002.eqiad.wmnet: [cloudceph]
-    cloudcephmon1003.eqiad.wmnet: [cloudceph]
     cloudcephmon1004.eqiad.wmnet: [cloudceph]
     cloudcephmon1005.eqiad.wmnet: [cloudceph]
     cloudcephmon1006.eqiad.wmnet: [cloudceph]
