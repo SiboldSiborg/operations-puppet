@@ -1447,10 +1447,6 @@ node /^htmldumper1001\.eqiad\./ {
     role(dumps::web::htmldumps)
 }
 
-node /^irc[12]002\.wikimedia\./ {
-    role(insetup::infrastructure_foundations)
-}
-
 node /^irc[12]003\.wikimedia\./ {
     role(ircstream)
 }
