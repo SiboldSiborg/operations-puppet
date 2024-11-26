@@ -47,7 +47,7 @@ groups:
               stef25, twilsonbf, ryan-bf, prtksxna, babiola, simone-this-dot, s-mukuti, nosc,
               kchapman, ryanbrounley, oleksandrtsyba-wmde, vhargyono, whatamidoing, agueyte, elitre,
               kassiameq, maurelio, dmantena, kelhurd, lea-wmde, febinbellamy, fjoseph, mcastro-wmf, jfk,
-              rudolphampofo, jrbranaa, wdoran]
+              rudolphampofo, jrbranaa, wdoran, wquarshie]
   wikidev:
     gid: 500
     description: container group for primary user groups.
@@ -7068,9 +7068,8 @@ ldap_only_users:
     ensure: absent
     realname: Leza Zaman
   wquarshie:
-    ensure: present
+    ensure: absent
     realname: Wendy Quarshie
-    email: wquarshie@wikimedia.org
   elal:
     ensure: present
     realname: Elena Aleynikova
