@@ -1808,7 +1808,7 @@ node /^cephosd100[12345]\.eqiad\./ {
 }
 
 # cloudceph monitor nodes
-node /^cloudcephmon100[1-6]\.eqiad\./ {
+node /^cloudcephmon100[4-6]\.eqiad\./ {
     role(wmcs::ceph::mon)
 }
 
