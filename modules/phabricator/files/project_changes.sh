@@ -311,6 +311,20 @@ SELECT CONCAT("https://phabricator.wikimedia.org/T", t.id) AS Task, FROM_UNIXTIM
 END
 )
 
+#echo "result_deadline_tasks_without_due_dates"
+# see https://phabricator.wikimedia.org/T380915
+result_deadline_tasks_without_due_dates=$(MYSQL_PWD=${sql_pass} /usr/bin/mysql -h $sql_host -P $sql_port -u $sql_user $sql_name << END
+SELECT CONCAT("https://phabricator.wikimedia.org/T", t.id) AS task
+    FROM phabricator_maniphest.maniphest_task t
+    WHERE t.subtype = "deadline"
+    AND (t.status = "open" OR t.status = "stalled" OR t.status = "progress")
+    AND t.phid NOT IN
+        (SELECT cfs.objectPHID
+        FROM phabricator_maniphest.maniphest_customfieldstorage cfs
+        WHERE cfs.fieldIndex = "GGorRQHBaRdo");
+END
+)
+
 #echo "result_parent_projects_without_desc"
 # see https://phabricator.wikimedia.org/T249805
 result_parent_projects_without_desc=$(MYSQL_PWD=${sql_pass} /usr/bin/mysql -h $sql_host -P $sql_port -u $sql_user $sql_name << END
@@ -583,6 +597,10 @@ ${result_new_user_assignees}
 OPEN TASKS WITH A DUE DATE MORE THAN 1 MONTH AGO
 (to ask the assignee and/or reporter to update task status or due date):
 ${result_past_due_dates}
+
+
+OPEN TASKS WITH DEADLINE SUBTYPE BUT WITHOUT DUE DATE (to reset the subtype):
+${result_deadline_tasks_without_due_dates}
 
 
 PROJECTS WHICH HAVE AN EMPTY PROJECT DESCRIPTION
