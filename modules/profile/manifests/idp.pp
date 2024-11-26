@@ -186,6 +186,19 @@ class profile::idp(
         }
     }
 
+    if $is_staging_host == false {
+        prometheus::blackbox::check::http{ 'idp.wikimedia.org' :
+            team               => 'infrastructure-foundations',
+            severity           => 'critical',
+            path               => '/login',
+            force_tls          => true,
+            status_matches     => [200],
+            body_regex_matches => ['developer'],
+            follow_redirects   => true,
+            probe_runbook      => 'https://wikitech.wikimedia.org/wiki/CAS-SSO#Alerting'
+        }
+    }
+
     profile::prometheus::jmx_exporter{ "idp_${facts['networking']['hostname']}":
         hostname    => $facts['networking']['hostname'],
         port        => $jmx_port,
@@ -193,6 +206,7 @@ class profile::idp(
         config_file => $jmx_config,
         content     => file('profile/idp/cas_jmx_exporter.yaml'),
     }
+
     if ($memcached_enable and $memcached_install) {
         class {'profile::idp::memcached':
             idp_nodes => $idp_nodes,
