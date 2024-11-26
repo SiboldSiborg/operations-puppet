@@ -2652,11 +2652,11 @@ node /^wdqs102[3-4].eqiad\./ {
 }
 
 node /^wdqs102[56].eqiad\./ {
-    role(wdqs::internal_main)
+    role(insetup::search_platform)
 }
 
 node /^wdqs1027.eqiad\./ {
-    role(wdqs::internal_scholarly)
+    role(insetup::search_platform)
 }
 
 
