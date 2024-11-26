@@ -2651,6 +2651,15 @@ node /^wdqs102[3-4].eqiad\./ {
     role(wdqs::scholarly)
 }
 
+node /^wdqs102[56].eqiad\./ {
+    role(wdqs::internal_main)
+}
+
+node /^wdqs1027.eqiad\./ {
+    role(wdqs::internal_scholarly)
+}
+
+
 node /^wdqs202[1-2].codfw\./ {
     role(wdqs::main)
 }
