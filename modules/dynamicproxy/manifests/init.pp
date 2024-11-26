@@ -43,7 +43,9 @@ class dynamicproxy (
         settings => {
             # Protected by iptables  / ferm rules from elsewhere
             # We need to allow this so we can replicate
-            bind           => '* -::*',
+            bind           => debian::codename::ge('bookworm').bool2str(
+                '* -::*', '*'
+            ),
             protected-mode => 'no',
             appendonly     => 'yes',
             appendfilename => "${::hostname}-${redis_port}.aof",
