@@ -148,6 +148,7 @@ Components: main
  component/varnish-staging
  thirdparty/amd-rocm54
  thirdparty/bigtop15
+ thirdparty/bigtop33
  thirdparty/ceph-octopus
  thirdparty/ceph-quincy
  thirdparty/ceph-reef
@@ -231,6 +232,7 @@ Components: main
  component/wmf-laptop
  thirdparty/amd-rocm61
  thirdparty/bigtop15
+ thirdparty/bigtop33
  thirdparty/ceph-reef
  thirdparty/elastic710
  thirdparty/elasticsearch-curator5
