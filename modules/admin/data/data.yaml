@@ -6387,7 +6387,8 @@ users:
     email: kgraessle@wikimedia.org
     uid: 46586
     gid: 500
-    ssh_keys: []  # Added with no SSH access, for membership in analytics-privatedata-users.
+    ssh_keys:
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMbWErwIys9ui42OUNWNbt3RSG4VN5Kngf2XOc5pm91d katherinegraessle@wmf3485
   daphnesmit:
     ensure: present
     realname: Daphne Smit
