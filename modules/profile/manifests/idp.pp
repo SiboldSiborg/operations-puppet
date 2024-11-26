@@ -79,16 +79,28 @@ class profile::idp(
       $firewall_port = 8080
     }
 
-    if $tomcat == 'tomcat9' {
-        class { 'tomcat': }
-    } else {
-        class { $tomcat: }
-    }
-
+    # Setup Prometheus JMX client and build java_opts for Tomcat 10.
     $jmx_port = 9200
     $jmx_config = '/etc/prometheus/cas_jmx_exporter.yaml'
     $jmx_jar = '/usr/share/java/prometheus/jmx_prometheus_javaagent.jar'
     $java_opts = "-javaagent:${jmx_jar}=${facts['networking']['ip']}:${jmx_port}:${jmx_config}"
+
+    profile::prometheus::jmx_exporter{ "idp_${facts['networking']['hostname']}":
+        hostname    => $facts['networking']['hostname'],
+        port        => $jmx_port,
+        config_dir  => $jmx_config.dirname,
+        config_file => $jmx_config,
+        content     => file('profile/idp/cas_jmx_exporter.yaml'),
+    }
+
+    if $tomcat == 'tomcat9' {
+        class { 'tomcat': }
+    } else {
+        class { $tomcat:
+            java_agent => $java_opts
+        }
+    }
+
     $groovy_source = 'puppet:///modules/profile/idp/global_principal_attribute_predicate.groovy'
     $log_dir = '/var/log/cas'
 
@@ -197,14 +209,6 @@ class profile::idp(
             follow_redirects   => true,
             probe_runbook      => 'https://wikitech.wikimedia.org/wiki/CAS-SSO#Alerting'
         }
-    }
-
-    profile::prometheus::jmx_exporter{ "idp_${facts['networking']['hostname']}":
-        hostname    => $facts['networking']['hostname'],
-        port        => $jmx_port,
-        config_dir  => $jmx_config.dirname,
-        config_file => $jmx_config,
-        content     => file('profile/idp/cas_jmx_exporter.yaml'),
     }
 
     if ($memcached_enable and $memcached_install) {

@@ -15,6 +15,7 @@ class tomcat10 (
     Boolean                $default_servlet_debug    = false,
     Boolean                $default_servlet_listings = false,
     Boolean                $remote_ip_logging        = true,
+    String[1]              $java_agent               = '',
     Hash[String[1], String[1]] $java_opts            = {'java.awt.headless'         => 'true',
                                                         'log4j2.formatMsgNoLookups' => 'true'},
 ){
@@ -39,7 +40,7 @@ class tomcat10 (
         '/etc/default/tomcat10':
             mode    => '0644',
             group   => 'root',
-            content => "JAVA_OPTS=\"${_java_opts}\"\n";
+            content => "JAVA_OPTS=\"${_java_opts} ${java_agent}\"\n";
     }
     service{'tomcat10':
         ensure => 'running',
