@@ -209,7 +209,7 @@ groups:
               dr0ptp4kt, dani, aqu, sfaci, damilare, dreamyjazz, wfan219,
               tjones, jsn, ecarg, amastilovic, ebysans, daphnesmit, toyofuku,
               mszabo, ihurbain, zoe, bpirkle, cicalese, daniel, gmodena, hokwelum,
-              tchin, xcollazo, sg912, aude, dbrant
+              tchin, xcollazo, sg912, aude, dbrant, jly
     ]
     system_members: [mwbuilder, mwpresync]
     privileges: ['ALL = (www-data,mwdeploy,scap,mwpresync) NOPASSWD: ALL',
@@ -449,7 +449,7 @@ groups:
               georgemikesell, bblack, toyofuku, linafaridwmde, yliou, derenrich, sperry-wmf,
               mareikeheuer, hnordeen, rickijay, radimer, dmuthuri, kgraessle, dreamyjazz, jsn, cwylo,
               sharvaniharan, ariel, quiddity, wmdecyn, joelyrookewmde, ifeatunnaobiwmde, cyndywikime,
-              seanleong-wmde, cdobbins, khantstop]
+              seanleong-wmde, cdobbins, khantstop, jly]
     privileges: ['ALL = (analytics-privatedata) NOPASSWD: ALL']
     system_members: [analytics-search, analytics, analytics-privatedata, analytics-product,
               analytics-research, analytics-platform-eng, analytics-wmde, spark]
@@ -6511,6 +6511,15 @@ users:
     expiry_contact: osefu@wikimedia.org
     ssh_keys:
       - 'ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEFkrUgMVVji39VP3BbWWZAP5/w2HJmfK5oKUfK21Ozj wmf3032@WMF3032s-MBP'
+  jly:
+    ensure: present
+    gid: 500
+    uid: 48013
+    realname: Jimmy Ly
+    email: jly@wikimedia.org
+    krb: present
+    ssh_keys:
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPDe7UZlc9MPD5CmwtLcKG9b13NsrAfcIQgXNUa0TCte jly@wikimedia.org
 
 ldap_only_users:
   adavenport:
