@@ -26,11 +26,4 @@ profile::base::production::role_description: 'Build host for Docker images and D
 # we need overlayfs
 profile::base::overlayfs: true
 
-profile::java::java_packages:
-  - version: "8"
-    variant: "jdk"
-  - version: "11"
-    variant: "jdk"
 
-# Needed to be able to build pybal
-profile::base::remove_python2_on_bullseye: false
