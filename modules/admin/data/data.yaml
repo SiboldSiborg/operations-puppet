@@ -924,7 +924,8 @@ groups:
                             klausman, dsaez, fab, isaacj, leizi, mgerlach,
                             mirrys, mnz, paragon, trokhymovych, xiaoxiao, bearloga]
     posix_name: render
-    privileges: []
+    privileges: ['ALL = NOPASSWD: /usr/sbin/radeontop',
+                 'ALL = NOPASSWD: /usr/bin/nvtop']
     approval:
       - Chris Albon
   gpu-testers:
