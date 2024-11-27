@@ -15,6 +15,6 @@ class openstack::neutron::ovs_agent::caracal (
         mode    => '0640',
         content => template('openstack/caracal/neutron/plugins/ml2/openvswitch_agent.ini.erb'),
         require => Package['neutron-openvswitch-agent'],
-        notify  => Service['neutron-openvswitch-agent'],
+        # NOTE: not notifying the service on file changes, see T380972
     }
 }

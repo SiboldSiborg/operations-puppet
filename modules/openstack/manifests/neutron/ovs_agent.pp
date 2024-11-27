@@ -10,12 +10,8 @@ class openstack::neutron::ovs_agent (
     }
 
     service { 'neutron-openvswitch-agent':
-        ensure    => running,
-        enable    => true,
-        subscribe => [
-            File['/etc/neutron/neutron.conf'],
-            File['/etc/neutron/plugins/ml2/ml2_conf.ini'],
-            # openvswitch_agent.ini uses a notify on the file resource
-        ],
+        ensure => running,
+        enable => true,
+        # NOTE: not subscribed to file changes on purpose, see T380972
     }
 }
