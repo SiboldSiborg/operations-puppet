@@ -97,6 +97,8 @@
 "os_compute_api:servers:resize": "rule:admin_or_member"
 "os_compute_api:servers:revert_resize": "rule:admin_or_member"
 "os_compute_api:servers:show": ""
+"os_compute_api:servers:show:flavor-extra-specs": ""
+"os_compute_api:servers:show:host_status": ""
 "os_compute_api:servers:start": "rule:admin_or_member"
 "os_compute_api:servers:stop": "rule:admin_or_member"
 "os_compute_api:servers:update": "rule:admin_or_member"
