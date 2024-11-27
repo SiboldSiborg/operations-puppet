@@ -1,2 +1,2 @@
 [client]
-host='tools-db'
+host='tools.db.svc.wikimedia.cloud'
