@@ -190,7 +190,7 @@ def nfs_home_check():
 @check("/redis")
 def redis_check():
     """Verify that we can write, read, and delete a Redis key."""
-    red = redis.StrictRedis(host="tools-redis")
+    red = redis.StrictRedis(host="redis.svc.tools.eqiad1.wikimedia.cloud")
     content = "toolschecker-check-{}".format(str(uuid.uuid4()))
     try:
         if not red.set(content, content):
