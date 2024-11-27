@@ -523,7 +523,7 @@ lvs::interfaces::vlan_data:
     iface:
       lvs7001: 'eno12399np0:195.200.68.2'
       lvs7002: 'eno12409np1:195.200.68.3'
-      lvs7003: 'eno12399np0:195.200.68.4'
+      lvs7003: 'eno12399np0:195.200.68.5'
   public1-b4-magru:
     id: "712"
     netmask: '255.255.255.224'
