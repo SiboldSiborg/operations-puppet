@@ -807,7 +807,7 @@ kafka_clusters:
       kafka-main1006.eqiad.wmnet:
         id: 1001
         rack: A
-      kafka-main1002.eqiad.wmnet:
+      kafka-main1007.eqiad.wmnet:
         id: 1002
         rack: B
       kafka-main1003.eqiad.wmnet:
