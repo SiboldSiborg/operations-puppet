@@ -7343,3 +7343,7 @@ ldap_only_users:
     ensure: present
     realname: Hector Arroyo
     email: hector.arroyo@wikimedia.org
+  sspalding:
+    ensure: present
+    realname: Shaun Spalding
+    email: sspalding@wikimedia.org
