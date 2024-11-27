@@ -1396,12 +1396,8 @@ node /^ganeti600[1234]\.drmrs\./ {
     role(ganeti)
 }
 
-node /^ganeti700[34]\.magru\./ {
+node /^ganeti700[1234]\.magru\./ {
     role(ganeti)
-}
-
-node /^ganeti700[12]\.magru\./ {
-    role(insetup::infrastructure_foundations)
 }
 
 # gitlab servers - eqiad (T274459, T301177)
