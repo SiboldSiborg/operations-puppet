@@ -88,11 +88,10 @@ listname_chars: [-_.0-9a-z]
 # the content of some mail to go missing.
 #
 # The mailman documentation says that changing the task runner should be safe
-# to run at different intervals (e.g., daily), so we'll start at 12 hours and
-# see if this improves things.
+# to run at different intervals (e.g., daily)
 #
 # The problem is outlined in https://phabricator.wikimedia.org/T377045
-run_tasks_every: 12h
+run_tasks_every: 1d
 
 [shell]
 # `mailman shell` (also `withlist`) gives you an interactive prompt that you
