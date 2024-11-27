@@ -17,7 +17,7 @@ class scap (
     Boolean $enable_bootstrapping                   = true,
 ) {
     require git::lfs
-    require scap::user
+    include scap::user
 
     # Required python3 package is provided by base::standard_packages class
     ensure_packages(['rsync', 'python3-venv'])
