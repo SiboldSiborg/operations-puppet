@@ -1,2 +1,19 @@
 which helm >/dev/null && source <(helm completion bash)
 which kubectl >/dev/null && source <(kubectl completion bash)
+
+_cookbook_completion() {
+    local cur
+    cur="${COMP_WORDS[COMP_CWORD]}"
+
+    local dir
+    dir=/srv/deployment/spicerack/cookbooks
+
+    # Search for .py files in $dir, exclude those starting with "_", replace slashes with dots, and remove .py extensions
+    local scripts
+    scripts=$(find $dir -type f -name "*.py" ! -name "_*.py" | \
+        sed -E "s|^${dir}/||;s|/|.|g;s|\.py$||")
+
+    COMPREPLY=( $(compgen -W "${scripts}" -- "${cur}") )
+}
+
+which cookbook >/dev/null && complete -F _cookbook_completion cookbook
