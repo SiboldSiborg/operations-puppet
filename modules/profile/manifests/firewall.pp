@@ -24,6 +24,7 @@ class profile::firewall (
     Array[Stdlib::IP::Address] $cumin_masters               = lookup('cumin_masters'),
     Array[Stdlib::IP::Address] $bastion_hosts               = lookup('bastion_hosts'),
     Array[Stdlib::IP::Address] $cache_hosts                 = lookup('cache_hosts'),
+    Array[Stdlib::IP::Address] $lb_health_checks            = lookup('haproxy_allowed_healthcheck_sources'),
     Array[Stdlib::IP::Address] $kafka_brokers_main          = lookup('kafka_brokers_main'),
     Array[Stdlib::IP::Address] $kafka_brokers_jumbo         = lookup('kafka_brokers_jumbo'),
     Array[Stdlib::IP::Address] $kafka_brokers_logging       = lookup('kafka_brokers_logging'),

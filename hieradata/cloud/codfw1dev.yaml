@@ -109,3 +109,5 @@ profile::puppetserver::hierarchy:
   - name: "Private Common hierarchy"
     path: "common.yaml"
     datadir: "/etc/puppet/private/hieradata"
+
+haproxy_allowed_healthcheck_sources: []

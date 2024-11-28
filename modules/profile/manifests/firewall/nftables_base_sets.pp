@@ -17,6 +17,7 @@ class profile::firewall::nftables_base_sets (
     Array[Stdlib::Host]        $prometheus_nodes      = lookup('prometheus_nodes'),
     Array[Stdlib::IP::Address] $zookeeper_flink_hosts = lookup('zookeeper_flink_hosts'),
     Array[Stdlib::IP::Address] $zookeeper_hosts_main  = lookup('zookeeper_hosts_main'),
+    Array[Stdlib::IP::Address] $lb_health_checks      = lookup('haproxy_allowed_healthcheck_sources'),
 ) {
 
     include network::constants
@@ -121,6 +122,12 @@ class profile::firewall::nftables_base_sets (
 
     nftables::set { 'CACHES':
         hosts => $cache_hosts,
+    }
+
+    unless $lb_health_checks.empty() {
+        nftables::set { 'LOAD_BALANCER_HEALTH_CHECKS':
+            hosts => $lb_health_checks,
+        }
     }
 
     nftables::set { 'KAFKA_BROKERS_MAIN':

@@ -54,6 +54,7 @@ aux_kubepods_networks = scope.lookupvar('network::constants::aux_kubepods_networ
 @def $DEPLOYMENT_HOSTS = (<%- @deployment_hosts.each do |ip| -%><%= ip %> <% end -%>);
 @def $CUMIN_MASTERS = (<%- @cumin_masters.each do |ip| -%><%= ip %> <% end -%>);
 @def $CACHES = (<%- @cache_hosts.each do |ip| -%><%= ip %> <% end -%>);
+@def $LOAD_BALANCER_HEALTH_CHECKS = (<%- @lb_health_checks.each do |ip| -%><%= ip %> <% end -%>);
 @def $KAFKA_BROKERS_MAIN = (<%- @kafka_brokers_main.each do |ip| -%><%= ip %> <% end -%>);
 @def $KAFKA_BROKERS_JUMBO = (<%- @kafka_brokers_jumbo.each do |ip| -%><%= ip %> <% end -%>);
 @def $KAFKA_BROKERS_LOGGING = (<%- @kafka_brokers_logging.each do |ip| -%><%= ip %> <% end -%>);

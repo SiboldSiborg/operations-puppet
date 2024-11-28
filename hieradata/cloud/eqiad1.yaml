@@ -307,3 +307,5 @@ profile::syslog::remote::tls_trusted_ca: /etc/ssl/certs/ca-certificates.crt
 # we need the ossl driver; gtls doesn't work with acme certs.
 profile::syslog::remote::tls_netstream_driver: ossl
 profile::syslog::centralserver::tls_netstream_driver: ossl
+
+haproxy_allowed_healthcheck_sources: []
