@@ -1343,12 +1343,12 @@ node /^lists2001\.wikimedia\./ {
     role(lists)
 }
 
-node /^ganeti10(09|1[89]|2[03456789]|3[0-9]|4[0-9]|5[0-2])\.eqiad\./ {
+node /^ganeti10(09|2[03456789]|3[0-9]|4[0-9]|5[0-2])\.eqiad\./ {
     role(ganeti)
 }
 
 # Old servers, to be decommed
-node /^ganeti10(1[2567]|2[12])\.eqiad\./ {
+node /^ganeti10(1[25678]|2[12])\.eqiad\./ {
     role(insetup::infrastructure_foundations)
 }
 
