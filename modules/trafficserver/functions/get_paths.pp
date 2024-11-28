@@ -45,7 +45,6 @@ function trafficserver::get_paths(Boolean $default_instance, String $instance_na
         logdir        => $logdir,
         cachedir      => $cachedir,
         records       => "${sysconfdir}/records.config",
-        ssl_multicert => "${sysconfdir}/ssl_multicert.config",
         secretsdir    => $secretsdir,
         stekfile      => $stekfile,
     }

@@ -3,7 +3,6 @@ define profile::trafficserver::monitoring(
     Trafficserver::Paths $paths,
     Stdlib::Port $port,
     Stdlib::Port::User $prometheus_exporter_port,
-    Optional[Trafficserver::Inbound_TLS_settings] $inbound_tls = undef,
     Optional[Trafficserver::Network_settings] $network_settings = undef,
     Boolean $default_instance = false,
     Boolean $acme_chief = false,
@@ -14,13 +13,8 @@ define profile::trafficserver::monitoring(
     # This profile depends on some resources created by profile::monitoring
     include profile::monitoring
 
-    if $inbound_tls {
-        $endpoint = "https://127.0.0.1:${port}/_stats"
-        $traffic_manager_http_check = 'check_https_hostheader_port_url'
-    } else {
-        $endpoint = "http://127.0.0.1:${port}/_stats"
-        $traffic_manager_http_check = 'check_http_hostheader_port_url'
-    }
+    $endpoint = "http://127.0.0.1:${port}/_stats"
+    $traffic_manager_http_check = 'check_http_hostheader_port_url'
 
     if $default_instance {
         $traffic_manager_nrpe_command = '/usr/lib/nagios/plugins/check_procs -c 1:1 -a "/usr/bin/traffic_manager --nosyslog"'
@@ -84,43 +78,4 @@ define profile::trafficserver::monitoring(
         require   => Trafficserver::Instance[$instance_name],
     }
 
-    if $inbound_tls {
-        $inbound_tls['certificates'].each |Trafficserver::TLS_certificate $certificate| {
-            if $certificate['common_name'] and $certificate['sni'] and $certificate['warning_threshold'] and $certificate['critical_threshold'] {
-                if $inbound_tls['do_ocsp'] == 1 {
-                    $check_ocsp = 'check_ssl_ats_ocsp'
-                } else {
-                    $check_ocsp = 'check_ssl_ats'
-                }
-                if $certificate['default'] {
-                    $check = "${check_ocsp}_default"
-                } else {
-                    $check = $check_ocsp
-                }
-                $check_sni_str = join($certificate['sni'], ',')
-                ['ECDSA', 'RSA'].each |String $algorithm| {
-                    monitoring::service { "trafficserver_${instance_name}_https_${certificate['common_name']}_${algorithm}":
-                        description   => "ats-${instance_name} HTTPS ${certificate['common_name']} ${algorithm}",
-                        check_command => "${check}!${certificate['warning_threshold']}!${certificate['critical_threshold']}!${certificate['common_name']}!${check_sni_str}!${port}!${algorithm}",
-                        notes_url     => 'https://wikitech.wikimedia.org/wiki/HTTPS',
-                    }
-                }
-            }
-        }
-        if $inbound_tls['do_ocsp'] == 1 {
-            $check_args = '-c 259500 -w 173100 -d /var/cache/ocsp -g "*.ocsp"'
-            $check_args_acme_chief = '-c 518400 -w 432000 -d /etc/acmecerts -g "*/live/*.ocsp"'
-            nrpe::monitor_service { "trafficserver_${instance_name}_ocsp_freshness":
-                description  => 'Freshness of OCSP Stapling files (ATS-TLS)',
-                nrpe_command => "/usr/local/lib/nagios/plugins/check_fresh_files_in_dir ${check_args}",
-                notes_url    => 'https://wikitech.wikimedia.org/wiki/HTTPS/Unified_Certificates',
-            }
-            nrpe::monitor_service { "trafficserver_${instance_name}_ocsp_freshness_acme_chief":
-                ensure       => bool2str($acme_chief, 'present', 'absent'),
-                description  => 'Freshness of OCSP Stapling files (ATS-TLS acme-chief)',
-                nrpe_command => "/usr/local/lib/nagios/plugins/check_fresh_files_in_dir ${check_args_acme_chief}",
-                notes_url    => 'https://wikitech.wikimedia.org/wiki/HTTPS/Unified_Certificates',
-            }
-        }
-    }
 }

@@ -1,8 +1,5 @@
 <%#- SPDX-License-Identifier: Apache-2.0 -%>
 [Service]
-<% if @update_ocsp -%>
-ExecStartPre=/usr/local/sbin/update-ocsp-all
-<% end -%>
 ExecStart=
 <% if @default_instance -%>
 ExecStart=/usr/bin/traffic_manager --nosyslog
@@ -51,10 +48,6 @@ ProtectSystem=strict
 ReadWritePaths=<%= @paths['logdir'] %>
 ReadWritePaths=<%= @paths['runtimedir'] %>
 ReadWritePaths=<%= @paths['cachedir'] %>
-<% if @update_ocsp -%>
-ReadWritePaths=/var/cache/ocsp
-ReadWritePaths=<%= @paths['sysconfdir'] %>
-<% end -%>
 <% end -%>
 <% if @service_name != 'trafficserver' -%>
 [Install]
