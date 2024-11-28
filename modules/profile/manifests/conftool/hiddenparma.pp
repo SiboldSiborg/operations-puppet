@@ -2,8 +2,10 @@
 # @summary profile to install the requestctl web interface
 #
 # @param api_tokens Hash[str, str] a dictionary of username-token pairs
+# @param csrf_secret str a secret key for CSRF protection
 class profile::conftool::hiddenparma (
     Hash[String, String] $api_tokens = lookup('profile::conftool::hiddenparma::api_tokens'),
+    String $csrf_shared_secret = lookup('profile::conftool::hiddenparma::csrf_shared_secret'),
 ) {
     # The passwords::etcd class is required by conftool::client, but we want to make the dependency explicit.
     require passwords::etcd
