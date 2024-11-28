@@ -7347,3 +7347,7 @@ ldap_only_users:
     ensure: present
     realname: Shaun Spalding
     email: sspalding@wikimedia.org
+  iackerman:
+    ensure: present
+    realname: Ilse Ackerman
+    email: iackerman@wikimedia.org
