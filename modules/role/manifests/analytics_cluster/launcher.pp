@@ -1,11 +1,6 @@
 # == Class role::analytics_cluster::launcher
 #
 class role::analytics_cluster::launcher {
-
-    system::role { 'analytics_cluster::launcher':
-        description => 'Analytics Cluster host launching jobs (airflow-analytics, Spark, Report Updater, etc..)'
-    }
-
     include profile::java
     include profile::analytics::cluster::client
 

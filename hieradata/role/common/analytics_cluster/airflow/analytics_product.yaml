@@ -8,6 +8,7 @@ profile::admin::groups:
   - analytics-admins
 
 profile::contacts::role_contacts: ['Data Platform']
+profile::base::production::role_description: 'Airflow instance for the Product Analytics team in the Analytics cluster'
 
 profile::hadoop::common::hadoop_cluster_name: 'analytics-hadoop'
 profile::hive::client::hive_service_name: 'analytics-hive'

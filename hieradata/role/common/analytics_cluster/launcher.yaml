@@ -109,6 +109,7 @@ profile::airflow::instances:
         extra_dejson: {"connection": {"schema_registry_url": "https://datahub-gms.discovery.wmnet:30443/schema-registry/api/"}}
 
 profile::contacts::role_contacts: ['Data Platform']
+profile::base::production::role_description: 'Analytics Cluster host launching jobs (airflow-analytics, Spark, Report Updater, etc..)'
 
 profile::base::certificates::include_bundle_jks: true
 

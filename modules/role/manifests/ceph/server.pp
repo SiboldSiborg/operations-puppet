@@ -14,10 +14,6 @@
 # generic naming of this role.
 #
 class role::ceph::server {
-    system::role { 'ceph::server':
-        description => 'Ceph server',
-    }
-
     include profile::base::production
     include profile::firewall
     include profile::ceph::auth::load_all

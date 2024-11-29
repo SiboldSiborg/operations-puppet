@@ -157,6 +157,7 @@ profile::java::java_packages:
 profile::java::extra_args:
   JAVA_TOOL_OPTIONS: "-Dfile.encoding=UTF-8"
 profile::contacts::role_contacts: ['Data Platform']
+profile::base::production::role_description: 'Analytics Cluster host running various Hadoop services (Hive and Presto)'
 
 profile::base::certificates::include_bundle_jks: true
 

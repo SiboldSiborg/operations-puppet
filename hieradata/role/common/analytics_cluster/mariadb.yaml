@@ -1,4 +1,5 @@
 profile::contacts::role_contacts: ['Data Platform']
+profile::base::production::role_description: 'MariaDB cluster for Data Engineering'
 
 profile::analytics::database::meta::datadir: '/srv/sqldata'
 profile::analytics::database::meta::monitoring_enabled: true
