@@ -18,7 +18,7 @@ profile::tlsproxy::envoy::services:
   - server_names: ["*"]
     port: 80
 profile::tlsproxy::envoy::upstream_response_timeout: 203.0
-profile::tlsproxy::envoy::retries: false
+profile::tlsproxy::envoy::retries: true
 profile::tlsproxy::envoy::global_cert_name: "appservers.svc.eqiad.wmnet"
 profile::tlsproxy::envoy::access_log: true
 profile::tlsproxy::envoy::header_key_format: "proper_case"
