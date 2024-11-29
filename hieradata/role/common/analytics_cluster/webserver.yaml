@@ -19,6 +19,10 @@ profile::tlsproxy::envoy::cfssl_options:
     - datasets.wikimedia.org
     - stats.wikimedia.org
 profile::tlsproxy::envoy::global_cert_name: "analytics.wikimedia.org"
+
+profile::tlsproxy::envoy::firewall_src_sets:
+  - CACHES
+
 # Increase the 65s upstream timeout to 300sin order to support large requests #T356792
 profile::tlsproxy::envoy::upstream_response_timeout: 300.0
 profile::contacts::role_contacts: ['Data Platform']
