@@ -34,6 +34,12 @@ define package_builder::pbuilder_hook(
             mode   => '0555',
             source => 'puppet:///modules/package_builder/hooks/D04java8-bookworm',
         }
+
+        file { "${basepath}/hooks/${distribution}/D04maps":
+            ensure => present,
+            mode   => '0555',
+            source => 'puppet:///modules/package_builder/hooks/D04maps',
+        }
     }
 
     if $distribution == 'bullseye' {
