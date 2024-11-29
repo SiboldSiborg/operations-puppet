@@ -18,9 +18,6 @@ profile::mediawiki::php::fpm_workers_multiplier: 0.32
 profile::conftool::state::ensure: present
 profile::conftool::state::query_interval: 30
 
-# envoy for TLS termination for noc.wikimedia.org behind ATS
-profile::tlsproxy::envoy::global_cert_name: "mwmaint.discovery.wmnet"
-
 # Use the gutter pool for failover
 profile::mediawiki::mcrouter_wancache::gutter_ttl: 600
 # Bump the connections per backend to 5 in mcrouter, see T203786
