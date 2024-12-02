@@ -984,7 +984,7 @@ node /^dbproxy200(5|6|7|8)\.codfw\./ {
 }
 
 # New external storage T378146
-node /^es204(1|2|3|4|5|6)\.codfw\./ {
+node /^es204(2|3|4|5|6)\.codfw\./ {
     role(insetup::data_persistence)
 }
 
@@ -1215,6 +1215,10 @@ node /^es1022\.eqiad\./ {
 
 ## codfw servers
 node /^es2020\.codfw\./ {
+    role(mariadb::core)
+}
+
+node /^es2041\.codfw\./ {
     role(mariadb::core)
 }
 
