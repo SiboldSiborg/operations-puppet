@@ -148,4 +148,9 @@ class profile::lvs::realserver::ipip(
         ensure         => $ensure,
         clamped_ipport => $clamped_ipport,
     }
+    prometheus::node_ferm_mss {'ferm_clamped_ipport':
+        ensure         => $ensure_ferm_mss,
+        clamped_ipport => $clamped_ipport,
+    }
+
 }
