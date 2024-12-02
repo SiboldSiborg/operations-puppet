@@ -434,8 +434,6 @@ kubernetes::clusters:
         - mw2417.codfw.wmnet
         - mw2418.codfw.wmnet
         - mw2419.codfw.wmnet
-        - mw2436.codfw.wmnet
-        - mw2437.codfw.wmnet
         - mw2440.codfw.wmnet
         - mw2442.codfw.wmnet
         - mw2443.codfw.wmnet
@@ -454,6 +452,8 @@ kubernetes::clusters:
         - wikikube-worker2002.codfw.wmnet
         - wikikube-worker2003.codfw.wmnet
         - wikikube-worker2004.codfw.wmnet
+        - wikikube-worker2005.codfw.wmnet
+        - wikikube-worker2006.codfw.wmnet
         - wikikube-worker2007.codfw.wmnet
         - wikikube-worker2008.codfw.wmnet
         - wikikube-worker2009.codfw.wmnet
