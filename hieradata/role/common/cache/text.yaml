@@ -294,7 +294,6 @@ profile::cache::base::default_weights:
 profile::cache::haproxy::extra_certificates:
   wikiworkshop:
     cert_paths:
-      - /etc/acmecerts/wikiworkshop/live/rsa-2048.chained.crt.key
       - /etc/acmecerts/wikiworkshop/live/ec-prime256v1.chained.crt.key
     server_names:
       - wikiworkshop.org
