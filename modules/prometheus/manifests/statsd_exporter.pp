@@ -71,6 +71,7 @@ class prometheus::statsd_exporter (
         owner   => 'root',
         group   => 'root',
         mode    => '0444',
+        notify  => Service['prometheus-statsd-exporter'],
     }
 
     file { '/etc/default/prometheus-statsd-exporter':
