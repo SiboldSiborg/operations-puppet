@@ -33,7 +33,7 @@ groups:
               shubhankar, nskaggs, mhoutti, goransm, brion, jfishback, pearley, kcv-wikimf, lsobanski,
               dbad2021, bdgreenlee, kormat, kwakuofori, mabualruz, mttp, springle, natalia-rodriguez,
               twentyafterfour, akhatun, ezachte, chelsyx, sbailey, gtzatchkova, manuel-wmde, sandeeps,
-              dumisani, lbowmaker, andyrussg]
+              dumisani, lbowmaker, andyrussg, eoghan]
   absent_ldap:
     description: meta group for absented users which had privileged LDAP access in the past, an automatic check verifies it has been really removed from the LDAP (but removal has to be handled separatelly)
     members: [adavenport, siddharth11, albe, audiohazel, tbolliger, jmatazzoni, pbj, nirzar,
@@ -68,7 +68,7 @@ groups:
               rzl, hnowlan, jayme, ryankemper, klausman,
               dcaro, legoktm, cmooney, jelto, btullis,
               rook, mvernon, ladsgroup, aokoth, jhathaway, bking, denisse, slyngshede,
-              brett, fnegri, cgoubert, eevans, stevemunene, eoghan, kamila,
+              brett, fnegri, cgoubert, eevans, stevemunene, kamila,
               fabfur, taavi, arnaudb, brouberol, swfrench, aborrero, cdobbins, tappof,
               jasmine]
     privileges: ['ALL = (ALL) NOPASSWD: ALL']
@@ -5827,13 +5827,11 @@ users:
       - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKl5dZELGsNPrSwmfHmNADYAXwrb/75Rz722wiNz2kdi muja@102979
     krb: present
   eoghan:
-    ensure: present
+    ensure: absent
     realname: Eoghan Gaffney
-    email: egaffney@wikimedia.org
     uid: 43207
     gid: 500
-    ssh_keys:
-      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII8bGW3V4Wh5U0uUdBVyAaWMf1FBf5WeCf9FnxhJf/vM egaffney@wikimedia.org
+    ssh_keys: []
   abhas:
     ensure: present
     realname: Abhas Tripathi
