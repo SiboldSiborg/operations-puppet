@@ -71,9 +71,7 @@ define scap::target(
     Array[String]    $sudo_rules                = [],
 ) {
     # Include scap3 and ssh ferm rules.
-    # The scap3 package provider further down in this file requires scap to be installed when it runs. Bootstrapping
-    # errors can happen otherwise, e.g. T378769
-    require scap
+    include scap
     include scap::ferm
 
     if !$service_name and !empty($additional_services_names) {
