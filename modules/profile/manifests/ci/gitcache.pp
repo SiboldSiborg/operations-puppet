@@ -21,6 +21,7 @@ class profile::ci::gitcache {
         'mediawiki/extensions/UniversalLanguageSelector',
         'mediawiki/extensions/VisualEditor',
         'mediawiki/extensions/Wikibase',
+        'mediawiki/extensions/WikimediaMessages', # Takes 13s to resolve deltas
         'mediawiki/skins/MinervaNeue',
         'mediawiki/skins/Vector',
     ]
