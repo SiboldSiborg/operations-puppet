@@ -15,6 +15,7 @@
 class profile::webperf::processors(
     String       $statsd        = lookup('statsd'),
     Stdlib::Fqdn $graphite_host = lookup('graphite_host'),
+    Array[Variant[Integer, Float]] $histogram_buckets = lookup('profile::webperf::processors::histogram_buckets', { 'default_value' => [0.005,0.01,0.025,0.05,0.1,0.25,0.5,1,2.5,5,10,30,60],}),
 ){
 
     $statsd_parts = split($statsd, ':')
@@ -44,7 +45,9 @@ class profile::webperf::processors(
     }
     class { 'profile::prometheus::statsd_exporter':
         prometheus_instance => 'ext',
-        relay_address       => '' # unset to disable relaying
+        relay_address       => '', # unset to disable relaying
+        timer_type          => 'histogram',
+        histogram_buckets   => $histogram_buckets
     }
 
     # EventLogging is on the jumbo kafka. Unlike the main one, this
