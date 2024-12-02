@@ -1,0 +1,4 @@
+# Future host
+# es1043
+profile::monitoring::notifications_enabled: false
+
