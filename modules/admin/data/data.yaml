@@ -33,7 +33,7 @@ groups:
               shubhankar, nskaggs, mhoutti, goransm, brion, jfishback, pearley, kcv-wikimf, lsobanski,
               dbad2021, bdgreenlee, kormat, kwakuofori, mabualruz, mttp, springle, natalia-rodriguez,
               twentyafterfour, akhatun, ezachte, chelsyx, sbailey, gtzatchkova, manuel-wmde, sandeeps,
-              dumisani, lbowmaker, andyrussg, eoghan]
+              dumisani, lbowmaker, andyrussg, eoghan, drochford]
   absent_ldap:
     description: meta group for absented users which had privileged LDAP access in the past, an automatic check verifies it has been really removed from the LDAP (but removal has to be handled separatelly)
     members: [adavenport, siddharth11, albe, audiohazel, tbolliger, jmatazzoni, pbj, nirzar,
@@ -434,7 +434,7 @@ groups:
               samwilson, tillmletzko-wmde, janjaquemot, mmartorana,
               mmunyoki, ryankemper, bking, spatel, aqu, ebysans, mfossati, madasan,
               tandic, auglnkv, rzl, aminalhazwani,
-              dalezhou, otich, sgimeno, tchin, aitolkyn, drochford,
+              dalezhou, otich, sgimeno, tchin, aitolkyn,
               hmonroy, dmaza, mazevedo, tsev, kstoller, samtar, xcollazo,
               dani, bgwiki, alinebruenger, sgrabarczuk, vpoundstone,
               soworu-01, pwaigi1-, trokhymovych, siko, wubwubwub, pfischer, ttaylor,
@@ -5437,12 +5437,11 @@ users:
     expiry_date: "2024-12-31"
     expiry_contact: mredi@wikimedia.org
   drochford:
-    ensure: present
+    ensure: absent
     realname: David Rochford
-    email: drochford@wikimedia.org
     uid: 25664
     gid: 500
-    ssh_keys: []  # Added with no SSH access, for membership in analytics-privatedata-users.
+    ssh_keys: []
   essexigyan:
     ensure: absent
     realname: Essex Igyan
