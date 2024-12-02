@@ -44,6 +44,7 @@ class profile::webperf::processors(
     }
     class { 'profile::prometheus::statsd_exporter':
         prometheus_instance => 'ext',
+        relay_address       => '' # unset to disable relaying
     }
 
     # EventLogging is on the jumbo kafka. Unlike the main one, this
