@@ -18,6 +18,7 @@ class puppet::agent (
     Optional[String[1]]                      $certname               = undef,
     Array[Stdlib::Fqdn]                      $dns_alt_names          = [],
     Optional[String[1]]                      $environment            = undef,
+    Optional[Integer]                        $facts_soft_limit       = 2048,
     Enum['pson', 'json', 'msgpack']          $serialization_format   = 'json',
     Optional[Enum['chain', 'leaf', 'false']] $certificate_revocation = undef,
 ) {
