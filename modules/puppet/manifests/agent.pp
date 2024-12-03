@@ -35,19 +35,36 @@ class puppet::agent (
         ensure_packages(['puppet-module-puppetlabs-augeas-core'])
     }
 
-    file { ['/etc/puppetlabs/','/etc/puppetlabs/facter/', '/etc/puppetlabs/facter/facts.d/']:
-        ensure => directory,
-        owner  => 'root',
-        group  => 'root',
-        mode   => '0555',
-    }
+    # Debian's Puppet 7 package moved the config to /etc/facter
+    if versioncmp($facts['puppetversion'], '7') >= 0 {
+        file { '/etc/facter':
+            ensure => directory,
+            mode   => '0555',
+        }
 
-    file { '/etc/puppetlabs/facter/facter.conf':
-        ensure => 'file',
-        owner  => 'root',
-        group  => 'root',
-        mode   => '0444',
-        source => 'puppet:///modules/puppet/facter.conf',
+        file { '/etc/facter/facter.conf':
+            ensure => 'file',
+            mode   => '0444',
+            source => 'puppet:///modules/puppet/facter.conf',
+        }
+
+        file { '/etc/puppetlabs':
+            ensure  => absent,
+            force   => true,
+            recurse => true,
+            mode    => '0555',
+        }
+    } else {
+        file { ['/etc/puppetlabs','/etc/puppetlabs/facter']:
+            ensure => directory,
+            mode   => '0555',
+        }
+
+        file { '/etc/puppetlabs/facter/facter.conf':
+            ensure => 'file',
+            mode   => '0444',
+            source => 'puppet:///modules/puppet/facter.conf',
+        }
     }
 
     concat { '/etc/puppet/puppet.conf':
