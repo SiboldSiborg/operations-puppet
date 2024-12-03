@@ -986,6 +986,10 @@ node /^db22(26|28|31|32|33|34|41|42)\.codfw\./ {
     role(insetup::data_persistence)
 }
 
+# New databases T379753
+node /^db12(55|56)\.eqiad\./ {
+    role(insetup::data_persistence)
+}
 # New external storage databases T378143
 node /^es104(1|2|3|4|5|6)\.eqiad\./ {
     role(insetup::data_persistence)

@@ -182,7 +182,7 @@ profile::installserver::preseed::preseed_per_hostname:
   'datahubsearch*':
     - partman/flat.cfg
     - virtual.cfg
-  'db999|db2230|db2241|db2242|es1041|es1042|es1043|es1044|es1045|es1046|es2041|es2042|es2043|es2044|es2045|es2046':
+  'db999|db1255|db1256|db2230|db2241|db2242|es1041|es1042|es1043|es1044|es1045|es1046|es2041|es2042|es2043|es2044|es2045|es2046':
     - partman/custom/db.cfg
   'db888':
     - partman/manual-setup.cfg
