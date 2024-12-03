@@ -90,8 +90,6 @@ kubernetes::clusters:
         v4: "10.67.128.0/18"
         v6: "2620:0:861:cabe::/64"
       cluster_nodes:
-        - kubernetes1019.eqiad.wmnet
-        - kubernetes1020.eqiad.wmnet
         - kubernetes1021.eqiad.wmnet
         - kubernetes1022.eqiad.wmnet
         - kubernetes1023.eqiad.wmnet
@@ -239,6 +237,8 @@ kubernetes::clusters:
         - wikikube-worker1012.eqiad.wmnet
         - wikikube-worker1013.eqiad.wmnet
         - wikikube-worker1014.eqiad.wmnet
+        - wikikube-worker1015.eqiad.wmnet
+        - wikikube-worker1016.eqiad.wmnet
         - wikikube-worker1017.eqiad.wmnet
         - wikikube-worker1018.eqiad.wmnet
         - wikikube-worker1019.eqiad.wmnet
