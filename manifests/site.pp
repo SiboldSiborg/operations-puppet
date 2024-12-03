@@ -1790,6 +1790,11 @@ node /^cloudcontrol10(0[8-9]|1[0])\-dev\.eqiad\./ {
     role(insetup::wmcs)
 }
 
+# Refresh for cloudcontrol1005
+node /^cloudcontrol1011.eqiad\./ {
+    role(insetup::wmcs)
+}
+
 # Data Platform - Ceph osd servers T322760
 node /^cephosd100[12345]\.eqiad\./ {
     role(ceph::server)
