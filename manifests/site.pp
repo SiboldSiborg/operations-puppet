@@ -896,8 +896,11 @@ node /^db1245\.eqiad\./ {
 
 # codfw backup sources
 ## s3 & s4, bullseye
-node /^db2(1|2)39\.codfw\./ {
+node /^db2139\.codfw\./ {
     role(mariadb::backup_source)
+}
+node /^db2239\.codfw\./ {
+    role(insetup::data_persistence)
 }
 ## s1, bullseye
 node /^db2141\.codfw\./ {
