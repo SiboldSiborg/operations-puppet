@@ -913,6 +913,7 @@ groups:
     privileges: []
     approval:
       - Chris Albon
+      - Ilias Sarantopoulos
   ml-lab-users:
     # Users of the ml-lab100x experimentation hosts. Typically ML-Team,
     # Research and similar folks.
@@ -928,6 +929,7 @@ groups:
                  'ALL = NOPASSWD: /usr/bin/nvtop']
     approval:
       - Chris Albon
+      - Ilias Sarantopoulos
   gpu-testers:
     description: People with access to Analytics hosts with GPUs (deprecated since 2020-12).
     gid: 810
@@ -994,6 +996,7 @@ groups:
     privileges: []
     approval:
       - Chris Albon
+      - Ilias Sarantopoulos
   gitlab-roots:
     gid: 826
     description: Group of users with full root access on gitlab machines
