@@ -2666,10 +2666,6 @@ node /^wdqs(200[79]|201[0-3]|201[6-7])\.codfw\./ {
     role(wdqs::public)
 }
 
-node /^wdqs(201[8-9]|2020)\./ {
-    role(insetup::search_platform)
-}
-
 node /^wdqs102[1-2].eqiad\./ {
     role(wdqs::main)
 }
