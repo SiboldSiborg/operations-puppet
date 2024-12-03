@@ -79,11 +79,11 @@ listen tls
     <%- if @extended_logging -%>
     capture request header Referer len 1024
     capture request header User-Agent len 1024
-    capture request header Accept-Language len 64
+    capture request header Accept-Language len 1024
     capture request header Range len 10
     capture request header Accept len 64
-    capture response header Content-Type len 25
-    capture response header X-Analytics len 96
+    capture response header Content-Type len 128
+    capture response header X-Analytics len 256
     capture response header X-Cache len 96
     capture response header Server len 64
     <%- end -%>
@@ -231,11 +231,11 @@ frontend http
 <%- if @extended_logging -%>
     capture request header Referer len 1024
     capture request header User-Agent len 1024
-    capture request header Accept-Language len 64
+    capture request header Accept-Language len 1024
     capture request header Range len 10
     capture request header Accept len 64
-    capture response header Content-Type len 25
-    capture response header X-Analytics len 96
+    capture response header Content-Type len 128
+    capture response header X-Analytics len 256
     capture response header X-Cache len 96
     capture response header Server len 64
 <%- end -%>
