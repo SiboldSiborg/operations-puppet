@@ -40,11 +40,11 @@ transport_url = rabbit://<%= @rabbitmq_nodes.map{ |rabbit_host| "#{@rabbit_user}
 ram_allocation_ratio=1.0
 initial_ram_allocation_ratio=1.0
 
-disk_allocation_ratio=1.5
-initial_disk_allocation_ratio=1.5
+disk_allocation_ratio=1.0
+initial_disk_allocation_ratio=1.0
 
-cpu_allocation_ratio=4.0
-initial_cpu_allocation_ratio=4.0
+cpu_allocation_ratio=2.0
+initial_cpu_allocation_ratio=2.0
 
 
 default_schedule_zone = <%= @default_schedule_zone %>
