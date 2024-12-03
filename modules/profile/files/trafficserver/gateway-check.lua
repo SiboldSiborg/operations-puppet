@@ -13,7 +13,7 @@ local gateway_paths = {}
 local function read_config()
     local configfile = ts.get_config_dir() .. "/lua/gateway-check.lua.conf"
     local conf = dofile(configfile)
-    if (type(conf) ~= "table") then
+    if (type(conf) ~= "table" or conf["default"] == nil) then
         ts.error("gateway-check.lua: invalid config file")
         return {}
     end
@@ -44,8 +44,20 @@ end
 local function use_rest_gateway()
     reload_config()
     local orig_path = ts.client_request.get_uri()
+    local rules = gateway_paths["default"]
+    local host = ts.client_request.header["Host"]
 
-    for key, value in pairs(gateway_paths) do
+    -- If we match a domain, add more rules
+    if host ~= nil and gateway_paths[host] ~= nil then
+        local mappings = gateway_paths[host]
+            -- Add the domain specific rules
+            for k, v in pairs(mappings) do
+                rules[k] = v
+            end
+    end
+
+    -- And now let's see if any rule matches
+    for key, value in pairs(rules) do
         if string.find(orig_path, key) then
             return value
         end

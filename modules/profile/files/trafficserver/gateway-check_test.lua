@@ -52,8 +52,13 @@ function expect(result, is_gateway, host, port)
 end
 
 local default_config = {
-   ["/api/rest_v1/(.+)/pdf/(.*)"] = {"rest-gateway.discovery.wmnet", 4113},
-   ["/api/rest_v1/metrics/unique%-devices/(.+)"] = {"api-gateway.discovery.wmnet", 8087}
+    ["default"] = {
+        ["/api/rest_v1/(.+)/pdf/(.*)"] = {"rest-gateway.discovery.wmnet", 4113},
+        ["/api/rest_v1/metrics/unique%-devices/(.+)"] = {"api-gateway.discovery.wmnet", 8087}
+    },
+    ["test.wikipedia.org"] = {
+        ["/api/rest_v1/page/title/(.*)"] = {"rest-gateway.discovery.wmnet", 4113},
+    },
 }
 
 -- the tests start here.
@@ -89,6 +94,34 @@ describe("Busted unit testing framework", function()
         default_config
       )
       expect(result, false, nil, nil)
+    end)
+
+    it("test - specific wiki route that matches", function()
+      result = run({
+          host = 'test.wikipedia.org',
+          uri = '/api/rest_v1/page/title/Hospet'
+        },
+        default_config
+      )
+      expect(result, true, 'rest-gateway.discovery.wmnet', 4113)
+    end)
+    it("test - specific wiki route that fails", function()
+      result = run({
+          host = 'test.wikipedia.org',
+          uri = '/api/rest_v1/utterfail'
+        },
+        default_config
+      )
+      expect(result, false, nil, nil)
+    end)
+    it("test - specific wiki matches default routes", function()
+      result = run({
+          host = 'test.wikipedia.org',
+          uri = '/api/rest_v1/metrics/unique-devices/en.wikipedia.org/all-sites/daily/20160201/20160229'
+        },
+        default_config
+      )
+      expect(result, true, 'api-gateway.discovery.wmnet', 8087)
     end)
   end)
 end)
