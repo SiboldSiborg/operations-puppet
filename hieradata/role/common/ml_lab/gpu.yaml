@@ -4,6 +4,7 @@ profile::admin::groups:
   - ml-lab-users
 
 profile::amd_gpu::rocm_version: '61'
+profile::amd_gpu::enable_opt_rocm_env: true
 
 profile::puppet::agent::force_puppet7: true
 

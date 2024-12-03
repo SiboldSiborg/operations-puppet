@@ -4,6 +4,7 @@
 class profile::amd_gpu (
     Optional[String] $rocm_version = lookup('profile::amd_gpu::rocm_version', { 'default_value' => undef }),
     Boolean $is_kubernetes_node = lookup('profile::amd_gpu::is_kubernetes_node', { 'default_value' => false }),
+    Boolean $enable_opt_rocm_env = lookup('profile::amd_gpu::enable_opt_rocm_env', { 'default_value' => false }),
 ) {
     if $is_kubernetes_node {
         # In most cases, like the stat100x nodes, we are able to control all the users
@@ -46,5 +47,23 @@ class profile::amd_gpu (
 
     if $is_kubernetes_node or $rocm_version {
         class { 'prometheus::node_amd_rocm': }
+    }
+
+    if $enable_opt_rocm_env {
+        systemd::environment { 'opt_rocm':
+            variables => {
+                # Since the Debian hipcc package assumes different paths for assorted
+                # binaries and include files than our /opt-based ROCm package provides,
+                # we need to override them using environment variables. Also see
+                # https://phabricator.wikimedia.org/T371344, and specifically
+                # https://phabricator.wikimedia.org/T371344#10368271
+                'DEVICE_LIB_PATH'        => '/opt/rocm/amdgcn/bitcode',
+                'HIP_CLANG_INCLUDE_PATH' => '/opt/rocm/llvm/include/',
+                'HIP_DEVICE_LIB_PATH'    => '/opt/rocm/amdgcn/bitcode',
+                'HIP_PATH'               => '/opt/rocm',
+                'PYTORCH_NVCC'           => '/usr/bin/hipcc',
+                'ROCM_PATH'              => '/opt/rocm',
+            },
+        }
     }
 }
