@@ -8,6 +8,10 @@ profile::tlsproxy::envoy::global_cert_name: 'graphite.discovery.wmnet'
 profile::tlsproxy::envoy::cfssl_options:
   hosts:
     - graphite.wikimedia.org
+
+profile::tlsproxy::envoy::firewall_src_sets:
+  - CACHES
+
 profile::idp::client::httpd::sites:
   'graphite.wikimedia.org':
     vhost_content: 'profile/idp/client/httpd-graphite.erb'
