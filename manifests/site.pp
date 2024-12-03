@@ -1360,7 +1360,7 @@ node /^lists2001\.wikimedia\./ {
     role(lists)
 }
 
-node /^ganeti10(09|2[3456789]|3[0-9]|4[0-9]|5[0-2])\.eqiad\./ {
+node /^ganeti10(2[3456789]|3[0-9]|4[0-9]|5[0-2])\.eqiad\./ {
     role(ganeti)
 }
 
