@@ -663,7 +663,7 @@ node /^db2155\.codfw\./ {
 
 # s5 (default, dewiki and others) core production dbs on eqiad
 # See also db1213 and db1144 below
-node /^db1(183|185|200|210|213|230)\.eqiad\./ {
+node /^db1(183|185|200|210|230)\.eqiad\./ {
     role(mariadb::core)
 }
 
@@ -796,6 +796,11 @@ node /^db2133\.codfw\./ {
 
 # m3 master
 node /^db1159\.eqiad\./ {
+    role(mariadb::misc::phabricator)
+}
+
+# Future master
+node /^db1213\.eqiad\./ {
     role(mariadb::misc::phabricator)
 }
 
