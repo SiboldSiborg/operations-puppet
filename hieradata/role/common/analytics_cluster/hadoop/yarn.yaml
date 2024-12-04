@@ -20,6 +20,9 @@ profile::tlsproxy::envoy::cfssl_options:
     - yarn.wikimedia.org
 profile::tlsproxy::envoy::global_cert_name: "yarn.wikimedia.org"
 
+profile::tlsproxy::envoy::firewall_src_sets:
+  - CACHES
+
 profile::java::java_packages:
   - version: '8'
     variant: 'jdk'
