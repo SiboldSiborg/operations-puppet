@@ -674,6 +674,8 @@ mediawiki::sites:
           server_aliases: ["auth.wikimedia.beta.wmflabs.org"]
           additional_rewrites:
             early:
+              - "    # Redirect requests for the root of the domain to something nice"
+              - "    RewriteRule ^/$ https://www.wikimedia.beta.wmflabs.org [R=302,L]"
               - "    # T365162 strip the prefix used to identify the wiki"
               - "    # (T380551#10368927 don't mess up the 404 error page)"
               - "    RewriteCond %%{}{REQUEST_URI} !=/w/404.php"
