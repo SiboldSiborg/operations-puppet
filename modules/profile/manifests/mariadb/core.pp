@@ -59,12 +59,11 @@ class profile::mariadb::core (
         password => $passwords::misc::scripts::mysql_cumin_pass,
     }
 
-    $is_writeable_dc = profile::mariadb::section_params::is_writeable_dc($shard)
-
+    # We want to alert on replication lag for shards that are replication clients
     if profile::mariadb::section_params::is_repl_client($shard, $mysql_role) {
         $source_dc = profile::mariadb::section_params::get_repl_src_dc($mysql_role)
         mariadb::monitor_replication { $shard:
-            is_critical => $is_writeable_dc,
+            is_critical => true,
             source_dc   => $source_dc,
         }
         profile::mariadb::replication_lag { $shard: }
