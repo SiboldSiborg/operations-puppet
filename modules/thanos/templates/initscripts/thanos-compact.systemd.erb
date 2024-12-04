@@ -11,5 +11,8 @@ ExecStart=/usr/bin/thanos compact \
   --retention.resolution-raw <%= @retention_raw %> \
   --retention.resolution-5m <%= @retention_5m %> \
   --retention.resolution-1h <%= @retention_1h %> \
+  --block-files-concurrency <%= @concurrency %> \
+  --compact.blocks-fetch-concurrency <%= @concurrency %> \
   --compact.concurrency <%= @concurrency %> \
+  --downsample.concurrency <%= @concurrency %> \
   --wait
