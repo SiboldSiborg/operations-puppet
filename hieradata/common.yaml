@@ -37,6 +37,8 @@ lookup_options:
     merge: deep
   profile::cache::haproxy::rings:
     merge: deep
+  profile::cache::haproxy::filters:
+    merge: deep
   profile::conftool2git::ssh_privkey:
     convert_to: 'Sensitive'
   profile::docker::engine::settings:
