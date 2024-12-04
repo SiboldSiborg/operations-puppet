@@ -17,15 +17,27 @@ fi
 DEPLOYMENT_SERVER="$1"
 DESTINATION_DIR="${2}/"
 INSTALL_USER="${USER:-scap}"
+DISTRO=$(lsb_release -cs)
 
 # "scap-install-staging" is an rsync module defined in class scap::master
 /usr/bin/rsync --archive \
                --delay-updates --delete --delete-delay \
                --compress --new-compress \
                --timeout=5 --contimeout=2 \
-               "$DEPLOYMENT_SERVER::scap-install-staging/scap-wheels/$(lsb_release -cs)" \
+               "$DEPLOYMENT_SERVER::scap-install-staging/scap-wheels/$DISTRO" \
                "$DEPLOYMENT_SERVER::scap-install-staging/scap/bin/install_local_version.sh" \
                "$DESTINATION_DIR"
 
 cd "$DESTINATION_DIR"
+
+# Leave only most recent version and set things up for `install_local_version.sh`
+LATEST_VERSION=$(find "$DISTRO" -mindepth 1 -maxdepth 1 -type d | sort --version-sort | tail -1)
+for VERSION in "$DISTRO"/*; do
+  if [ "$VERSION" != "$LATEST_VERSION" ]; then
+    rm -rf "$VERSION"
+  fi
+done
+mv "$LATEST_VERSION"/* "$DISTRO"
+rmdir "$LATEST_VERSION"
+
 ./install_local_version.sh -u "$INSTALL_USER"
