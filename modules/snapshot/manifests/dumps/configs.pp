@@ -46,7 +46,7 @@ class snapshot::dumps::configs(
                 revsPerJob        => '1500000',
                 revsMargin        => '100',
                 fixeddumporder    => '1',
-                lbzip2threads     => '3',
+                lbzip2threads     => '6',
                 lbzip2forhistory  => '1',
                 revinfostash      => '1',
                 wikis => {
@@ -122,7 +122,7 @@ class snapshot::dumps::configs(
                 revsPerJob        => '1500000',
                 revsMargin        => '100',
                 maxrevs           => '20000',
-                lbzip2threads     => '10',
+                lbzip2threads     => '20',
                 revinfostash      => '1',
                 wikis => {
                     enwiki => {
@@ -145,7 +145,7 @@ class snapshot::dumps::configs(
                 revsPerJob            => '1500000',
                 revsMargin            => '100',
                 maxrevs               => '20000',
-                lbzip2threads         => '10',
+                lbzip2threads         => '20',
                 emptyAbstracts        => '1',
                 revinfostash          => '1',
                 contentbatchesEnabled => '1',
