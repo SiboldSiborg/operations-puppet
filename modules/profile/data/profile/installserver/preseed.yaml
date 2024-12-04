@@ -298,7 +298,7 @@ profile::installserver::preseed::preseed_per_hostname:
     - partman/standard.cfg
     - partman/raid1-2dev.cfg
     - partman/custom/kubernetes-node-overlay.cfg
-  'mw143[0-59]|mw144[0-28-9]|mw145[1-57-9]|mw146[0-9]|mw147[0-9]|mw148[0-8]|mw149[1-6]':
+  'mw143[0-59]|mw144[0-28-9]|mw145[1-57-9]|mw146[0-9]|mw147[0-9]|mw148[0-8]':
     - partman/standard.cfg
     - partman/raid1-2dev.cfg
     - partman/custom/kubernetes-node-overlay.cfg
