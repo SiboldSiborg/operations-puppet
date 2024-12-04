@@ -675,6 +675,8 @@ mediawiki::sites:
           additional_rewrites:
             early:
               - "    # T365162 strip the prefix used to identify the wiki"
+              - "    # (T380551#10368927 don't mess up the 404 error page)"
+              - "    RewriteCond %%{}{REQUEST_URI} !=/w/404.php"
               - "    RewriteRule ^/([^/]*)/(.*)$ /$2"
             late: []
 profile::mediawiki::webserver::default_php_version: "7.4"
