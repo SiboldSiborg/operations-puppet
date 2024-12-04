@@ -531,6 +531,7 @@ mediawiki::sites:
           https_only: true
   # www.wikimedia.org also catches *.wikimedia.org
   # so it needs to come last.
+  # (keep in sync with hieradata/cloud/eqiad1/deployment-prep/common.yaml)
   - name: www.wikimedia.org
     template: mediawiki/apache/sites/included/www.wikimedia.org.conf.erb
     priority: 10

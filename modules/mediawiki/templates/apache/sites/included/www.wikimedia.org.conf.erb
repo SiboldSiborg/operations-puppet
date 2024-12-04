@@ -1,9 +1,9 @@
 <VirtualHost *:80>
     DocumentRoot "/srv/mediawiki/docroot/wwwportal"
     # bare wikimedia.org is in redirects.dat
-    ServerName www.wikimedia.org
+    ServerName www.wikimedia.<%= @domain_suffix %>
     # FIXME: Should this still be here?
-    ServerAlias *.wikimedia.org 
+    ServerAlias *.wikimedia.<%= @domain_suffix %>
 
     RewriteEngine On
     RewriteRule . - [E=RW_PROTO:%{HTTP:X-Forwarded-Proto}]
@@ -26,7 +26,7 @@
     ExpiresActive On
 
     # Redirect wiki which was previously at this location
-    RewriteRule ^/wiki/(.*)$ %{ENV:RW_PROTO}://foundation.wikimedia.org/wiki/$1 [R=301,L]
+    RewriteRule ^/wiki/(.*)$ %{ENV:RW_PROTO}://foundation.wikimedia.<%= @domain_suffix %>/wiki/$1 [R=301,L]
 
     # /api/ rewrites
     RewriteRule ^/api$ %{ENV:RW_PROTO}://%{SERVER_NAME}/api/ [R=301]

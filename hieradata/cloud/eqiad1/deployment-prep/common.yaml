@@ -679,6 +679,13 @@ mediawiki::sites:
               - "    RewriteCond %%{}{REQUEST_URI} !=/w/404.php"
               - "    RewriteRule ^/([^/]*)/(.*)$ /$2"
             late: []
+  # www.wikimedia.beta.wmflabs.org also catches *.wikimedia.beta.wmflabs.org
+  # so it needs to come last.
+  # (keep in sync with hieradata/common/mediawiki.yaml)
+  - name: www.wikimedia.beta.wmflabs.org
+    template: mediawiki/apache/sites/included/www.wikimedia.org.conf.erb
+    priority: 10
+
 profile::mediawiki::webserver::default_php_version: "7.4"
 profile::mediawiki::jobrunner::default_php_version: "7.4"
 # Enable icu67 component - T345561
