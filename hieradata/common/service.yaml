@@ -3292,7 +3292,7 @@ service::catalog:
       class: low-traffic
       conftool:
         cluster: wdqs-internal-main
-        service: wdqs
+        service: wdqs-main
       depool_threshold: 0.3
       enabled: true
       monitors:
@@ -3328,7 +3328,7 @@ service::catalog:
       class: low-traffic
       conftool:
         cluster: wdqs-internal-scholarly
-        service: wdqs
+        service: wdqs-scholarly
       depool_threshold: 0.3
       enabled: true
       monitors:
