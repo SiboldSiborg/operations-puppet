@@ -49,11 +49,17 @@ local function use_rest_gateway()
 
     -- If we match a domain, add more rules
     if host ~= nil and gateway_paths[host] ~= nil then
+        -- Start from a fresh copy of default.
+        local merged_rules = {}
+        for k, v in pairs(rules) do
+            merged_rules[k] = v
+        end
+        -- Add the domain specific rules
         local mappings = gateway_paths[host]
-            -- Add the domain specific rules
-            for k, v in pairs(mappings) do
-                rules[k] = v
-            end
+        for k, v in pairs(mappings) do
+            merged_rules[k] = v
+        end
+        rules = merged_rules
     end
 
     -- And now let's see if any rule matches
