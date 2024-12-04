@@ -35,8 +35,9 @@ class puppet::agent (
         ensure_packages(['puppet-module-puppetlabs-augeas-core'])
     }
 
-    # Debian's Bookworm facter package moved the config to /etc/facter
-    if debian::codename::ge('bookworm') {
+    # Debian's Bookworm facter 4.3 package moved the config to /etc/facter
+    # we have also backported the package to Bullseye
+    if versioncmp($facts['facterversion'], '4') >= 0 {
         file { '/etc/facter':
             ensure => directory,
             mode   => '0555',
