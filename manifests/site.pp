@@ -1001,7 +1001,7 @@ node /^dbproxy200(5|6|7|8)\.codfw\./ {
 }
 
 # New external storage T378146
-node /^es204(3|4|5)\.codfw\./ {
+node /^es204(4|5)\.codfw\./ {
     role(insetup::data_persistence)
 }
 
@@ -1250,6 +1250,9 @@ node /^es2022\.codfw\./ {
     role(mariadb::core)
 }
 
+node /^es2043\.codfw\./ {
+    role(mariadb::core)
+}
 # External Storage, Shard 5 (es5) databases
 # RO section
 ## eqiad servers
