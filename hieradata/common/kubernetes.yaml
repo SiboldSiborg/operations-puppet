@@ -90,8 +90,6 @@ kubernetes::clusters:
         v4: "10.67.128.0/18"
         v6: "2620:0:861:cabe::/64"
       cluster_nodes:
-        - kubernetes1023.eqiad.wmnet
-        - kubernetes1024.eqiad.wmnet
         - kubernetes1025.eqiad.wmnet
         - kubernetes1026.eqiad.wmnet
         - kubernetes1027.eqiad.wmnet
@@ -256,6 +254,8 @@ kubernetes::clusters:
         - wikikube-worker1033.eqiad.wmnet
         - wikikube-worker1034.eqiad.wmnet
         - wikikube-worker1035.eqiad.wmnet
+        - wikikube-worker1036.eqiad.wmnet
+        - wikikube-worker1037.eqiad.wmnet
         # This space intentionally left blank
         - wikikube-worker1240.eqiad.wmnet
         - wikikube-worker1241.eqiad.wmnet
