@@ -54,7 +54,7 @@ profile::cloudceph::mon::hosts:
 
 profile::wmcs::backy2::backup_cinder_volumes::scheduler_config:
   ceph_pool: codfw1dev-cinder
-  live_for_days: 4
+  live_for_days: 2
   exclude_volumes:
     andrewtestproject:
       - ".*"
