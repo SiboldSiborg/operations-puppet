@@ -15,6 +15,10 @@ define apt::repository(
       fail('uri, dist and component are all required if ensure =>  present')
     }
 
+    if $bin == false and $source == false {
+      fail('You need to enable at least binary or source packages')
+    }
+
     $releaseinfo_flag = $allow_releaseinfo_change ? {
         true    => ' --allow-releaseinfo-change',
         default => '',
@@ -60,10 +64,14 @@ define apt::repository(
         $trustedline = ''
     }
 
-    if $source {
+    if $source and $bin {
         $types = ['deb', 'deb-src']
     } else {
-        $types = ['deb']
+        if $source {
+            $types = ['deb-src']
+        } elsif $bin {
+            $types = ['deb']
+        }
     }
 
     if debian::codename::ge('bookworm') {
