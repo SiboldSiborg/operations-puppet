@@ -34,12 +34,4 @@ class profile::query_service::monitor::wikidata_internal_scholarly {
         ip6                => $facts['ipaddress6'],
         alert_after        => '8m',
     }
-
-    ### ensure this is absented until next patch
-    nrpe::monitor_service { 'Query_Service_Internal_HTTP_endpoint':
-        ensure       => 'absent',
-        description  => 'Query Service HTTP Port',
-        nrpe_command => '/usr/lib/nagios/plugins/check_http -H 127.0.0.1 -p 80 -w 10 -u /readiness-probe',
-        notes_url    => 'https://wikitech.wikimedia.org/wiki/Wikidata_query_service',
-    }
 }
