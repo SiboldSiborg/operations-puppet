@@ -173,8 +173,6 @@ eqiad:
     wikikube-ctrl1001.eqiad.wmnet: [kubemaster]
     wikikube-ctrl1002.eqiad.wmnet: [kubemaster]
     wikikube-ctrl1003.eqiad.wmnet: [kubemaster]
-    kubernetes1025.eqiad.wmnet: [kubesvc]
-    kubernetes1026.eqiad.wmnet: [kubesvc]
     kubernetes1027.eqiad.wmnet: [kubesvc]
     kubernetes1028.eqiad.wmnet: [kubesvc]
     kubernetes1029.eqiad.wmnet: [kubesvc]
@@ -336,6 +334,8 @@ eqiad:
     wikikube-worker1041.eqiad.wmnet: [kubesvc]
     wikikube-worker1042.eqiad.wmnet: [kubesvc]
     wikikube-worker1043.eqiad.wmnet: [kubesvc]
+    wikikube-worker1044.eqiad.wmnet: [kubesvc]
+    wikikube-worker1045.eqiad.wmnet: [kubesvc]
     # This space intentionally left blank - new hosts start at 1240 (T369743), below reserved for renames
     wikikube-worker1240.eqiad.wmnet: [kubesvc]
     wikikube-worker1241.eqiad.wmnet: [kubesvc]
