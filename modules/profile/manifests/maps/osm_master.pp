@@ -30,8 +30,6 @@ class profile::maps::osm_master (
         $network::constants::staging_kubepods_networks,
     ])
 
-    $maps_hosts_ferm = join($maps_hosts, ' ')
-
     $db_name = 'gis'
 
     $pgversion = $::lsbdistcodename ? {
@@ -198,10 +196,10 @@ class profile::maps::osm_master (
     }
 
     # Access to postgres master from postgres replicas
-    ferm::service { 'postgres_maps':
+    firewall::service { 'postgres_maps':
         proto  => 'tcp',
-        port   => '5432',
-        srange => "@resolve((${maps_hosts_ferm}))",
+        port   => 5432,
+        srange => $maps_hosts,
     }
 
     # Enable venvs for ad-hoc python scripts
