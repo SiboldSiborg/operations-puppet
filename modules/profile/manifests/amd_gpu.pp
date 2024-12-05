@@ -52,17 +52,8 @@ class profile::amd_gpu (
     if $enable_opt_rocm_env {
         systemd::environment { 'opt_rocm':
             variables => {
-                # Since the Debian hipcc package assumes different paths for assorted
-                # binaries and include files than our /opt-based ROCm package provides,
-                # we need to override them using environment variables. Also see
-                # https://phabricator.wikimedia.org/T371344, and specifically
-                # https://phabricator.wikimedia.org/T371344#10368271
-                'DEVICE_LIB_PATH'        => '/opt/rocm/amdgcn/bitcode',
-                'HIP_CLANG_INCLUDE_PATH' => '/opt/rocm/llvm/include/',
-                'HIP_DEVICE_LIB_PATH'    => '/opt/rocm/amdgcn/bitcode',
-                'HIP_PATH'               => '/opt/rocm',
-                'PYTORCH_NVCC'           => '/usr/bin/hipcc',
-                'ROCM_PATH'              => '/opt/rocm',
+                # Install a PATH component for /opt/rocm/bin
+                'PATH' => '$PATH:/opt/rocm/bin',
             },
         }
     }
