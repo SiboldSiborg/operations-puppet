@@ -2609,9 +2609,9 @@ class profile::prometheus::ops (
     }
 
     firewall::service { 'prometheus-web':
-        proto  => 'tcp',
-        port   => [80],
-        srange => '$DOMAIN_NETWORKS',
+        proto    => 'tcp',
+        port     => [80],
+        src_sets => ['DOMAIN_NETWORKS'],
     }
 
     $gerrit_targets = {
