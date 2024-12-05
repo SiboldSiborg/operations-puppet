@@ -373,7 +373,7 @@ node /^build2001\.codfw\./ {
 }
 
 node /^build2002\.codfw\./ {
-    role(builder)
+    role(insetup::infrastructure_foundations)
 }
 
 node /^centrallog[0-9]{4}\.(eqiad|codfw)\./ {
