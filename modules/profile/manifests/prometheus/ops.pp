@@ -1497,6 +1497,14 @@ class profile::prometheus::ops (
           { 'files' => [ "${targets_path}/jmx_zookeeper_*.yaml" ]}
         ],
       },
+      {
+        'job_name'        => 'jmx_idp',
+        'scheme'          => 'http',
+        'port'            => 9200,
+        'file_sd_configs' => [
+          { 'files' => [ "${targets_path}/jmx_idp_*.yaml" ]}
+        ],
+      },
     ]
 
     prometheus::jmx_exporter_config{ "logstash_${::site}":
@@ -1561,6 +1569,16 @@ class profile::prometheus::ops (
         labels     => {
             'cluster' => "test-${::site}",
         },
+    }
+
+    prometheus::jmx_exporter_config{ "idp_${::site}":
+        dest       => "${targets_path}/jmx_idp_${::site}.yaml",
+        class_name => 'role::idp',
+    }
+
+    prometheus::jmx_exporter_config{ "idp_test_${::site}":
+        dest       => "${targets_path}/jmx_idp_test_${::site}.yaml",
+        class_name => 'role::idp_test',
     }
 
     $etherpad_jobs = [
