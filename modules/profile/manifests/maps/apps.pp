@@ -6,11 +6,7 @@ class profile::maps::apps(
     String $wikidata_query_service = lookup('profile::maps::apps::wikidata_query_service'),
 ) {
 
-    $osm_dir = $osm_engine ? {
-        'osm2pgsql' => '/srv/osmosis',
-        'imposm3' => '/srv/osm'
-    }
-
+    $osm_dir = '/srv/osm'
     $contact_groups = 'admins,team-interactive'
 
     class { 'kartotherian':

@@ -12,7 +12,6 @@ class profile::maps::osm_master (
     String $swift_password                       = lookup('profile::maps::osm_master::swift_password'),
     String $tegola_swift_container               = lookup('profile::maps::osm_master::tegola_swift_container'),
     Hash[String, Struct[{ip_address => Stdlib::IP::Address}]] $postgres_replicas = lookup('profile::maps::osm_master::replicas', { 'default_value' => {}}),
-    String $osm_engine                           = lookup('profile::maps::osm_master::engine', { 'default_value' => 'osm2pgsql' }),
     Boolean $disable_replication_cron            = lookup('profile::maps::osm_master::disable_replication_cron', { 'default_value' => false }),
     Boolean $disable_tile_generation_cron        = lookup('profile::maps::osm_master::disable_tile_generation_cron', { 'default_value' => false }),
     Boolean $disable_admin_timer                 = lookup('profile::maps::osm_master::disable_admin_timer', { 'default_value' => false }),
@@ -174,8 +173,6 @@ class profile::maps::osm_master (
 
     osm::planet_sync { $db_name:
         ensure                       => present,
-        engine                       => $osm_engine,
-        flat_nodes                   => true,
         expire_levels                => 15,
         num_threads                  => 4,
         use_proxy                    => $use_proxy,
@@ -193,23 +190,7 @@ class profile::maps::osm_master (
         tegola_swift_container       => $tegola_swift_container
     }
 
-    if ($osm_engine == 'osm2pgsql') {
-        file { '/usr/local/bin/grants-populate-admin.sql':
-            owner  => 'postgres',
-            group  => 'postgres',
-            mode   => '0400',
-            source => 'puppet:///modules/profile/maps/grants-populate-admin.sql',
-        }
-        osm::populate_admin { $db_name:
-            ensure              => present,
-            disable_admin_timer => $disable_admin_timer,
-        }
-    }
-
-    $state_path = $osm_engine ? {
-        'imposm3' => '/srv/osm/diff/last.state.txt',
-        'osm2pgsql' => '/srv/osmosis/state.txt'
-    }
+    $state_path = '/srv/osm/diff/last.state.txt'
 
     class { 'osm::prometheus':
         state_path      => $state_path,

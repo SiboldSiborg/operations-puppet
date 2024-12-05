@@ -7,8 +7,6 @@
 # imposm3 or osm2pgsql
 #
 # Parameters:
-#   $engine
-#       Engine to use for syncing - either osm2pgsql or imposm3
 #   $use_proxy
 #       present or absent, just like for standard resources
 #   $proxy_host
@@ -29,8 +27,6 @@
 #       Day for cronjob, format is the same as for cron resource
 #   $minute
 #       Minute for cronjob, format is the same as for cron resource
-#   $flat_nodes
-#      [osm2pgsql] Whether osm2pgsql --flat-nodes parameter should be used
 #   $expire_levels
 #       For which levels should expiry files be generated.
 #       [imposm] corresponds to
@@ -62,7 +58,6 @@
 # Sample Usage:
 #  osm::planet_sync { 'mydb': }
 define osm::planet_sync (
-    Enum['osm2pgsql', 'imposm3'] $engine,
     Boolean $use_proxy,
     String $proxy_host,
     String $swift_key_id,
@@ -103,55 +98,22 @@ define osm::planet_sync (
         mode   => '0775',
     }
 
-    $osm_log_dir = $engine ? {
-        'imposm3' => '/var/log/imposm',
-        'osm2pgsql' => '/var/log/osmosis'
-    }
+    $osm_log_dir = '/var/log/imposm'
+    $osm_log_file = 'imposm.log'
+    $tile_generation_command = $postreplicate_command
 
-    $osm_log_file = $engine ? {
-        'imposm3' => 'imposm.log',
-        'osm2pgsql' => 'osm2pgsql.log'
-    }
-
-    $tile_generation_command = $engine ? {
-        'imposm3' => $postreplicate_command,
-        'osm2pgsql' => '/usr/local/bin/replicate-osm'
-    }
-
-    case $engine {
-        'imposm3': {
-            class { 'osm::imposm3':
-                ensure                   => $ensure,
-                proxy_host               => $proxy_host,
-                proxy_port               => $proxy_port,
-                osm_log_dir              => $osm_log_dir,
-                expire_dir               => $expire_dir,
-                expire_levels            => $expire_levels,
-                disable_replication_cron => $disable_replication_cron,
-                eventgate_endpoint       => $eventgate_endpoint,
-                swift_key_id             => $swift_key_id,
-                swift_password           => $swift_password,
-                tegola_swift_container   => $tegola_swift_container
-            }
-        }
-        'osm2pgsql': {
-            class { 'osm::osm2pgsql':
-                use_proxy           => $use_proxy,
-                proxy_host          => $proxy_host,
-                proxy_port          => $proxy_port,
-                osm_log_dir         => $osm_log_dir,
-                flat_nodes          => $flat_nodes,
-                period              => $period,
-                expire_dir          => $expire_dir,
-                expire_levels       => $expire_levels,
-                memory_limit        => $memory_limit,
-                num_threads         => $num_threads,
-                input_reader_format => $input_reader_format,
-            }
-        }
-        default: {
-            fail("Unsupported sync engine ${engine}")
-        }
+    class { 'osm::imposm3':
+        ensure                   => $ensure,
+        proxy_host               => $proxy_host,
+        proxy_port               => $proxy_port,
+        osm_log_dir              => $osm_log_dir,
+        expire_dir               => $expire_dir,
+        expire_levels            => $expire_levels,
+        disable_replication_cron => $disable_replication_cron,
+        eventgate_endpoint       => $eventgate_endpoint,
+        swift_key_id             => $swift_key_id,
+        swift_password           => $swift_password,
+        tegola_swift_container   => $tegola_swift_container
     }
 
     file { $osm_log_dir:
