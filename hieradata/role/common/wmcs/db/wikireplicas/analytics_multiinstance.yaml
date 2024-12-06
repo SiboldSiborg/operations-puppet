@@ -1,5 +1,6 @@
 ---
 profile::contacts::role_contacts: ['Data Platform','WMCS']
+profile::base::production::role_description: 'wikireplica database - analytics, multi-instance'
 profile::admin::groups:
     - wmcs-admin
     - wikireplica-roots

@@ -1,8 +1,4 @@
 class role::wmcs::db::wikireplicas::dedicated::analytics_multiinstance {
-    system::role { $name:
-        description => 'wikireplica database - analytics, multi-instance (Analytics team\'s special db host)',
-    }
-
     include profile::base::production
     include profile::wmcs::db::wikireplicas::mariadb_multiinstance
     include profile::firewall
