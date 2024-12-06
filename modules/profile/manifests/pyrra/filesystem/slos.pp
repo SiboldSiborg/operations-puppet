@@ -379,6 +379,40 @@ class profile::pyrra::filesystem::slos (
 
     }
 
+    # WDQS Availability SLO - WDQS uses one availability SLI: The percentage of all requests receiving a non-error response,
+    #                         defined as one of: HTTP 200 (success), HTTP 403 (client banned), or HTTP 429 (client throttled).
+    #                         Note that there is no latency guarantee in the SLO, so queries could take up to the timeout limit.
+    #
+    pyrra::filesystem::config { "wdqs-availability-${datacenter}.yaml":
+      content => to_yaml({
+        'apiVersion' => 'pyrra.dev/v1alpha1',
+        'kind' => 'ServiceLevelObjective',
+        'metadata' => {
+            'name' => 'wdqs-availability',
+            'namespace' => 'pyrra-o11y',
+            'labels' => {
+                'pyrra.dev/team' => 'search',
+                'pyrra.dev/service' => 'wdqs',
+                'pyrra.dev/site' => "${datacenter}",  #lint:ignore:only_variable_string
+            },
+        },
+        'spec' => {
+            'target' => '95',
+            'window' => '12w',
+            'indicator' => {
+                'ratio' => {
+                    'errors' => {
+                        'metric' => "trafficserver_backend_requests_seconds_count{site=~\"${datacenter}\",status=~\"200|403|429\",backend=\"wdqs.discovery.wmnet\"}",
+                    },
+                    'total' => {
+                        'metric' => "trafficserver_backend_requests_seconds_count{site=~\"${datacenter}\",backend=\"wdqs.discovery.wmnet\"}",
+                    },
+                },
+            },
+        },
+      })
+    }
+
     }
 
     #lint:endignore
