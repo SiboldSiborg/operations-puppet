@@ -401,7 +401,7 @@ class profile::pyrra::filesystem::slos (
             'window' => '12w',
             'indicator' => {
                 'ratio' => {
-                    'errors' => {
+                    'succcess' => {
                         'metric' => "trafficserver_backend_requests_seconds_count{site=~\"${datacenter}\",status=~\"200|403|429\",backend=\"wdqs.discovery.wmnet\"}",
                     },
                     'total' => {
