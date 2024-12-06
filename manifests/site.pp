@@ -1381,16 +1381,10 @@ node /^ganeti10(2[3456789]|3[0-9]|4[0-9]|5[0-2])\.eqiad\./ {
     role(ganeti)
 }
 
-# Old servers, to be decommed
-node /^ganeti10(09|1[2678]|2[02])\.eqiad\./ {
-    role(insetup::infrastructure_foundations)
-}
-
 # T381576
 node /^ganeti10(5[34])\.eqiad\./ {
     role(insetup::infrastructure_foundations)
 }
-
 
 # Routed Ganeti nodes
 node /^ganeti203[3-4]\.codfw\./ {
