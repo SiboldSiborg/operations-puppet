@@ -7361,3 +7361,7 @@ ldap_only_users:
     ensure: present
     realname: Ilse Ackerman
     email: iackerman@wikimedia.org
+  cpetrillo:
+    ensure: present
+    realname: Chris Petrillo
+    email: cpetrillo@wikimedia.org
