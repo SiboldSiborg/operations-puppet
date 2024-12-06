@@ -1386,6 +1386,12 @@ node /^ganeti10(09|1[2678]|2[02])\.eqiad\./ {
     role(insetup::infrastructure_foundations)
 }
 
+# T381576
+node /^ganeti10(5[34])\.eqiad\./ {
+    role(insetup::infrastructure_foundations)
+}
+
+
 # Routed Ganeti nodes
 node /^ganeti203[3-4]\.codfw\./ {
     role(ganeti_routed)
