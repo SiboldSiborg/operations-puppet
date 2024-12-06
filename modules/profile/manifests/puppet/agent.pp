@@ -43,6 +43,12 @@ class profile::puppet::agent (
                 component => 'component/puppet7',
                 priority  => 1002,
             }
+            # facter 4 needs a more recent version of ruby-sys-filesystem to
+            # parse sysfs structures for the "mountpoints" fact  T381538
+            apt::package_from_component { 'ruby-sys-filesystem':
+                component => 'component/puppet7',
+                packages  => ['ruby-sys-filesystem']
+            }
         } else {
             # Add a priority on the debian repos as we have a forward port in wikimedia/main
             apt::pin { 'puppet':
