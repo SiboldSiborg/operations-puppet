@@ -2667,12 +2667,7 @@ node /^wdqs102[3-4].eqiad\./ {
     role(wdqs::scholarly)
 }
 
-# temporary reimage issues
-node /^wdqs1025.eqiad\./ {
-    role(insetup::search_platform)
-}
-
-node /^wdqs1026.eqiad\./ {
+node /^wdqs102[5-6].eqiad\./ {
     role(wdqs::internal_main)
 }
 
