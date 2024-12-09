@@ -413,6 +413,66 @@ class profile::pyrra::filesystem::slos (
       })
     }
 
+    # WDQS update lag - WDQS uses one SLI: The percentage of all active servers whose update lag is <10 minutes
+    #
+    # limited to primary sites only
+    if $datacenter in ['eqiad', 'codfw'] {
+        pyrra::filesystem::config { "wdqs-update-lag-${datacenter}.yaml":
+          content => to_yaml({
+            'apiVersion' => 'pyrra.dev/v1alpha1',
+            'kind' => 'ServiceLevelObjective',
+            'metadata' => {
+                'name' => 'wdqs-update-lag',
+                'namespace' => 'pyrra-o11y',
+                'labels' => {
+                    'pyrra.dev/team' => 'search',
+                    'pyrra.dev/service' => 'wdqs',
+                    'pyrra.dev/site' => "${datacenter}",  #lint:ignore:only_variable_string
+                },
+            },
+            'spec' => {
+                'target' => '95',
+                'window' => '12w',
+                'indicator' => {
+                    'bool_gauge' => {
+                            'metric' => "wdqs_sli_update_lag:bool{site=~\"${datacenter}\"}",
+                    },
+                },
+            },
+          })
+        }
+    }
+
+    # Search update lag - Search uses one availability SLI: The time after which page are edited enters the search cluster is <10 minutes
+    #
+    # limited to primary sites only
+    if $datacenter in ['eqiad', 'codfw'] {
+        pyrra::filesystem::config { "search-update-lag-${datacenter}.yaml":
+          content => to_yaml({
+            'apiVersion' => 'pyrra.dev/v1alpha1',
+            'kind' => 'ServiceLevelObjective',
+            'metadata' => {
+                'name' => 'search-update-lag',
+                'namespace' => 'pyrra-o11y',
+                'labels' => {
+                    'pyrra.dev/team' => 'search',
+                    'pyrra.dev/service' => 'search',
+                    'pyrra.dev/site' => "${datacenter}",  #lint:ignore:only_variable_string
+                },
+            },
+            'spec' => {
+                'target' => '95',
+                'window' => '12w',
+                'indicator' => {
+                    'bool_gauge' => {
+                            'metric' => "search_sli_update_lag:bool{job_name=~\"cirrus_streaming_updater_consumer_search_${datacenter}\", prometheus=\"k8s\"}",
+                    },
+                },
+            },
+          })
+        }
+    }
+
     }
 
     #lint:endignore
