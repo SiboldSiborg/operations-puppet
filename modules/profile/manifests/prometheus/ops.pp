@@ -1500,7 +1500,6 @@ class profile::prometheus::ops (
       {
         'job_name'        => 'jmx_idp',
         'scheme'          => 'http',
-        'port'            => 9200,
         'file_sd_configs' => [
           { 'files' => [ "${targets_path}/jmx_idp_*.yaml" ]}
         ],
