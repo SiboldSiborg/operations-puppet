@@ -22,8 +22,6 @@ class profile::maps::postgresql_common(
     # Tuning
     file { "/etc/postgresql/${pgversion}/main/tuning.conf":
         ensure  => 'present',
-        owner   => 'root',
-        group   => 'root',
         mode    => '0444',
         content => template('profile/maps/tuning.conf.erb'),
     }
@@ -36,9 +34,9 @@ class profile::maps::postgresql_common(
         },
     }
 
-    ferm::service { 'kubepods-maps-postgres':
-        proto  => 'tcp',
-        port   => '5432',
-        srange => '($WIKIKUBE_KUBEPODS_NETWORKS $STAGING_KUBEPODS_NETWORKS)',
+    firewall::service { 'kubepods_maps_postgres':
+        proto    => 'tcp',
+        port     => 5432,
+        src_sets => ['WIKIKUBE_KUBEPODS_NETWORKS', 'STAGING_KUBEPODS_NETWORKS'],
     }
 }
