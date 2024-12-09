@@ -31,11 +31,7 @@ class profile::maps::osm_master (
     ])
 
     $db_name = 'gis'
-
-    $pgversion = $::lsbdistcodename ? {
-        'bullseye'  => 13,
-        'buster'  => 11,
-    }
+    $pgversion  = wmflib::debian_postgresql_version()
 
     # We need 1 connection per host that is fully pooled. If we want
     # to pool additional hosts, we need TWO connections per host (one

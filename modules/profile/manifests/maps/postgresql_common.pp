@@ -17,10 +17,7 @@ class profile::maps::postgresql_common(
 
     class { '::postgresql::postgis': }
 
-    $pgversion = $::lsbdistcodename ? {
-        'buster'  => 11,
-        'bullseye' => 13,
-    }
+    $pgversion  = wmflib::debian_postgresql_version()
 
     # Tuning
     file { "/etc/postgresql/${pgversion}/main/tuning.conf":

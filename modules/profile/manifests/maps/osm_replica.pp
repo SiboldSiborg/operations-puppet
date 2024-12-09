@@ -9,17 +9,14 @@ class profile::maps::osm_replica(
     Optional[Integer[250]] $log_min_duration_statement = lookup('profile::maps::osm_replica::log_min_duration_statement', { 'default_value' => undef })
 ){
 
-    require ::profile::maps::postgresql_common
+    require profile::maps::postgresql_common
 
     $tegola_networks = flatten([
         $network::constants::services_kubepods_networks,
         $network::constants::staging_kubepods_networks,
     ])
 
-    $pgversion = $::lsbdistcodename ? {
-        'buster'  => 11,
-        'bullseye' => 13,
-    }
+    $pgversion  = Integer(wmflib::debian_postgresql_version())
 
     $replication_slot_name = $use_replication_slots ? {
         true    => "wal_${facts['networking']['fqdn'].regsubst('\.', '_', 'G')}",
