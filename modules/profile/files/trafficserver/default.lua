@@ -72,7 +72,7 @@ function do_global_read_request()
     end
 
     -- Skip cache on HEAD requests from WME https://phabricator.wikimedia.org/T381771
-    if ts.client_request.get_method() == 'HEAD' and ts.client_request.header['Host'] == 'upload.wikimedia.org' and string.match(ts.client_request.header['User-Agent'], "^WME/[0-9]") then
+    if ts.client_request.header['X-Client-IP'] == '3.211.48.168' and ts.client_request.header['Host'] == 'upload.wikimedia.org' and string.match(ts.client_request.header['User-Agent'], "^WME/[0-9]") then
         no_cache_lookup()
     end
 
