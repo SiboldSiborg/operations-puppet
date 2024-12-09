@@ -97,5 +97,5 @@
     RewriteRule ^/w/extensions/.*\.php - [F,L]
 <%= scope.function_template(["mediawiki/apache/php_backend_selection.erb"]) %>
 
-    RewriteRule ^/\.well-known/change-password$ /wiki/Special:ChangeCredentials/MediaWiki\\Auth\\PasswordAuthenticationRequest [R=302]
+    RewriteRule ^/\.well-known/change-password$ %{ENV:RW_PROTO}://%{SERVER_NAME}/wiki/Special:ChangeCredentials/MediaWiki\\Auth\\PasswordAuthenticationRequest [R=302]
 </VirtualHost>

@@ -87,3 +87,10 @@ https://sep11.wikipedia.org:
   assert_status: 301
   assert_headers:
     Location: https://meta.wikimedia.org/wiki/Sep11wiki
+
+# T263800
+https://en.wikipedia.org:
+- path: /.well-known/change-password
+  assert_status: 302
+  assert_headers:
+    Location: https://en.wikipedia.org/wiki/Special:ChangeCredentials/MediaWiki%5cAuth%5cPasswordAuthenticationRequest
