@@ -168,9 +168,29 @@ describe("Busted unit testing framework", function()
 
     it("test - do_global_read_request", function()
       stub(ts.http, "config_int_set")
+      stub(ts.client_request, "get_method", "GET")
       _G.ts.client_request.header['Accept-Encoding'] = 'gzip'
       do_global_read_request()
       assert.are.equals(nil, _G.ts.client_request.header['Accept-Encoding'])
+      assert.stub(ts.http.config_int_set).was_not_called()
+    end)
+
+    it("test - do_global_read_request skips cache lookup on incoming Authorization header", function ()
+      stub(ts.http, "config_int_set")
+      stub(ts.client_request, "get_method", "GET")
+      _G.ts.client_request.header['Authorization'] = 'Bearer 12345'
+      do_global_read_request()
+      assert.stub(ts.http.config_int_set).was.called_with(TS_LUA_CONFIG_HTTP_CACHE_HTTP, 0)
+    end)
+
+    it("test - do_global_read_requests skips cache on WME's HEAD requests", function ()
+      stub(ts.http, "config_int_set")
+      stub(ts.client_request, "get_method", "HEAD")
+      _G.ts.client_request.header['Host'] = 'upload.wikimedia.org'
+      _G.ts.client_request.header['X-Client-IP'] = '3.211.48.168'
+      _G.ts.client_request.header['User-Agent'] = 'WME/2.0 (https://enterprise.wikimedia.com/; wme_mgmt@wikimedia.org)'
+      do_global_read_request()
+      assert.stub(ts.http.config_int_set).was.called_with(TS_LUA_CONFIG_HTTP_CACHE_HTTP, 0)
     end)
 
     it("test - do_global_post_remap with Session cookie", function()
