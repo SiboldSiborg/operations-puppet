@@ -182,11 +182,7 @@ class profile::netbox::db (
     }
 
     if $auto_restart {
-        $pgversion = $::lsbdistcodename ? {
-            'bullseye'  => 13,
-            'bookworm'  => 15,
-        }
-
+        $pgversion  = wmflib::debian_postgresql_version()
         profile::auto_restarts::service { "postgresql@${pgversion}-main": }
     }
 }
