@@ -449,7 +449,7 @@ groups:
               georgemikesell, bblack, toyofuku, linafaridwmde, yliou, derenrich, sperry-wmf,
               mareikeheuer, hnordeen, rickijay, radimer, dmuthuri, kgraessle, dreamyjazz, jsn, cwylo,
               sharvaniharan, ariel, quiddity, wmdecyn, joelyrookewmde, ifeatunnaobiwmde, cyndywikime,
-              seanleong-wmde, cdobbins, khantstop, jly]
+              seanleong-wmde, cdobbins, khantstop, jly, suzannewood]
     privileges: ['ALL = (analytics-privatedata) NOPASSWD: ALL']
     system_members: [analytics-search, analytics, analytics-privatedata, analytics-product,
               analytics-research, analytics-platform-eng, analytics-wmde, spark]
@@ -6520,6 +6520,13 @@ users:
     krb: present
     ssh_keys:
       - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPDe7UZlc9MPD5CmwtLcKG9b13NsrAfcIQgXNUa0TCte jly@wikimedia.org
+  suzannewood:
+    ensure: present
+    gid: 500
+    uid: 47922
+    realname: Suzanne Wood
+    email: suzanne.wood@wikimedia.de
+    ssh_keys: []  # Added with no SSH access, for membership in analytics-privatedata-users.
 
 ldap_only_users:
   adavenport:
@@ -7365,7 +7372,3 @@ ldap_only_users:
     ensure: present
     realname: Chris Petrillo
     email: cpetrillo@wikimedia.org
-  suzannewood:
-    ensure: present
-    realname: Suzanne Wood
-    email: suzanne.wood@wikimedia.de
