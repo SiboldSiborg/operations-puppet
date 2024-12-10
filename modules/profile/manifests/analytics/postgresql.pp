@@ -119,10 +119,7 @@ class profile::analytics::postgresql (
     method   => 'peer',
   }
 
-  $pgversion = $::lsbdistcodename ? {
-      'bullseye' => 13,
-      'bookworm' => 15,
-    }
+  $pgversion  = wmflib::debian_postgresql_version()
 
   # Tuning
   file { "/etc/postgresql/${pgversion}/main/tuning.conf":
