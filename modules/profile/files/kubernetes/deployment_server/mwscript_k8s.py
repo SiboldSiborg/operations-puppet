@@ -345,6 +345,7 @@ def start(args: argparse.Namespace) -> dict[str, str]:
         'job': job,
         'mediawiki_container': container,
         'namespace': NAMESPACE,
+        'release': release,
     }
 
 
