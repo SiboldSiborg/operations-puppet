@@ -36,6 +36,12 @@ profile::gitlab::runner::allowed_services:
   apt-staging: # For uploading apt packages to the staging host
     host: 'apt-staging.discovery.wmnet'
     port: 873
+  blunderbuss:
+    # Bug: T371994
+    # Blunderbuss needs to be accessed from GitLab trusted runners
+    # in order to automate HDFS synchronization during GitLab CI/CD
+    host: 'blunderbuss.discovery.wmnet'
+    port: 30443
   dns:
     host: 'recdns.anycast.wmnet'
     port: 53
