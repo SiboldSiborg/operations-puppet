@@ -27,11 +27,8 @@ class profile::puppetdb::database(
     Optional[Integer[250]] $log_min_duration_statement  = lookup('profile::puppetdb::database::log_min_duration_statement'),
     Optional[Integer]      $log_autovacuum_min_duration = lookup('profile::puppetdb::database::log_autovacuum_min_duration'),
 ) {
-    $pgversion = debian::codename() ? {
-        'bookworm' => 15,
-        'bullseye' => 13,
-        'buster'   => 11,
-    }
+    $pgversion  = Integer(wmflib::debian_postgresql_version())
+
     if $master == $facts['networking']['fqdn'] {
         # db_role is only used for the motd in role::puppetdb
         $db_role = 'primary'
