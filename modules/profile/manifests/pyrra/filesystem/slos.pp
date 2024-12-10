@@ -432,40 +432,42 @@ class profile::pyrra::filesystem::slos (
     }
 
 
+    # disabled pending review as SLO budget currently sits at -1900% 
+    #
     # "Lift Wing Readability service latency - 95% of successful requests (2xx status code) are answered within 5000ms.
     #
     # limited to primary sites only
-    if $datacenter in ['eqiad', 'codfw'] {
-        pyrra::filesystem::config { "liftwing-readability-latency-${datacenter}.yaml":
-          content => to_yaml({
-            'apiVersion' => 'pyrra.dev/v1alpha1',
-            'kind' => 'ServiceLevelObjective',
-            'metadata' => {
-                'name' => 'liftwing-readability-latency',
-                'namespace' => 'pyrra-o11y',
-                'labels' => {
-                    'pyrra.dev/team' => 'ml',
-                    'pyrra.dev/service' => 'liftwing',
-                    'pyrra.dev/site' => "${datacenter}",  #lint:ignore:only_variable_string
-                },
-            },
-            'spec' => {
-                'target' => '95',
-                'window' => '12w',
-                'indicator' => {
-                    'latency' => {
-                        'success' => {
-                            'metric' => "istio_sli_latency_request_duration_milliseconds_bucket:increase5m{site=~\"${datacenter}\",  le=\"5000\", response_code=~\"2..\", destination_service_namespace=\"readability\", destination_canonical_service=\"readability-predictor-default\"}",
-                        },
-                        'total' => {
-                            'metric' => "istio_sli_latency_request_duration_milliseconds_count:increase5m{site=~\"${datacenter}\",  response_code=~\"2..\", destination_service_namespace=\"readability\", destination_canonical_service=\"readability-predictor-default\"}",
-                        },
-                    },
-                },
-            },
-          })
-        }
-    }
+    #    if $datacenter in ['eqiad', 'codfw'] {
+    #        pyrra::filesystem::config { "liftwing-readability-latency-${datacenter}.yaml":
+    #          content => to_yaml({
+    #            'apiVersion' => 'pyrra.dev/v1alpha1',
+    #            'kind' => 'ServiceLevelObjective',
+    #            'metadata' => {
+    #                'name' => 'liftwing-readability-latency',
+    #                'namespace' => 'pyrra-o11y',
+    #                'labels' => {
+    #                    'pyrra.dev/team' => 'ml',
+    #                    'pyrra.dev/service' => 'liftwing',
+    #                    'pyrra.dev/site' => "${datacenter}",  #lint:ignore:only_variable_string
+    #                },
+    #            },
+    #            'spec' => {
+    #                'target' => '95',
+    #                'window' => '12w',
+    #                'indicator' => {
+    #                    'latency' => {
+    #                        'success' => {
+    #                            'metric' => "istio_sli_latency_request_duration_milliseconds_bucket:increase5m{site=~\"${datacenter}\",  le=\"5000\", response_code=~\"2..\", destination_service_namespace=\"readability\", destination_canonical_service=\"readability-predictor-default\"}",
+    #                        },
+    #                        'total' => {
+    #                            'metric' => "istio_sli_latency_request_duration_milliseconds_count:increase5m{site=~\"${datacenter}\",  response_code=~\"2..\", destination_service_namespace=\"readability\", destination_canonical_service=\"readability-predictor-default\"}",
+    #                        },
+    #                    },
+    #                },
+    #            },
+    #          })
+    #        }
+    #    }
 
     # Lift Wing Readability service availability - 95% of requests are successful (2xx status code).
     #
