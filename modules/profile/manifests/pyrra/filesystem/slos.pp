@@ -148,6 +148,360 @@ class profile::pyrra::filesystem::slos (
     }
 
 
+    # Lift Wing Revscoring services latency - 98% of successful requests (2xx status code) are answered within 5s.
+    #
+    # limited to primary sites only
+    if $datacenter in ['eqiad', 'codfw'] {
+        pyrra::filesystem::config { "liftwing-revscoring-latency-${datacenter}.yaml":
+          content => to_yaml({
+            'apiVersion' => 'pyrra.dev/v1alpha1',
+            'kind' => 'ServiceLevelObjective',
+            'metadata' => {
+                'name' => 'liftwing-revscoring-latency',
+                'namespace' => 'pyrra-o11y',
+                'labels' => {
+                    'pyrra.dev/team' => 'ml',
+                    'pyrra.dev/service' => 'liftwing',
+                    'pyrra.dev/site' => "${datacenter}",  #lint:ignore:only_variable_string
+                },
+            },
+            'spec' => {
+                'target' => '98',
+                'window' => '12w',
+                'indicator' => {
+                    'latency' => {
+                        'success' => {
+                            'metric' => "istio_sli_latency_request_duration_milliseconds_bucket:increase5m{site=~\"${datacenter}\",  le=\"5000\", response_code=~\"2..\", destination_service_namespace=~\"revscoring.*\"}",
+                        },
+                        'total' => {
+                            'metric' => "istio_sli_latency_request_duration_milliseconds_count:increase5m{site=~\"${datacenter}\",  response_code=~\"2..\", destination_service_namespace=~\"revscoring.*\"}",
+                        },
+                    },
+                },
+            },
+          })
+        }
+    }
+
+    # Lift Wing Revscoring services availability - 98% of requests are successful (2xx status code).
+    #
+    # liftwing is in eqiad/codfw only
+    if $datacenter in [ 'eqiad', 'codfw' ] {
+        pyrra::filesystem::config { "liftwing-revscoring-availability-${datacenter}.yaml":
+          content => to_yaml({
+            'apiVersion' => 'pyrra.dev/v1alpha1',
+            'kind' => 'ServiceLevelObjective',
+            'metadata' => {
+                'name' => 'liftwing-revscoring-availability',
+                'namespace' => 'pyrra-o11y',
+                'labels' => {
+                    'pyrra.dev/team' => 'ml',
+                    'pyrra.dev/service' => 'liftwing',
+                    'pyrra.dev/site' => "${datacenter}", #lint:ignore:only_variable_string
+                },
+            },
+            'spec' => {
+                'target' => '98',
+                'window' => '12w',
+                'indicator' => {
+                    'ratio' => {
+                        'errors' => {
+                            'metric' => "istio_sli_availability_requests_total:increase5m{response_code!~\"(2|3|4)..\", site=~\"${datacenter}\",  destination_service_namespace=~\"revscoring.*\"}",
+                        },
+                        'total' => {
+                            'metric' => "istio_sli_availability_requests_total:increase5m{response_code=~\"...\", site=~\"${datacenter}\",  destination_service_namespace=~\"revscoring.*\"}",
+                        },
+                    },
+                },
+            },
+          })
+        }
+    }
+
+
+    # Lift Wing Revert Risk Language Agnostic service latency - 98% of successful requests (2xx status code) are answered within 500ms.
+    #
+    # limited to primary sites only
+    if $datacenter in ['eqiad', 'codfw'] {
+        pyrra::filesystem::config { "liftwing-revert-risk-lang-agnostic-latency-${datacenter}.yaml":
+          content => to_yaml({
+            'apiVersion' => 'pyrra.dev/v1alpha1',
+            'kind' => 'ServiceLevelObjective',
+            'metadata' => {
+                'name' => 'liftwing-revert-risk-lang-agnostic-latency',
+                'namespace' => 'pyrra-o11y',
+                'labels' => {
+                    'pyrra.dev/team' => 'ml',
+                    'pyrra.dev/service' => 'liftwing',
+                    'pyrra.dev/site' => "${datacenter}",  #lint:ignore:only_variable_string
+                },
+            },
+            'spec' => {
+                'target' => '98',
+                'window' => '12w',
+                'indicator' => {
+                    'latency' => {
+                        'success' => {
+                            'metric' => "istio_sli_latency_request_duration_milliseconds_bucket:increase5m{site=~\"${datacenter}\",  le=\"500\", response_code=~\"2..\", destination_service_namespace=\"revertrisk\", destination_canonical_service=\"revertrisk-language-agnostic-predictor-default\"}",
+                        },
+                        'total' => {
+                            'metric' => "istio_sli_latency_request_duration_milliseconds_count:increase5m{site=~\"${datacenter}\",  response_code=~\"2..\", destination_service_namespace=\"revertrisk\", destination_canonical_service=\"revertrisk-language-agnostic-predictor-default\"}",
+                        },
+                    },
+                },
+            },
+          })
+        }
+    }
+
+    # Lift Wing Revert Risk Language Agnostic service availability - 98% of requests are successful (2xx status code)
+    #
+    # liftwing is in eqiad/codfw only
+    if $datacenter in [ 'eqiad', 'codfw' ] {
+        pyrra::filesystem::config { "liftwing-revert-risk-lang-agnostic-availability-${datacenter}.yaml":
+          content => to_yaml({
+            'apiVersion' => 'pyrra.dev/v1alpha1',
+            'kind' => 'ServiceLevelObjective',
+            'metadata' => {
+                'name' => 'liftwing-revert-risk-lang-agnostic-availability',
+                'namespace' => 'pyrra-o11y',
+                'labels' => {
+                    'pyrra.dev/team' => 'ml',
+                    'pyrra.dev/service' => 'liftwing',
+                    'pyrra.dev/site' => "${datacenter}", #lint:ignore:only_variable_string
+                },
+            },
+            'spec' => {
+                'target' => '98',
+                'window' => '12w',
+                'indicator' => {
+                    'ratio' => {
+                        'errors' => {
+                            'metric' => "istio_sli_availability_requests_total:increase5m{response_code!~\"(2|3|4)..\", site=~\"${datacenter}\",  destination_service_namespace=\"revertrisk\", destination_canonical_service=\"revertrisk-language-agnostic-predictor-default\"}",
+                        },
+                        'total' => {
+                            'metric' => "istio_sli_availability_requests_total:increase5m{response_code=~\"...\", site=~\"${datacenter}\",  destination_service_namespace=\"revertrisk\", destination_canonical_service=\"revertrisk-language-agnostic-predictor-default\"}",
+                        },
+                    },
+                },
+            },
+          })
+        }
+    }
+
+
+    # Lift Wing Revert Risk MultiLingual service latency - 95% of successful requests (2xx status code) are answered within 5000ms.
+    #
+    # limited to primary sites only
+    if $datacenter in ['eqiad', 'codfw'] {
+        pyrra::filesystem::config { "liftwing-revert-risk-multilingual-latency-${datacenter}.yaml":
+          content => to_yaml({
+            'apiVersion' => 'pyrra.dev/v1alpha1',
+            'kind' => 'ServiceLevelObjective',
+            'metadata' => {
+                'name' => 'liftwing-revert-risk-multilingual-latency',
+                'namespace' => 'pyrra-o11y',
+                'labels' => {
+                    'pyrra.dev/team' => 'ml',
+                    'pyrra.dev/service' => 'liftwing',
+                    'pyrra.dev/site' => "${datacenter}",  #lint:ignore:only_variable_string
+                },
+            },
+            'spec' => {
+                'target' => '95',
+                'window' => '12w',
+                'indicator' => {
+                    'latency' => {
+                        'success' => {
+                            'metric' => "istio_sli_latency_request_duration_milliseconds_bucket:increase5m{site=~\"${datacenter}\",  le=\"5000\", response_code=~\"2..\", destination_service_namespace=\"revertrisk\", destination_canonical_service=\"revertrisk-multilingual-predictor-default\"}",
+                        },
+                        'total' => {
+                            'metric' => "istio_sli_latency_request_duration_milliseconds_count:increase5m{site=~\"{datacenter}\",  response_code=~\"2..\", destination_service_namespace=\"revertrisk\", destination_canonical_service=\"revertrisk-multilingual-predictor-default\"}",
+                        },
+                    },
+                },
+            },
+          })
+        }
+    }
+
+    # Lift Wing Revert Risk MultiLingual service availability - 95% of requests are successful (2xx status code).
+    #
+    # liftwing is in eqiad/codfw only
+    if $datacenter in [ 'eqiad', 'codfw' ] {
+        pyrra::filesystem::config { "liftwing-revert-risk-multilingual-availability-${datacenter}.yaml":
+          content => to_yaml({
+            'apiVersion' => 'pyrra.dev/v1alpha1',
+            'kind' => 'ServiceLevelObjective',
+            'metadata' => {
+                'name' => 'liftwing-revert-risk-multilingual-availability',
+                'namespace' => 'pyrra-o11y',
+                'labels' => {
+                    'pyrra.dev/team' => 'ml',
+                    'pyrra.dev/service' => 'liftwing',
+                    'pyrra.dev/site' => "${datacenter}", #lint:ignore:only_variable_string
+                },
+            },
+            'spec' => {
+                'target' => '95',
+                'window' => '12w',
+                'indicator' => {
+                    'ratio' => {
+                        'errors' => {
+                            'metric' => "istio_sli_availability_requests_total:increase5m{response_code!~\"(2|3|4)..\", site=~\"${datacenter}\",  destination_service_namespace=\"revertrisk\", destination_canonical_service=\"revertrisk-multilingual-predictor-default\"}",
+                        },
+                        'total' => {
+                            'metric' => "istio_sli_availability_requests_total:increase5m{response_code=~\"...\", site=~\"${datacenter}\",  destination_service_namespace=\"revertrisk\", destination_canonical_service=\"revertrisk-multilingual-predictor-default\"}",
+                        },
+                    },
+                },
+            },
+          })
+        }
+    }
+
+
+    # Lift Wing Article Topic Outlink service latency - 95% of successful requests (2xx status code) are answered within 5000ms.
+    #
+    # limited to primary sites only
+    if $datacenter in ['eqiad', 'codfw'] {
+        pyrra::filesystem::config { "liftwing-articletopic-outlink-latency-${datacenter}.yaml":
+          content => to_yaml({
+            'apiVersion' => 'pyrra.dev/v1alpha1',
+            'kind' => 'ServiceLevelObjective',
+            'metadata' => {
+                'name' => 'liftwing-articletopic-outlink-latency',
+                'namespace' => 'pyrra-o11y',
+                'labels' => {
+                    'pyrra.dev/team' => 'ml',
+                    'pyrra.dev/service' => 'liftwing',
+                    'pyrra.dev/site' => "${datacenter}",  #lint:ignore:only_variable_string
+                },
+            },
+            'spec' => {
+                'target' => '95',
+                'window' => '12w',
+                'indicator' => {
+                    'latency' => {
+                        'success' => {
+                            'metric' => "istio_sli_latency_request_duration_milliseconds_bucket:increase5m{site=~\"${datacenter}\",  le=\"5000\", response_code=~\"2..\", destination_service_namespace=\"articletopic-outlink\", destination_canonical_service=\"outlink-topic-model-transformer-default\"}",
+                        },
+                        'total' => {
+                            'metric' => "istio_sli_latency_request_duration_milliseconds_count:increase5m{site=~\"${datacenter}\",  response_code=~\"2..\", destination_service_namespace=\"articletopic-outlink\", destination_canonical_service=\"outlink-topic-model-transformer-default\"}",
+                        },
+                    },
+                },
+            },
+          })
+        }
+    }
+
+    # Lift Wing Article Topic Outlink service availability - 95% of requests are successful (2xx status code).
+    #
+    # liftwing is in eqiad/codfw only
+    if $datacenter in [ 'eqiad', 'codfw' ] {
+        pyrra::filesystem::config { "liftwing-articletopic-outlink-availability-${datacenter}.yaml":
+          content => to_yaml({
+            'apiVersion' => 'pyrra.dev/v1alpha1',
+            'kind' => 'ServiceLevelObjective',
+            'metadata' => {
+                'name' => 'liftwing-articletopic-outlink-availability',
+                'namespace' => 'pyrra-o11y',
+                'labels' => {
+                    'pyrra.dev/team' => 'ml',
+                    'pyrra.dev/service' => 'liftwing',
+                    'pyrra.dev/site' => "${datacenter}", #lint:ignore:only_variable_string
+                },
+            },
+            'spec' => {
+                'target' => '95',
+                'window' => '12w',
+                'indicator' => {
+                    'ratio' => {
+                        'errors' => {
+                            'metric' => "istio_sli_availability_requests_total:increase5m{response_code!~\"(2|3|4)..\", site=~\"${datacenter}\",  destination_service_namespace=\"articletopic-outlink\", destination_canonical_service=\"outlink-topic-model-transformer-default\"}",
+                        },
+                        'total' => {
+                            'metric' => "istio_sli_availability_requests_total:increase5m{response_code=~\"...\", site=~\"${datacenter}\",  destination_service_namespace=\"articletopic-outlink\", destination_canonical_service=\"outlink-topic-model-transformer-default\"}",
+                        },
+                    },
+                },
+            },
+          })
+        }
+    }
+
+
+    # "Lift Wing Readability service latency - 95% of successful requests (2xx status code) are answered within 5000ms.
+    #
+    # limited to primary sites only
+    if $datacenter in ['eqiad', 'codfw'] {
+        pyrra::filesystem::config { "liftwing-readability-latency-${datacenter}.yaml":
+          content => to_yaml({
+            'apiVersion' => 'pyrra.dev/v1alpha1',
+            'kind' => 'ServiceLevelObjective',
+            'metadata' => {
+                'name' => 'liftwing-readability-latency',
+                'namespace' => 'pyrra-o11y',
+                'labels' => {
+                    'pyrra.dev/team' => 'ml',
+                    'pyrra.dev/service' => 'liftwing',
+                    'pyrra.dev/site' => "${datacenter}",  #lint:ignore:only_variable_string
+                },
+            },
+            'spec' => {
+                'target' => '95',
+                'window' => '12w',
+                'indicator' => {
+                    'latency' => {
+                        'success' => {
+                            'metric' => "istio_sli_latency_request_duration_milliseconds_bucket:increase5m{site=~\"${datacenter}\",  le=\"5000\", response_code=~\"2..\", destination_service_namespace=\"readability\", destination_canonical_service=\"readability-predictor-default\"}",
+                        },
+                        'total' => {
+                            'metric' => "istio_sli_latency_request_duration_milliseconds_count:increase5m{site=~\"${datacenter}\",  response_code=~\"2..\", destination_service_namespace=\"readability\", destination_canonical_service=\"readability-predictor-default\"}",
+                        },
+                    },
+                },
+            },
+          })
+        }
+    }
+
+    # Lift Wing Readability service availability - 95% of requests are successful (2xx status code).
+    #
+    # liftwing is in eqiad/codfw only
+    if $datacenter in [ 'eqiad', 'codfw' ] {
+        pyrra::filesystem::config { "liftwing-readability-availability-${datacenter}.yaml":
+          content => to_yaml({
+            'apiVersion' => 'pyrra.dev/v1alpha1',
+            'kind' => 'ServiceLevelObjective',
+            'metadata' => {
+                'name' => 'liftwing-readability-availability',
+                'namespace' => 'pyrra-o11y',
+                'labels' => {
+                    'pyrra.dev/team' => 'ml',
+                    'pyrra.dev/service' => 'liftwing',
+                    'pyrra.dev/site' => "${datacenter}", #lint:ignore:only_variable_string
+                },
+            },
+            'spec' => {
+                'target' => '95',
+                'window' => '12w',
+                'indicator' => {
+                    'ratio' => {
+                        'errors' => {
+                            'metric' => "istio_sli_availability_requests_total:increase5m{response_code!~\"(2|3|4)..\", site=~\"${datacenter}\",  destination_service_namespace=\"readability\", destination_canonical_service=\"readability-predictor-default\"}",
+                        },
+                        'total' => {
+                            'metric' => "istio_sli_availability_requests_total:increase5m{response_code=~\"...\", site=~\"${datacenter}\",  destination_service_namespace=\"readability\", destination_canonical_service=\"readability-predictor-default\"}",
+                        },
+                    },
+                },
+            },
+          })
+        }
+    }
+
     # Varnish uses one combined latency-availability SLI: A response is satisfactory IF it spends less than 100 ms processing time in Varnish, AND it isn't a Varnish internal error.
     # SLO: In each DC, 99.9% of requests get satisfactory responses. (grouping by site)
     # Request Error Ratio SLI: The percentage of requests receiving unsatisfactory responses. This is normally near zero; upward spikes represent incidents.
