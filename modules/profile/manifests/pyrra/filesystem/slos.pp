@@ -77,6 +77,77 @@ class profile::pyrra::filesystem::slos (
         }
     }
 
+    # Lift Wing Recommendation API NG service latency - 95% of successful requests (2xx status code) are answered within 10s.
+    #
+    # limited to primary sites only
+    if $datacenter in ['eqiad', 'codfw'] {
+        pyrra::filesystem::config { "liftwing-api-ng-latency-${datacenter}.yaml":
+          content => to_yaml({
+            'apiVersion' => 'pyrra.dev/v1alpha1',
+            'kind' => 'ServiceLevelObjective',
+            'metadata' => {
+                'name' => 'liftwing-api-ng-latency',
+                'namespace' => 'pyrra-o11y',
+                'labels' => {
+                    'pyrra.dev/team' => 'ml',
+                    'pyrra.dev/service' => 'liftwing',
+                    'pyrra.dev/site' => "${datacenter}",  #lint:ignore:only_variable_string
+                },
+            },
+            'spec' => {
+                'target' => '95',
+                'window' => '12w',
+                'indicator' => {
+                    'latency' => {
+                        'success' => {
+                            'metric' => "istio_sli_latency_request_duration_milliseconds_bucket:increase5m{site=~\"${datacenter}\",  le=\"10000\", response_code=~\"2..\", destination_service_namespace=\"recommendation-api-ng\", destination_canonical_service=\"recommendation-api-ng-main\"}",
+                        },
+                        'total' => {
+                            'metric' => "istio_sli_latency_request_duration_milliseconds_count:increase5m{site=~\"${datacenter}\",  response_code=~\"2..\", destination_service_namespace=\"recommendation-api-ng\", destination_canonical_service=\"recommendation-api-ng-main\"}",
+                        },
+                    },
+                },
+            },
+          })
+        }
+    }
+
+    # Lift Wing Recommendation API NG service availability - 95% of requests are successful (2|3|4xx status code)
+    #
+    # liftwing is in eqiad/codfw only
+    if $datacenter in [ 'eqiad', 'codfw' ] {
+        pyrra::filesystem::config { "liftwing-api-ng-availability-${datacenter}.yaml":
+          content => to_yaml({
+            'apiVersion' => 'pyrra.dev/v1alpha1',
+            'kind' => 'ServiceLevelObjective',
+            'metadata' => {
+                'name' => 'liftwing-api-ng-availability',
+                'namespace' => 'pyrra-o11y-pilot',
+                'labels' => {
+                    'pyrra.dev/team' => 'ml',
+                    'pyrra.dev/service' => 'liftwing',
+                    'pyrra.dev/site' => "${datacenter}", #lint:ignore:only_variable_string
+                },
+            },
+            'spec' => {
+                'target' => '95',
+                'window' => '12w',
+                'indicator' => {
+                    'ratio' => {
+                        'errors' => {
+                            'metric' => "istio_sli_availability_requests_total:increase5m{response_code!~\"(2|3|4)..\", site=~\"${datacenter}\",  destination_service_namespace=\"recommendation-api-ng\", destination_canonical_service=\"recommendation-api-ng-main\"}",
+                        },
+                        'total' => {
+                            'metric' => "istio_sli_availability_requests_total:increase5m{response_code=~\"...\", site=~\"${datacenter}\",  destination_service_namespace=\"recommendation-api-ng\", destination_canonical_service=\"recommendation-api-ng-main\"}",
+                        },
+                    },
+                },
+            },
+          })
+        }
+    }
+
+
     # Varnish uses one combined latency-availability SLI: A response is satisfactory IF it spends less than 100 ms processing time in Varnish, AND it isn't a Varnish internal error.
     # SLO: In each DC, 99.9% of requests get satisfactory responses. (grouping by site)
     # Request Error Ratio SLI: The percentage of requests receiving unsatisfactory responses. This is normally near zero; upward spikes represent incidents.
