@@ -475,7 +475,6 @@ kubernetes::clusters:
         - wikikube-worker2044.codfw.wmnet
         - wikikube-worker2045.codfw.wmnet
         - wikikube-worker2046.codfw.wmnet
-        - wikikube-worker2047.codfw.wmnet
         - wikikube-worker2048.codfw.wmnet
         - wikikube-worker2049.codfw.wmnet
         - wikikube-worker2050.codfw.wmnet
@@ -494,7 +493,6 @@ kubernetes::clusters:
         - wikikube-worker2063.codfw.wmnet
         - wikikube-worker2064.codfw.wmnet
         - wikikube-worker2065.codfw.wmnet
-        - wikikube-worker2066.codfw.wmnet
         - wikikube-worker2067.codfw.wmnet
         - wikikube-worker2068.codfw.wmnet
         - wikikube-worker2069.codfw.wmnet
@@ -513,8 +511,6 @@ kubernetes::clusters:
         - wikikube-worker2082.codfw.wmnet
         - wikikube-worker2083.codfw.wmnet
         - wikikube-worker2084.codfw.wmnet
-        - wikikube-worker2085.codfw.wmnet
-        - wikikube-worker2086.codfw.wmnet
         - wikikube-worker2087.codfw.wmnet
         - wikikube-worker2088.codfw.wmnet
         - wikikube-worker2089.codfw.wmnet
@@ -608,10 +604,6 @@ kubernetes::clusters:
         - wikikube-worker2177.codfw.wmnet
         - wikikube-worker2178.codfw.wmnet
         - wikikube-worker2179.codfw.wmnet
-        - wikikube-worker2180.codfw.wmnet
-        - wikikube-worker2181.codfw.wmnet
-        - wikikube-worker2182.codfw.wmnet
-        - wikikube-worker2183.codfw.wmnet
         - wikikube-worker2184.codfw.wmnet
         - wikikube-worker2185.codfw.wmnet
         - wikikube-worker2186.codfw.wmnet
