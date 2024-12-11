@@ -371,10 +371,6 @@ kubernetes::clusters:
         v4: "10.194.128.0/18"
         v6: "2620:0:860:cabe::/64"
       cluster_nodes:
-        - kubernetes2017.codfw.wmnet
-        - kubernetes2021.codfw.wmnet
-        - kubernetes2022.codfw.wmnet
-        - kubernetes2024.codfw.wmnet
         - kubernetes2036.codfw.wmnet
         - kubernetes2037.codfw.wmnet
         - kubernetes2038.codfw.wmnet
@@ -616,6 +612,10 @@ kubernetes::clusters:
         - wikikube-worker2181.codfw.wmnet
         - wikikube-worker2182.codfw.wmnet
         - wikikube-worker2183.codfw.wmnet
+        - wikikube-worker2184.codfw.wmnet
+        - wikikube-worker2185.codfw.wmnet
+        - wikikube-worker2186.codfw.wmnet
+        - wikikube-worker2187.codfw.wmnet
       apparmor_profiles: *wikikube_apparmor_profiles
     staging-eqiad:
       # cluster_alias: staging makes this the "active" staging cluster.
