@@ -7,3 +7,12 @@ https://articlequality.article-models.wikimedia.org:
   assert_status: 200
   assert_body_contains: score
   method: POST
+
+https://article-country.article-models.wikimedia.org:
+- path: /v1/models/article-country:predict
+  json_body:
+    lang: "en"
+    title: "Toni_Morrison"
+  assert_status: 200
+  assert_body_contains: score
+  method: POST
