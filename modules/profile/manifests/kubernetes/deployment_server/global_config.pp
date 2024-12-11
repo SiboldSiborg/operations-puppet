@@ -82,6 +82,8 @@ class profile::kubernetes::deployment_server::global_config (
                     'port' => $upstream_port,
                     'encryption' => $encryption,
                     'sets_sni'   => $listener['sets_sni'],
+                    'tcp_keepalive'   => $listener['tcp_keepalive'],
+                    'idle_timeout'   => $listener['idle_timeout'],
                     'keepalive' => $listener['keepalive'],
         }.filter |$key, $val| { $val =~ NotUndef }
         $retval = {
