@@ -575,10 +575,20 @@ profile::kubernetes::deployment_server::services:
       usernames:
         - name: postgresql-test
         - name: postgresql-test-deploy
+    mw-content-history-reconcile-enrich:
+      usernames:
+        - name: mw-content-history-reconcile-enrich
+        - name: mw-content-history-reconcile-enrich-deploy
+    mw-content-history-reconcile-enrich-next:
+      usernames:
+        - name: mw-content-history-reconcile-enrich-next
+        - name: mw-content-history-reconcile-enrich-next-deploy
+    # To be deleted: See #T381322 for details
     mw-dump-rev-content-reconcile-enrich-next:
       usernames:
         - name: mw-dump-rev-content-reconcile-enrich-next
         - name: mw-dump-rev-content-reconcile-enrich-next-deploy
+    # To be deleted: See #T381322 for details
     mw-dump-rev-content-reconcile-enrich:
       usernames:
         - name: mw-dump-rev-content-reconcile-enrich
