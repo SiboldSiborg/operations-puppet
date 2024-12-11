@@ -100,10 +100,10 @@ class profile::pyrra::filesystem::slos (
                 'indicator' => {
                     'latency' => {
                         'success' => {
-                            'metric' => "istio_sli_latency_request_duration_milliseconds_bucket:increase5m{site=~\"${datacenter}\",  le=\"10000\", response_code=~\"2..\", destination_service_namespace=\"recommendation-api-ng\", destination_canonical_service=\"recommendation-api-ng-main\"}",
+                            'metric' => "istio_request_duration_milliseconds_bucket{site=~\"${datacenter}\",  le=\"10000\", response_code=~\"2..\", destination_service_namespace=\"recommendation-api-ng\", destination_canonical_service=\"recommendation-api-ng-main\"}",
                         },
                         'total' => {
-                            'metric' => "istio_sli_latency_request_duration_milliseconds_count:increase5m{site=~\"${datacenter}\",  response_code=~\"2..\", destination_service_namespace=\"recommendation-api-ng\", destination_canonical_service=\"recommendation-api-ng-main\"}",
+                            'metric' => "istio_request_duration_milliseconds_count{site=~\"${datacenter}\",  response_code=~\"2..\", destination_service_namespace=\"recommendation-api-ng\", destination_canonical_service=\"recommendation-api-ng-main\"}",
                         },
                     },
                 },
@@ -135,10 +135,10 @@ class profile::pyrra::filesystem::slos (
                 'indicator' => {
                     'ratio' => {
                         'errors' => {
-                            'metric' => "istio_sli_availability_requests_total:increase5m{response_code!~\"(2|3|4)..\", site=~\"${datacenter}\",  destination_service_namespace=\"recommendation-api-ng\", destination_canonical_service=\"recommendation-api-ng-main\"}",
+                            'metric' => "istio_requests_total{response_code!~\"(2|3|4)..\", site=~\"${datacenter}\",  destination_service_namespace=\"recommendation-api-ng\", destination_canonical_service=\"recommendation-api-ng-main\"}",
                         },
                         'total' => {
-                            'metric' => "istio_sli_availability_requests_total:increase5m{response_code=~\"...\", site=~\"${datacenter}\",  destination_service_namespace=\"recommendation-api-ng\", destination_canonical_service=\"recommendation-api-ng-main\"}",
+                            'metric' => "istio_requests_total{response_code=~\"...\", site=~\"${datacenter}\",  destination_service_namespace=\"recommendation-api-ng\", destination_canonical_service=\"recommendation-api-ng-main\"}",
                         },
                     },
                 },
@@ -171,10 +171,10 @@ class profile::pyrra::filesystem::slos (
                 'indicator' => {
                     'latency' => {
                         'success' => {
-                            'metric' => "istio_sli_latency_request_duration_milliseconds_bucket:increase5m{site=~\"${datacenter}\",  le=\"5000\", response_code=~\"2..\", destination_service_namespace=~\"revscoring.*\"}",
+                            'metric' => "istio_request_duration_milliseconds_bucket{site=~\"${datacenter}\",  le=\"5000\", response_code=~\"2..\", destination_service_namespace=~\"revscoring.*\"}",
                         },
                         'total' => {
-                            'metric' => "istio_sli_latency_request_duration_milliseconds_count:increase5m{site=~\"${datacenter}\",  response_code=~\"2..\", destination_service_namespace=~\"revscoring.*\"}",
+                            'metric' => "istio_request_duration_milliseconds_count{site=~\"${datacenter}\",  response_code=~\"2..\", destination_service_namespace=~\"revscoring.*\"}",
                         },
                     },
                 },
@@ -206,10 +206,10 @@ class profile::pyrra::filesystem::slos (
                 'indicator' => {
                     'ratio' => {
                         'errors' => {
-                            'metric' => "istio_sli_availability_requests_total:increase5m{response_code!~\"(2|3|4)..\", site=~\"${datacenter}\",  destination_service_namespace=~\"revscoring.*\"}",
+                            'metric' => "istio_requests_total{response_code!~\"(2|3|4)..\", site=~\"${datacenter}\",  destination_service_namespace=~\"revscoring.*\"}",
                         },
                         'total' => {
-                            'metric' => "istio_sli_availability_requests_total:increase5m{response_code=~\"...\", site=~\"${datacenter}\",  destination_service_namespace=~\"revscoring.*\"}",
+                            'metric' => "istio_requests_total{response_code=~\"...\", site=~\"${datacenter}\",  destination_service_namespace=~\"revscoring.*\"}",
                         },
                     },
                 },
@@ -242,10 +242,10 @@ class profile::pyrra::filesystem::slos (
                 'indicator' => {
                     'latency' => {
                         'success' => {
-                            'metric' => "istio_sli_latency_request_duration_milliseconds_bucket:increase5m{site=~\"${datacenter}\",  le=\"500\", response_code=~\"2..\", destination_service_namespace=\"revertrisk\", destination_canonical_service=\"revertrisk-language-agnostic-predictor-default\"}",
+                            'metric' => "istio_request_duration_milliseconds_bucket{site=~\"${datacenter}\",  le=\"500\", response_code=~\"2..\", destination_service_namespace=\"revertrisk\", destination_canonical_service=\"revertrisk-language-agnostic-predictor-default\"}",
                         },
                         'total' => {
-                            'metric' => "istio_sli_latency_request_duration_milliseconds_count:increase5m{site=~\"${datacenter}\",  response_code=~\"2..\", destination_service_namespace=\"revertrisk\", destination_canonical_service=\"revertrisk-language-agnostic-predictor-default\"}",
+                            'metric' => "istio_request_duration_milliseconds_count{site=~\"${datacenter}\",  response_code=~\"2..\", destination_service_namespace=\"revertrisk\", destination_canonical_service=\"revertrisk-language-agnostic-predictor-default\"}",
                         },
                     },
                 },
@@ -277,10 +277,10 @@ class profile::pyrra::filesystem::slos (
                 'indicator' => {
                     'ratio' => {
                         'errors' => {
-                            'metric' => "istio_sli_availability_requests_total:increase5m{response_code!~\"(2|3|4)..\", site=~\"${datacenter}\",  destination_service_namespace=\"revertrisk\", destination_canonical_service=\"revertrisk-language-agnostic-predictor-default\"}",
+                            'metric' => "istio_requests_total{response_code!~\"(2|3|4)..\", site=~\"${datacenter}\",  destination_service_namespace=\"revertrisk\", destination_canonical_service=\"revertrisk-language-agnostic-predictor-default\"}",
                         },
                         'total' => {
-                            'metric' => "istio_sli_availability_requests_total:increase5m{response_code=~\"...\", site=~\"${datacenter}\",  destination_service_namespace=\"revertrisk\", destination_canonical_service=\"revertrisk-language-agnostic-predictor-default\"}",
+                            'metric' => "istio_requests_total{response_code=~\"...\", site=~\"${datacenter}\",  destination_service_namespace=\"revertrisk\", destination_canonical_service=\"revertrisk-language-agnostic-predictor-default\"}",
                         },
                     },
                 },
@@ -313,10 +313,10 @@ class profile::pyrra::filesystem::slos (
                 'indicator' => {
                     'latency' => {
                         'success' => {
-                            'metric' => "istio_sli_latency_request_duration_milliseconds_bucket:increase5m{site=~\"${datacenter}\",  le=\"5000\", response_code=~\"2..\", destination_service_namespace=\"revertrisk\", destination_canonical_service=\"revertrisk-multilingual-predictor-default\"}",
+                            'metric' => "istio_request_duration_milliseconds_bucket{site=~\"${datacenter}\",  le=\"5000\", response_code=~\"2..\", destination_service_namespace=\"revertrisk\", destination_canonical_service=\"revertrisk-multilingual-predictor-default\"}",
                         },
                         'total' => {
-                            'metric' => "istio_sli_latency_request_duration_milliseconds_count:increase5m{site=~\"{datacenter}\",  response_code=~\"2..\", destination_service_namespace=\"revertrisk\", destination_canonical_service=\"revertrisk-multilingual-predictor-default\"}",
+                            'metric' => "istio_request_duration_milliseconds_count{site=~\"{datacenter}\",  response_code=~\"2..\", destination_service_namespace=\"revertrisk\", destination_canonical_service=\"revertrisk-multilingual-predictor-default\"}",
                         },
                     },
                 },
@@ -348,10 +348,10 @@ class profile::pyrra::filesystem::slos (
                 'indicator' => {
                     'ratio' => {
                         'errors' => {
-                            'metric' => "istio_sli_availability_requests_total:increase5m{response_code!~\"(2|3|4)..\", site=~\"${datacenter}\",  destination_service_namespace=\"revertrisk\", destination_canonical_service=\"revertrisk-multilingual-predictor-default\"}",
+                            'metric' => "istio_requests_total{response_code!~\"(2|3|4)..\", site=~\"${datacenter}\",  destination_service_namespace=\"revertrisk\", destination_canonical_service=\"revertrisk-multilingual-predictor-default\"}",
                         },
                         'total' => {
-                            'metric' => "istio_sli_availability_requests_total:increase5m{response_code=~\"...\", site=~\"${datacenter}\",  destination_service_namespace=\"revertrisk\", destination_canonical_service=\"revertrisk-multilingual-predictor-default\"}",
+                            'metric' => "istio_requests_total{response_code=~\"...\", site=~\"${datacenter}\",  destination_service_namespace=\"revertrisk\", destination_canonical_service=\"revertrisk-multilingual-predictor-default\"}",
                         },
                     },
                 },
@@ -384,10 +384,10 @@ class profile::pyrra::filesystem::slos (
                 'indicator' => {
                     'latency' => {
                         'success' => {
-                            'metric' => "istio_sli_latency_request_duration_milliseconds_bucket:increase5m{site=~\"${datacenter}\",  le=\"5000\", response_code=~\"2..\", destination_service_namespace=\"articletopic-outlink\", destination_canonical_service=\"outlink-topic-model-transformer-default\"}",
+                            'metric' => "istio_request_duration_milliseconds_bucket{site=~\"${datacenter}\",  le=\"5000\", response_code=~\"2..\", destination_service_namespace=\"articletopic-outlink\", destination_canonical_service=\"outlink-topic-model-transformer-default\"}",
                         },
                         'total' => {
-                            'metric' => "istio_sli_latency_request_duration_milliseconds_count:increase5m{site=~\"${datacenter}\",  response_code=~\"2..\", destination_service_namespace=\"articletopic-outlink\", destination_canonical_service=\"outlink-topic-model-transformer-default\"}",
+                            'metric' => "istio_request_duration_milliseconds_count{site=~\"${datacenter}\",  response_code=~\"2..\", destination_service_namespace=\"articletopic-outlink\", destination_canonical_service=\"outlink-topic-model-transformer-default\"}",
                         },
                     },
                 },
@@ -419,10 +419,10 @@ class profile::pyrra::filesystem::slos (
                 'indicator' => {
                     'ratio' => {
                         'errors' => {
-                            'metric' => "istio_sli_availability_requests_total:increase5m{response_code!~\"(2|3|4)..\", site=~\"${datacenter}\",  destination_service_namespace=\"articletopic-outlink\", destination_canonical_service=\"outlink-topic-model-transformer-default\"}",
+                            'metric' => "istio_requests_total{response_code!~\"(2|3|4)..\", site=~\"${datacenter}\",  destination_service_namespace=\"articletopic-outlink\", destination_canonical_service=\"outlink-topic-model-transformer-default\"}",
                         },
                         'total' => {
-                            'metric' => "istio_sli_availability_requests_total:increase5m{response_code=~\"...\", site=~\"${datacenter}\",  destination_service_namespace=\"articletopic-outlink\", destination_canonical_service=\"outlink-topic-model-transformer-default\"}",
+                            'metric' => "istio_requests_total{response_code=~\"...\", site=~\"${datacenter}\",  destination_service_namespace=\"articletopic-outlink\", destination_canonical_service=\"outlink-topic-model-transformer-default\"}",
                         },
                     },
                 },
@@ -457,10 +457,10 @@ class profile::pyrra::filesystem::slos (
     #                'indicator' => {
     #                    'latency' => {
     #                        'success' => {
-    #                            'metric' => "istio_sli_latency_request_duration_milliseconds_bucket:increase5m{site=~\"${datacenter}\",  le=\"5000\", response_code=~\"2..\", destination_service_namespace=\"readability\", destination_canonical_service=\"readability-predictor-default\"}",
+    #                            'metric' => "istio_request_duration_milliseconds_bucket{site=~\"${datacenter}\",  le=\"5000\", response_code=~\"2..\", destination_service_namespace=\"readability\", destination_canonical_service=\"readability-predictor-default\"}",
     #                        },
     #                        'total' => {
-    #                            'metric' => "istio_sli_latency_request_duration_milliseconds_count:increase5m{site=~\"${datacenter}\",  response_code=~\"2..\", destination_service_namespace=\"readability\", destination_canonical_service=\"readability-predictor-default\"}",
+    #                            'metric' => "istio_request_duration_milliseconds_count{site=~\"${datacenter}\",  response_code=~\"2..\", destination_service_namespace=\"readability\", destination_canonical_service=\"readability-predictor-default\"}",
     #                        },
     #                    },
     #                },
@@ -492,10 +492,10 @@ class profile::pyrra::filesystem::slos (
                 'indicator' => {
                     'ratio' => {
                         'errors' => {
-                            'metric' => "istio_sli_availability_requests_total:increase5m{response_code!~\"(2|3|4)..\", site=~\"${datacenter}\",  destination_service_namespace=\"readability\", destination_canonical_service=\"readability-predictor-default\"}",
+                            'metric' => "istio_requests_total{response_code!~\"(2|3|4)..\", site=~\"${datacenter}\",  destination_service_namespace=\"readability\", destination_canonical_service=\"readability-predictor-default\"}",
                         },
                         'total' => {
-                            'metric' => "istio_sli_availability_requests_total:increase5m{response_code=~\"...\", site=~\"${datacenter}\",  destination_service_namespace=\"readability\", destination_canonical_service=\"readability-predictor-default\"}",
+                            'metric' => "istio_requests_total{response_code=~\"...\", site=~\"${datacenter}\",  destination_service_namespace=\"readability\", destination_canonical_service=\"readability-predictor-default\"}",
                         },
                     },
                 },
