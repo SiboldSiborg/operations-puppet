@@ -81,38 +81,38 @@ GRANT ALTER, CREATE, SELECT, INSERT, UPDATE, DELETE
 -- haproxy@dbproxy2001
 
 GRANT USAGE
-    ON *.* TO 'haproxy'@'10.192.0.129';
+    ON *.* TO 'haproxy'@'10.192.23.11';
 
 -- etherpadlite
 
 GRANT USAGE
-    ON *.* TO 'etherpadlite'@'10.192.0.129'
+    ON *.* TO 'etherpadlite'@'10.192.23.11'
     IDENTIFIED BY PASSWORD '*BB9BC9FF217E05F42991AC64A9A70BE54275E306';
 
 GRANT ALL PRIVILEGES
-    ON `etherpadlite`.* TO 'etherpadlite'@'10.192.0.129';
+    ON `etherpadlite`.* TO 'etherpadlite'@'10.192.23.11';
 
 -- librenms
 
 GRANT USAGE
-    ON *.* TO 'librenms'@'10.192.0.129'
+    ON *.* TO 'librenms'@'10.192.23.11'
     IDENTIFIED BY PASSWORD '*AD0D2C74067568FE1E34E75191C2137762AC0A49';
 
 GRANT ALL PRIVILEGES
-    ON `librenms`.* TO 'librenms'@'10.192.0.129';
+    ON `librenms`.* TO 'librenms'@'10.192.23.11';
 
 -- rt
 
 GRANT USAGE
-    ON *.* TO 'rt'@'10.192.0.129'
+    ON *.* TO 'rt'@'10.192.23.11'
     IDENTIFIED BY PASSWORD '*876E1392F4CCBAD0362B8BEC583772EB50DCB02C';
 
 GRANT ALL PRIVILEGES
-    ON `rt`.* TO 'rt'@'10.192.0.129';
+    ON `rt`.* TO 'rt'@'10.192.23.11';
 
 -- rddmarc
 GRANT ALTER, CREATE, SELECT, INSERT, UPDATE, DELETE
-    ON rddmarc.* TO 'rddmarc'@'10.192.0.129' IDENTIFIED BY '<%=@rddmarc_pass%>';
+    ON rddmarc.* TO 'rddmarc'@'10.192.23.11' IDENTIFIED BY '<%=@rddmarc_pass%>';
 
 -- cas
 -- dbproxy1022
@@ -126,9 +126,9 @@ GRANT USAGE ON *.* TO `cas`@`10.64.32.10` IDENTIFIED BY '<%=@u2f_jpa_password%>'
 GRANT ALTER, CREATE, CREATE TEMPORARY TABLES, DELETE, INSERT, SELECT, UPDATE ON `cas_staging`.* TO `cas`@`10.64.32.10`;
 
 -- dbproxy2001
--- Grants for 'cas'@'10.192.0.129'
-GRANT USAGE ON *.* TO `cas`@`10.192.0.129` IDENTIFIED BY '<%=@u2f_jpa_password%>';
-GRANT ALTER, CREATE, CREATE TEMPORARY TABLES, DELETE, INSERT, SELECT, UPDATE ON `cas_staging`.* TO `cas`@`10.192.0.129`;
+-- Grants for 'cas'@'10.192.23.11'
+GRANT USAGE ON *.* TO `cas`@`10.192.23.11` IDENTIFIED BY '<%=@u2f_jpa_password%>';
+GRANT ALTER, CREATE, CREATE TEMPORARY TABLES, DELETE, INSERT, SELECT, UPDATE ON `cas_staging`.* TO `cas`@`10.192.23.11`;
 
 -- cas @ dbproxy1022 and dbproxy1024
 GRANT USAGE ON *.* TO 'cas'@'10.64.32.10' IDENTIFIED BY '<%=@u2f_jpa_password%>';
@@ -137,8 +137,8 @@ GRANT USAGE ON *.* TO 'cas'@'10.64.0.15' IDENTIFIED BY '<%=@u2f_jpa_password%>';
 GRANT SELECT, INSERT, UPDATE, DELETE, CREATE,ALTER ON `cas`.* TO 'cas'@'10.64.0.15';
 
 -- cas @ dbproxy2001
-GRANT USAGE ON *.* TO 'cas'@'10.192.0.129' IDENTIFIED BY '<%=@u2f_jpa_password%>';
-GRANT SELECT, INSERT, UPDATE, DELETE, CREATE,ALTER ON `cas`.* TO 'cas'@'10.192.0.129';
+GRANT USAGE ON *.* TO 'cas'@'10.192.23.11' IDENTIFIED BY '<%=@u2f_jpa_password%>';
+GRANT SELECT, INSERT, UPDATE, DELETE, CREATE,ALTER ON `cas`.* TO 'cas'@'10.192.23.11';
 
 -- backupcheck @ dbbackups
 
