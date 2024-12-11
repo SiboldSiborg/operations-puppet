@@ -587,6 +587,14 @@ profile::kubernetes::deployment_server::services:
       usernames:
         - name: blunderbuss
         - name: blunderbuss-deploy
+    llm-inference:
+      usernames:
+        - name: llm-inference
+          owner: root
+          group: research-deployers
+        - name: llm-inference-deploy
+          owner: root
+          group: research-deployers
   aux-k8s:
     jaeger:
       usernames:
