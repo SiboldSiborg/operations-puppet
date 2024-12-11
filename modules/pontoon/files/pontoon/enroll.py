@@ -43,7 +43,10 @@ class Enroller(object):
                 text=True,
             )
             if p.returncode > 0:
-                log.error("Unable to find agent server for %s", host)
+                log.error(
+                    "Unable to find agent server for %s. Is the host reachable over ssh?",
+                    host,
+                )
                 log.error("Stderr: %s", p.stderr)
                 log.error("Stdout: %s", p.stdout)
                 return False

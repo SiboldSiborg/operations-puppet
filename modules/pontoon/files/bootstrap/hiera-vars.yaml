@@ -5,5 +5,9 @@
 # Environment available:
 # - FQDN
 
+# profile::puppet::agent depends on this to bootstrap
+puppetmaster: ${FQDN}
+puppet_ca_server: ${FQDN}
+
 profile::puppetserver::ca_server: ${FQDN}
 profile::puppet::agent::puppetmaster: ${FQDN}

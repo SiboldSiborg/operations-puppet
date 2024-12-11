@@ -130,6 +130,10 @@ EOF
 #!/bin/bash
 export PONTOON_HOME=$puppet/modules/pontoon/files
 
+# puppet apply below will also run a git clone of these repos, make sure
+# that can happen successfully
+chown puppet $puppet/.git $private/.git
+
 exec puppet apply --hiera_config $init/hiera-config.yaml \\
   --modulepath $modulepath \\
   --verbose --detailed-exitcodes \\
