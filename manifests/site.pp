@@ -1672,7 +1672,7 @@ node /^kubernetes10(59|6[0-2]|)\.eqiad\./ {
     role(kubernetes::worker)
 }
 
-node /^kubernetes20(3[26-9]|4[0-9]|5[0-368])\.codfw\./ {
+node /^kubernetes20(4[0-9]|5[0-368])\.codfw\./ {
     role(kubernetes::worker)
 }
 
