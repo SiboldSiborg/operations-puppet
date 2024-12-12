@@ -253,7 +253,9 @@ def noraid_parse(response):
     for blk_dev in blk_devs:
         if blk_dev['type'] != 'disk':
             continue
-        if blk_dev['name'].startswith('drbd') or blk_dev['name'].startswith('nbd'):
+        if blk_dev['name'].startswith('drbd') or \
+           blk_dev['name'].startswith('zram') or \
+           blk_dev['name'].startswith('nbd'):
             continue
         # The vendor value returned by lsblk is a fixed width string of 8 chars,
         # with space padding on the right.
