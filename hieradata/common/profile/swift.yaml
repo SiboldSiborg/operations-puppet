@@ -134,6 +134,14 @@ profile::swift::storagehosts:
   - ms-be1080.eqiad.wmnet
   - ms-be1081.eqiad.wmnet
   - ms-be1082.eqiad.wmnet
+  - ms-be1083.eqiad.wmnet
+  - ms-be1084.eqiad.wmnet
+  - ms-be1085.eqiad.wmnet
+  - ms-be1086.eqiad.wmnet
+  - ms-be1087.eqiad.wmnet
+  - ms-be1088.eqiad.wmnet
+  - ms-be1089.eqiad.wmnet
+  - ms-be1090.eqiad.wmnet
   - ms-be2051.codfw.wmnet
   - ms-be2052.codfw.wmnet
   - ms-be2053.codfw.wmnet
@@ -164,3 +172,10 @@ profile::swift::storagehosts:
   - ms-be2078.codfw.wmnet
   - ms-be2079.codfw.wmnet
   - ms-be2080.codfw.wmnet
+  - ms-be2081.codfw.wmnet
+  - ms-be2082.codfw.wmnet
+  - ms-be2083.codfw.wmnet
+  - ms-be2084.codfw.wmnet
+  - ms-be2085.codfw.wmnet
+  - ms-be2086.codfw.wmnet
+  - ms-be2087.codfw.wmnet
