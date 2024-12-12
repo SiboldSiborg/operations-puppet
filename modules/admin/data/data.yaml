@@ -471,7 +471,7 @@ groups:
                  This group should contain members of the Analytics team.
     members: &analytics_admins_members [joal, mforns, milimetric, oljad, ebysans, aqu,
               xcollazo, hokwelum, gmodena, dcausse, mnz, jebe, tchin, cjming, phuedx, dr0ptp4kt, sg912, sfaci,
-              btullis, stevemunene, brouberol, ryankemper, bking, gehel, amastilovic, ahoelzl]
+              btullis, stevemunene, brouberol, ryankemper, bking, gehel, amastilovic, ahoelzl, otto]
     privileges: ['ALL = (hdfs)  NOPASSWD: ALL',
                  'ALL = (analytics)  NOPASSWD: ALL',
                  'ALL = (yarn)  NOPASSWD: ALL',
