@@ -46,18 +46,33 @@ hosts:
     - ms-be1080
     - ms-be1081
     - ms-be1082
+    - ms-be1083
+    - ms-be1084
+    - ms-be1085
+    - ms-be1086
+    - ms-be1087
+    - ms-be1088
+    - ms-be1089
+    - ms-be1090
   prod:
-    - ms-be1051
-    - ms-be1052
-    - ms-be1053
-    - ms-be1054
-    - ms-be1055
+    - ms-be1051:
+        - drain
+    - ms-be1052:
+        - drain
+    - ms-be1053:
+        - drain
+    - ms-be1054:
+        - drain
+    - ms-be1055:
+        - drain
     - ms-be1056:
-        - sdh1: failed
-    - ms-be1057
+        - drain
+    - ms-be1057:
+        - drain
     - ms-be1058:
-        - sdc1: failed
-    - ms-be1059
+        - drain
+    - ms-be1059:
+        - drain
   prod24:
     - ms-be1060
     - ms-be1061

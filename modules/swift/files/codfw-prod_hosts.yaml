@@ -56,13 +56,26 @@ hosts:
     - ms-be2078
     - ms-be2079
     - ms-be2080
+    - ms-be2081
+    - ms-be2082
+    - ms-be2083
+    - ms-be2084
+    - ms-be2085
+    - ms-be2086
+    - ms-be2087
   prod:
-    - ms-be2051
-    - ms-be2052
-    - ms-be2053
-    - ms-be2054
-    - ms-be2055
-    - ms-be2056
+    - ms-be2051:
+        - drain
+    - ms-be2052:
+        - drain
+    - ms-be2053:
+        - drain
+    - ms-be2054:
+        - drain
+    - ms-be2055:
+        - drain
+    - ms-be2056:
+        - drain
   prod24:
     - ms-be2057
     - ms-be2058
