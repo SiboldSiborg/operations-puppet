@@ -15,7 +15,7 @@ def main():
     enable_group = parser.add_mutually_exclusive_group(required=True)
     enable_group.add_argument('--enable', action='store_true', help='enable MFA')
     enable_group.add_argument('--disable', action='store_true', help='disable MFA.')
-    parser.add_argument('--method', default='mfa-u2f', choices=['mfa-u2f', 'mfa-webauthn'])
+    parser.add_argument('--method', default='mfa-webauthn', choices=['mfa-webauthn',])
 
     args = parser.parse_args()
     user = ldap.get_user(args.user)
