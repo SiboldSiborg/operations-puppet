@@ -381,6 +381,8 @@ class profile::kubernetes::deployment_server::global_config (
             'analytics' => wmflib::role::ips('analytics_cluster::postgresql'),
             'maps-read-replicas-eqiad' => wmflib::role::ips('maps::replica', 'eqiad'),
             'maps-read-replicas-codfw' => wmflib::role::ips('maps::replica', 'codfw'),
+            'maps-master-eqiad' => wmflib::role::ips('maps::master', 'eqiad'),
+            'maps-master-codfw' => wmflib::role::ips('maps::master', 'codfw'),
           },
         },
         'opensearch' => {
