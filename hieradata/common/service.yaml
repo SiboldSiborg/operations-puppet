@@ -4297,6 +4297,7 @@ service::catalog:
     page: false  # TODO(T372081): set to true before launching beyond testwiki
     probes:
       - type: http
+        path: /_info
     port: *k8s-ingress-wikikube_port
     sites:
       - eqiad
