@@ -989,12 +989,12 @@ node /^es104(1|2|3|4|5|6)\.eqiad\./ {
     role(insetup::data_persistence)
 }
 
-# New passive codfw proxies for misc databases T361352
+# Passive codfw proxies for misc databases
 node /^dbproxy200(5|6|7|8)\.codfw\./ {
     role(mariadb::proxy::master)
 }
 
-# Passive codfw proxies for misc databases
+# Old codfw proxies for misc databases - will be decommissioned T381962
 node /^dbproxy20(01|02|03|04)\.codfw\./ {
     role(mariadb::proxy::master)
 }
