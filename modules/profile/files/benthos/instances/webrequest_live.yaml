@@ -131,6 +131,7 @@ tests:
     output_batches:
       -
         - json_equals:
+             https: "1"
              client_port: "4181"
              is_debug: "0"
              is_from_public_cloud: "1"
