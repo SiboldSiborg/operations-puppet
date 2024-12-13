@@ -37,8 +37,10 @@ if [[ -n "$1" && "$1" == "-h" ]]; then
     usage
 fi
 
+if [ -n "$OCI_RUNTIME" ] && command -v "$OCI_RUNTIME" >/dev/null; then
+    oci_runtime="$OCI_RUNTIME"
 # Verify that docker or podman is installed, prefer podman
-if command -v podman >/dev/null; then
+elif command -v podman >/dev/null; then
     oci_runtime='podman'
 elif command -v docker >/dev/null; then
     oci_runtime='docker'
