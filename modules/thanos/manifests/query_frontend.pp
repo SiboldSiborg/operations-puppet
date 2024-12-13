@@ -42,7 +42,6 @@ class thanos::query_frontend (
         'type'   => 'IN-MEMORY',
         'config' => {
           'max_size'      => '16GB',
-          'max_item_size' => '30MB',
         }
       }
     } else {
