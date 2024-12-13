@@ -33,6 +33,7 @@ class TaskGen < ::Rake::TaskLib
       :kubernetes_hiera,
       :shellcheck,
       :python_extensions,
+      :profile_benthos_yaml_tests,
       :spec,
       :tox,
       :per_module_tox,
@@ -436,6 +437,28 @@ class TaskGen < ::Rake::TaskLib
       puts "hieradata/common/kubernetes.yaml: OK".green
     end
     [:kubernetes_hiera]
+  end
+
+  def setup_profile_benthos_yaml_tests
+    profile_benthos_yaml_files = filter_files_by("modules/profile/files/benthos/instances/*.yaml")
+    return [] if profile_benthos_yaml_files.empty?
+    desc 'Check profile::benthos yaml files'
+    task :profile_benthos_yaml_tests do
+      failures = false
+      profile_benthos_yaml_files.each do |f|
+        yaml = YAML.safe_load(File.open(f))
+        next unless yaml.key?('tests')
+        # Invoke benthos to run the unit tests defined in the yaml file
+        res = system("benthos test #{f}")
+        unless res
+          $stderr.puts "benthos test failed for #{f}".red
+          failures = true
+        end
+      end
+      abort("profile::benthos yaml files: FAILED".red) if failures
+      puts "profile::benthos yaml files: OK".green
+    end
+    [:profile_benthos_yaml_tests]
   end
 
   def setup_spec
