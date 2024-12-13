@@ -15,17 +15,8 @@
 
 # Node definitions (alphabetic order)
 
-# Ganeti VMs for acme-chief service
-node /^acmechief1001\.eqiad\./ {
-    role(insetup::buster)
-}
-
 node /^acmechief1002\.eqiad\./ {
     role(acme_chief)
-}
-
-node /^acmechief2001\.codfw\./ {
-    role(insetup::buster)
 }
 
 node /^acmechief2002\.codfw\./ {
