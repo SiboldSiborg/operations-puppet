@@ -967,8 +967,8 @@ tables:
     visibility: private
 sources:
   core:
-    - path: maintenance/tables.json
-      gerrit: https://gerrit.wikimedia.org/r/plugins/gitiles/mediawiki/core/+/refs/heads/master/maintenance/tables.json
+    - path: sql/tables.json
+      gerrit: https://gerrit.wikimedia.org/r/plugins/gitiles/mediawiki/core/+/refs/heads/master/sql/tables.json
   abuse_filter:
     - path: extensions/AbuseFilter/db_patches/tables.json
       gerrit: https://gerrit.wikimedia.org/r/plugins/gitiles/mediawiki/extensions/AbuseFilter/+/master/db_patches/tables.json
