@@ -25,7 +25,7 @@ class profile::maps::osm_master (
     require profile::maps::postgresql_common
     include network::constants
 
-    $tegola_networks = flatten([
+    $wikikube_networks = flatten([
         $network::constants::services_kubepods_networks,
         $network::constants::staging_kubepods_networks,
     ])
@@ -99,28 +99,40 @@ class profile::maps::osm_master (
         method   => 'peer',
     }
 
-    profile::maps::tilerator_user { 'localhost':
+    profile::maps::user_cidrs { 'tilerator@localhost':
+        user       => 'tilerator',
+        database   => 'all',
         ip_address => '127.0.0.1/32',
         password   => $tilerator_pass,
     }
-    # tegola-vector-tiles will connect as user tilerator from
-    # kubernetes pods.
-    $tegola_networks.each |String $subnet| {
+    # * tegola-vector-tiles will connect as user tilerator from
+    #   kubernetes pods.
+    # * kartotherian will connect from kubernetes pods.
+    $wikikube_networks.each |String $subnet| {
         if $subnet =~ Stdlib::IP::Address::V4 {
             $_subnet = split($subnet, '/')[0]
-            profile::maps::tilerator_user { "${_subnet}_kubepod":
-            ip_address => $subnet,
-            password   => $tilerator_pass,
+            profile::maps::user_cidrs { "tilerator@${_subnet}_kubepod":
+                user       => 'tilerator',
+                database   => 'all',
+                ip_address => $subnet,
+                password   => $tilerator_pass,
+            }
+            profile::maps::user_cidrs { "kartotherian@${_subnet}_kubepod":
+                user       => 'kartotherian',
+                database   => $db_name,
+                ip_address => $subnet,
+                password   => $kartotherian_pass,
             }
         }
     }
 
-    if $postgres_replicas {
-        create_resources(
-            profile::maps::tilerator_user,
-            $postgres_replicas,
-            { password => $tilerator_pass }
-        )
+    $postgres_replicas.each |$replica, $ip_address| {
+        profile::maps::user_cidrs { "tilerator@${replica}":
+            user       => 'tilerator',
+            password   => $tilerator_pass,
+            database   => 'all',
+            ip_address => $ip_address['ip_address'],
+        }
     }
 
     # Grants

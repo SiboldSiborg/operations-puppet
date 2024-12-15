@@ -1,13 +1,15 @@
 # SPDX-License-Identifier: Apache-2.0
 #
-# Create postgresql users for tilerator and tegola
+# Create postgresql users for tilerator, tegola and kartotherian.
 #
 # This is extracted to reduce a bit of duplication and to be used as a pseudo
 # loop with `create_resources`. It might make sense to refactor this once we
 # activate puppet future parser. It might also make sense to expose higher
 # level abstractions in the postgresql module itself.
 #
-define profile::maps::tilerator_user (
+define profile::maps::user_cidrs (
+    String $user,
+    String $database,
     Stdlib::IP::Address $ip_address,
     String $password,
 ) {
@@ -16,10 +18,10 @@ define profile::maps::tilerator_user (
     } else {
         $_ip_address = $ip_address
     }
-    postgresql::user { "tilerator@${title}":
-        user     => 'tilerator',
+    postgresql::user { $title:
+        user     => $user,
         password => $password,
-        database => 'all',
+        database => $database,
         cidr     => $_ip_address,
     }
 }
