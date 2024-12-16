@@ -14,7 +14,6 @@ class profile::prometheus::ops (
     Array $alertmanagers                                      = lookup('alertmanagers', {'default_value' => []}),
     Array[Stdlib::HTTPUrl] $blackbox_pingthing_http_check_urls = lookup('profile::prometheus::ops::blackbox_pingthing_http_check_urls', { 'default_value' => [] }),
     Array[Stdlib::HTTPUrl] $blackbox_pingthing_proxied_urls    = lookup('profile::prometheus::ops::blackbox_pingthing_proxied_urls', { 'default_value' => [] }),
-    Optional[Stdlib::HTTPUrl] $http_proxy                     = lookup('http_proxy', {default_value => undef}),
     Wmflib::Infra::Devices $infra_devices                     = lookup('infra_devices'),
     Array                  $alerting_relabel_configs_extra    = lookup('profile::prometheus::ops::alerting_relabel_configs_extra'),
     Array[Stdlib::Host] $ganeti_clusters                      = lookup('profile::prometheus::ganeti::clusters', { 'default_value' => []}),
@@ -84,18 +83,6 @@ class profile::prometheus::ops (
         group   => 'root',
         mode    => '0444',
         content => to_yaml($swagger_external_checks)
-    }
-
-    # We need a deterministic location for client certificates to use for exported
-    # blackbox checks e.g. prometheus::blackbox::check::{http,tcp} with use_client_auth
-    puppet::expose_agent_certs { '/etc/prometheus':
-        ensure          => 'present',
-        user            => 'prometheus',
-        provide_private => true,
-    }
-
-    class{ '::prometheus::blackbox_exporter':
-        http_proxy => $http_proxy,
     }
 
     # Blackbox jobs share the same relabel config
@@ -190,11 +177,6 @@ class profile::prometheus::ops (
         'relabel_configs' => $blackbox_relabel_configs,
       },
     ]
-
-    # Local blackbox_exporter needs configuration (modules) generated from service::catalog
-    class { '::prometheus::blackbox::modules::service_catalog':
-        services_config => wmflib::service::fetch(),
-    }
 
     # Relabel configuration to support for targets in the following forms to
     # keep 'instance' label readable:
