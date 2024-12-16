@@ -1,0 +1,16 @@
+profile::ceph::mon::hosts:
+  "cephosd1001.eqiad.wmnet":
+    public:
+      addr: "10.64.130.13"
+  "cephosd1002.eqiad.wmnet":
+    public:
+      addr: "10.64.131.21"
+  "cephosd1003.eqiad.wmnet":
+    public:
+      addr: "10.64.132.23"
+  "cephosd1004.eqiad.wmnet":
+    public:
+      addr: "10.64.134.12"
+  "cephosd1005.eqiad.wmnet":
+    public:
+      addr: "10.64.135.21"

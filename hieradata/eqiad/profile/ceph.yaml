@@ -1,0 +1,5 @@
+# Generated with uuidgen
+profile::ceph::fsid: 6d4278e1-ea45-4d29-86fe-85b44c150813
+
+profile::ceph::public_networks:
+  - 10.64.0.0/12
