@@ -84,6 +84,7 @@ class profile::puppet::agent (
         dns_alt_names          => $dns_alt_names,
         environment            => $environment,
         certificate_revocation => $_certificate_revocation,
+        facts_soft_limit       => $facts_soft_limit,
     }
     class { 'puppet_statsd':
         statsd_host   => 'statsd.eqiad.wmnet',
