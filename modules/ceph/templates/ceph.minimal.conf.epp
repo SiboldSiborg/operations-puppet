@@ -1,0 +1,11 @@
+<%#- SPDX-License-Identifier: Apache-2.0 -%>
+<%- | String                     $fsid,
+      Hash[String,Hash]          $mon_hosts,
+| -%>
+# minimal ceph.conf for <%= $fsid %>
+#
+# This file is managed by Puppet.
+#
+[global]
+  fsid = <%= $fsid %>
+  mon host = <%= $mon_hosts.values().map |$v| {"[v2:${v['public']['addr']}:3300/0,v1:${v['public']['addr']}:6789/0]"}.join(',') %>
