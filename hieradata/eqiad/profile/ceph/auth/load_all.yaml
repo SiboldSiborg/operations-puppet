@@ -11,6 +11,11 @@ profile::ceph::auth::load_all::configuration:
       osd: allow rw tag cephfs metadata=dpe, allow rw tag cephfs data=dpe
       mds: allow r fsname=dpe path=/volumes, allow rws fsname=dpe path=/volumes/csi
       mon: allow r fsname=dpe
+  ml_lab:
+    caps:
+      osd: allow rw tag cephfs data=home
+      mds: allow rw fsname=home
+      mon: allow r fsname=home
   admin:
     caps:
       mgr: allow *

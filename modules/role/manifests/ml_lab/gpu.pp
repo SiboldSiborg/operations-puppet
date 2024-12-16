@@ -9,4 +9,5 @@ class role::ml_lab::gpu {
     include profile::firewall
 
     include profile::amd_gpu
+    include profile::ceph::client
 }
