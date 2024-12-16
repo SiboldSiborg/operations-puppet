@@ -36,7 +36,7 @@ class thanos::rule (
     Array[String] $rule_files,
     Stdlib::HTTPSUrl $query_url,
     Wmflib::Ensure $ensure = present,
-    Stdlib::Port::Unprivileged $query_port = 10902,
+    Stdlib::Port::Unprivileged $query_port = 16902, #thanos query-frontend
     Stdlib::Port::Unprivileged $http_port = 17902,
     Stdlib::Port::Unprivileged $grpc_port = 17901,
 ) {
