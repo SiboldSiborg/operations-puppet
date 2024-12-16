@@ -11,7 +11,7 @@ class profile::maps::osm_replica(
 
     require profile::maps::postgresql_common
 
-    $tegola_networks = flatten([
+    $wikikube_networks = flatten([
         $network::constants::services_kubepods_networks,
         $network::constants::staging_kubepods_networks,
     ])
@@ -41,14 +41,20 @@ class profile::maps::osm_replica(
         retries     => 15, # compensate for spikes in lag when OSM database resync is underway.
     }
 
-    # tegola-vector-tiles will connect as user tilerator from
-    # kubernetes pods.
-    $tegola_networks.each |String $subnet| {
+    # tegola-vector-tiles and kartotherian will connect as user tilerator
+    # from kubernetes pods.
+    $wikikube_networks.each |String $subnet| {
         if $subnet =~ Stdlib::IP::Address::V4 {
             $_subnet = split($subnet, '/')[0]
-            postgresql::user::hba { "${_subnet}_kubepod":
+            postgresql::user::hba { "tilerator_${_subnet}_kubepod":
                 user      => 'tilerator',
                 database  => 'all',
+                cidr      => $subnet,
+                pgversion => $pgversion,
+            }
+            postgresql::user::hba { "kartotherian_${_subnet}_kubepod":
+                user      => 'kartotherian',
+                database  => 'gis',
                 cidr      => $subnet,
                 pgversion => $pgversion,
             }
