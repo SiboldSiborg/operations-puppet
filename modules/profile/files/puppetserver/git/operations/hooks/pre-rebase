@@ -1,0 +1,9 @@
+#!/bin/bash
+# SPDX-License-Identifier: Apache-2.0
+
+if [ "$USER" != "gitpuppet" ]
+then
+        echo "You should only be rebasing here as user 'gitpuppet', and mostly shouldn't even be doing that."
+        echo "The puppet-merge script probably does what you are trying to do."
+        exit 1
+fi

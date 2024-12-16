@@ -1,0 +1,8 @@
+#!/bin/bash
+# SPDX-License-Identifier: Apache-2.0
+
+if [ "$USER" != "gitpuppet" ]
+then
+        echo "You should only be merging here as user 'gitpuppet', and only via the 'puppet-merge' script."
+        exit 1
+fi
