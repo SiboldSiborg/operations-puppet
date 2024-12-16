@@ -32,21 +32,21 @@ class profile::ceph::server::firewall (
         proto      => 'tcp',
         port_range => [6800, 7300],
         srange     => $ceph_server_addrs + $dse_k8s_workers_ips,
-        src_sets   => ['DSE_KUBEPODS_NETWORKS'],
+        src_sets   => ['DSE_KUBEPODS_NETWORKS','ANALYTICS_NETWORKS'],
         before     => Class['ceph::common'],
     }
     firewall::service { 'ceph_mon_v1':
         proto    => 'tcp',
         port     => 6789,
         srange   => $ceph_server_addrs + $dse_k8s_workers_ips,
-        src_sets => ['DSE_KUBEPODS_NETWORKS'],
+        src_sets => ['DSE_KUBEPODS_NETWORKS','ANALYTICS_NETWORKS'],
         before   => Class['ceph::common'],
     }
     firewall::service { 'ceph_mon_v2':
         proto    => 'tcp',
         port     => 3300,
         srange   => $ceph_server_addrs + $dse_k8s_workers_ips,
-        src_sets => ['DSE_KUBEPODS_NETWORKS'],
+        src_sets => ['DSE_KUBEPODS_NETWORKS','ANALYTICS_NETWORKS'],
         before   => Class['ceph::common'],
     }
 }
