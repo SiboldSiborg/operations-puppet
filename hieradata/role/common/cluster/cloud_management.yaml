@@ -7,6 +7,8 @@ profile::admin::groups:
 profile::puppet::agent::force_puppet7: true
 
 profile::contacts::role_contacts: ['WMCS']
+profile::base::production::role_description: 'Cluster management of WMCS hosts'
+
 profile::cumin::monitor_agentrun: false
 profile::cumin::master::email_alerts: false
 profile::cumin::master::connect_timeout: 20

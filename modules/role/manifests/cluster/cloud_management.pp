@@ -5,11 +5,6 @@
 # both in production and in the WMCS realm (Openstack VPS)
 #
 class role::cluster::cloud_management {
-
-    system::role { 'cluster-cloud-management':
-        description => 'Cluster management of WMCS hosts',
-    }
-
     include profile::base::production
     include profile::firewall
 

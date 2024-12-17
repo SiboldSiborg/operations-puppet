@@ -2,8 +2,6 @@
 
 class role::wmcs::cloudlb (
 ) {
-    system::role { $name: }
-
     include profile::base::production
     include profile::firewall
     include profile::base::cloud_production

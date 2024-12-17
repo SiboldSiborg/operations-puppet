@@ -40,3 +40,4 @@ profile::java::extra_args:
 profile::nginx::variant: "full"
 
 profile::contacts::role_contacts: ["WMCS"]
+profile::base::production::role_description: 'clouddumps host in the public VLAN that distributes dumps to clients via NFS/Web/Rsync'
