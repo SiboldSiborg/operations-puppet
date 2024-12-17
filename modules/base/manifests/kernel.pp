@@ -71,6 +71,7 @@ class base::kernel(
             'f2fs',
             'jfs',
             'nilfs2',
+            'squashfs',
         ],
     }
 
