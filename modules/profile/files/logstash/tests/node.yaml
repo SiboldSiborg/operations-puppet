@@ -14,7 +14,7 @@ testcases:
     - >
       {
         "rsyslog.timereported": "2021-05-13T15:59:07.122",
-        "rsyslog.hostname": "restbase1027",
+        "rsyslog.hostname": "restbase9027",
         "rsyslog.severity": "ERROR",
         "facility": "local0",
         "hostname": "bunyan_hostname",
@@ -62,7 +62,7 @@ testcases:
             "access-control-allow-headers": "accept, content-type, content-length, cache-control, accept-language, api-user-agent, if-match, if-modified-since, if-none-match, dnt, accept-encoding",
             "content-security-policy": "default-src 'none'; frame-ancestors 'none'",
             "x-content-type-options": "nosniff",
-            "server": "restbase1027",
+            "server": "restbase9027",
             "x-xss-protection": "1; mode=block",
             "access-control-expose-headers": "etag",
             "x-frame-options": "SAMEORIGIN",
@@ -74,7 +74,7 @@ testcases:
         },
         "pid": 213,
         "stack": "HTTPError: 500: server_error\n    at apiError (/srv/deployment/restbase/deploy-cache/revs/4755f5048b573e21af8b9a388a2c0691b472913a/restbase/sys/action.js:127:12)\n    at checkQueryResponse (/srv/deployment/restbase/deploy-cache/revs/4755f5048b573e21af8b9a388a2c0691b472913a/restbase/sys/action.js:136:15)\n    at tryCatcher (/srv/deployment/restbase/deploy-cache/revs/4755f5048b573e21af8b9a388a2c0691b472913a/node_modules/bluebird/js/release/util.js:16:23)\n    at Promise._settlePromiseFromHandler (/srv/deployment/restbase/deploy-cache/revs/4755f5048b573e21af8b9a388a2c0691b472913a/node_modules/bluebird/js/release/promise.js:547:31)\n    at Promise._settlePromise (/srv/deployment/restbase/deploy-cache/revs/4755f5048b573e21af8b9a388a2c0691b472913a/node_modules/bluebird/js/release/promise.js:604:18)\n    at Promise._settlePromise0 (/srv/deployment/restbase/deploy-cache/revs/4755f5048b573e21af8b9a388a2c0691b472913a/node_modules/bluebird/js/release/promise.js:649:10)\n    at Promise._settlePromises (/srv/deployment/restbase/deploy-cache/revs/4755f5048b573e21af8b9a388a2c0691b472913a/node_modules/bluebird/js/release/promise.js:729:18)\n    at _drainQueueStep (/srv/deployment/restbase/deploy-cache/revs/4755f5048b573e21af8b9a388a2c0691b472913a/node_modules/bluebird/js/release/async.js:93:12)\n    at _drainQueue (/srv/deployment/restbase/deploy-cache/revs/4755f5048b573e21af8b9a388a2c0691b472913a/node_modules/bluebird/js/release/async.js:86:9)\n    at Async._drainQueues (/srv/deployment/restbase/deploy-cache/revs/4755f5048b573e21af8b9a388a2c0691b472913a/node_modules/bluebird/js/release/async.js:102:5)\n    at Immediate.Async.drainQueues (/srv/deployment/restbase/deploy-cache/revs/4755f5048b573e21af8b9a388a2c0691b472913a/node_modules/bluebird/js/release/async.js:15:14)\n    at runCallback (timers.js:672:20)\n    at tryOnImmediate (timers.js:645:5)\n    at processImmediate [as _immediateCallback] (timers.js:617:5)",
-        "logsource": "restbase1027"
+        "logsource": "restbase9027"
       }
     expected:
       - __target_index: "ecs-default-1-1.11.0-N-weekly"
@@ -90,7 +90,7 @@ testcases:
               name: "error"
             priority: 131
         host:
-          name: "restbase1027"
+          name: "restbase9027"
         service:
           type: "restbase"
         process:
@@ -129,7 +129,7 @@ testcases:
               access-control-allow-headers: "accept, content-type, content-length, cache-control, accept-language, api-user-agent, if-match, if-modified-since, if-none-match, dnt, accept-encoding"
               content-security-policy: "default-src 'none'; frame-ancestors 'none'"
               x-content-type-options: "nosniff"
-              server: "restbase1027"
+              server: "restbase9027"
               x-xss-protection: "1; mode=block"
               access-control-expose-headers: "etag"
               x-frame-options: "SAMEORIGIN"
@@ -142,7 +142,7 @@ testcases:
     - >
       {
         "rsyslog.timereported": "2021-05-13T16:45:26.434",
-        "rsyslog.hostname": "restbase1019",
+        "rsyslog.hostname": "restbase9019",
         "rsyslog.severity": "DEBUG",
         "facility": "local0",
         "hostname": "bunyan_hostname",
@@ -185,7 +185,7 @@ testcases:
         "severity": "DEBUG",
         "timestamp": "2021-05-13T16:45:26.434Z",
         "time": "2021-05-13T16:45:26.434Z",
-        "logsource": "restbase1019"
+        "logsource": "restbase9019"
       }
     expected:
       - __target_index: "ecs-default-1-1.11.0-N-weekly"
@@ -194,7 +194,7 @@ testcases:
           level_path: "debug/api_error"
           api_path: "/bcl.wikipedia.org/v1/data/lists/changes/since/{date}"
         host:
-          name: "restbase1019"
+          name: "restbase9019"
         log:
           level: "DEBUG"
           syslog:
@@ -285,7 +285,7 @@ testcases:
     - >
       {
         "rsyslog.timereported": "2021-05-13T20:10:29.849",
-        "rsyslog.hostname": "restbase1021",
+        "rsyslog.hostname": "restbase9021",
         "rsyslog.severity": "ERROR",
         "facility": "local0",
         "hostname": "bunyan_hostname",
@@ -315,7 +315,7 @@ testcases:
         "severity": "ERROR",
         "timestamp": "2021-05-13T20:10:29.849Z",
         "time": "2021-05-13T20:10:29.849Z",
-        "logsource": "restbase1021"
+        "logsource": "restbase9021"
       }
     expected:
       - __target_index: "ecs-default-1-1.11.0-N-weekly"
@@ -341,7 +341,7 @@ testcases:
         error:
           stack_trace: "URIError: URI malformed\n    at decodeURIComponent (native)\n    at Object.mwUtil.extractRedirect (/srv/deployment/restbase/deploy-cache/revs/4755f5048b573e21af8b9a388a2c0691b472913a/restbase/lib/mwUtil.js:391:16)\n    at hyper.get.then (/srv/deployment/restbase/deploy-cache/revs/4755f5048b573e21af8b9a388a2c0691b472913a/restbase/lib/access_check_filter.js:58:46)\n    at tryCatcher (/srv/deployment/restbase/deploy-cache/revs/4755f5048b573e21af8b9a388a2c0691b472913a/node_modules/bluebird/js/release/util.js:16:23)\n    at Promise._settlePromiseFromHandler (/srv/deployment/restbase/deploy-cache/revs/4755f5048b573e21af8b9a388a2c0691b472913a/node_modules/bluebird/js/release/promise.js:547:31)\n    at Promise._settlePromise (/srv/deployment/restbase/deploy-cache/revs/4755f5048b573e21af8b9a388a2c0691b472913a/node_modules/bluebird/js/release/promise.js:604:18)\n    at Promise._settlePromise0 (/srv/deployment/restbase/deploy-cache/revs/4755f5048b573e21af8b9a388a2c0691b472913a/node_modules/bluebird/js/release/promise.js:649:10)\n    at Promise._settlePromises (/srv/deployment/restbase/deploy-cache/revs/4755f5048b573e21af8b9a388a2c0691b472913a/node_modules/bluebird/js/release/promise.js:729:18)\n    at Promise._fulfill (/srv/deployment/restbase/deploy-cache/revs/4755f5048b573e21af8b9a388a2c0691b472913a/node_modules/bluebird/js/release/promise.js:673:18)\n    at Promise._resolveCallback (/srv/deployment/restbase/deploy-cache/revs/4755f5048b573e21af8b9a388a2c0691b472913a/node_modules/bluebird/js/release/promise.js:466:57)\n    at Promise._settlePromiseFromHandler (/srv/deployment/restbase/deploy-cache/revs/4755f5048b573e21af8b9a388a2c0691b472913a/node_modules/bluebird/js/release/promise.js:559:17)\n    at Promise._settlePromise (/srv/deployment/restbase/deploy-cache/revs/4755f5048b573e21af8b9a388a2c0691b472913a/node_modules/bluebird/js/release/promise.js:604:18)\n    at Promise._settlePromise0 (/srv/deployment/restbase/deploy-cache/revs/4755f5048b573e21af8b9a388a2c0691b472913a/node_modules/bluebird/js/release/promise.js:649:10)\n    at Promise._settlePromises (/srv/deployment/restbase/deploy-cache/revs/4755f5048b573e21af8b9a388a2c0691b472913a/node_modules/bluebird/js/release/promise.js:729:18)\n    at Promise._fulfill (/srv/deployment/restbase/deploy-cache/revs/4755f5048b573e21af8b9a388a2c0691b472913a/node_modules/bluebird/js/release/promise.js:673:18)\n    at Promise._resolveCallback (/srv/deployment/restbase/deploy-cache/revs/4755f5048b573e21af8b9a388a2c0691b472913a/node_modules/bluebird/js/release/promise.js:466:57)"
         host:
-          name: "restbase1021"
+          name: "restbase9021"
         url:
           original: "/it.wikipedia.org/v1/page/summary/a_summary_page"
         http:
