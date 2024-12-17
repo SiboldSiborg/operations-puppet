@@ -232,11 +232,13 @@ class IcingaStatus:
         # The reason that's so much faster is that most blocks describe hosts (or services on hosts)
         # that weren't listed on the command line, so we're never going to read them. Splitting this
         # way means that we can immediately bail out of those blocks and skip to the next.
+        last_elements = {
+            'hostdowntime', 'servicedowntime', 'hostcomment', 'servicecomment', 'contactstatus'}
         blocks = status_text.split('\n\t}\n')
         for block in blocks:
             name, data = self._parse_block(block)
             # These objects appear last in the file so we can exit the function
-            if name in {'hostdowntime', 'servicedowntime'}:
+            if name in last_elements:
                 return
             if not data:
                 continue
@@ -248,7 +250,8 @@ class IcingaStatus:
                 self.hosts[service.host].add_service(service)
         # If we get to this point we have found no downtime and likely read a corrupt file
         raise IcingaStatusParseError(
-            'corrupt status.dat: Failed to find downtime object'
+            'corrupt status.dat: Failed to find blocks at the end of the file, expected one of: '
+            f'{last_elements}'
         )
 
     def _parse_block(self, block: str) -> Tuple[str, Optional[Dict[str, str]]]:
