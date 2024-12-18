@@ -5,10 +5,6 @@
 # access to) for a cephadm-controlled Ceph cluster.
 #
 class role::cephadm::rgw {
-    system::role { 'cephadm::rgw':
-        description => 'Cephadm-managed RGW node',
-    }
-
     include profile::base::production
     include profile::firewall
 

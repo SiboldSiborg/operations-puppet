@@ -1,6 +1,7 @@
 profile::puppet::agent::force_puppet7: true
 
 profile::contacts::role_contacts: ['Data Persistence']
+profile::base::production::role_description: 'Cephadm-managed RGW node'
 
 profile::ssh::server::authorized_keys_file:
     - '/etc/ssh/userkeys/%u'

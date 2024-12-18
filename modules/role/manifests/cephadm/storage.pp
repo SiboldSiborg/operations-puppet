@@ -5,10 +5,6 @@
 # this involves osd/mon/mgr daemons.
 #
 class role::cephadm::storage {
-    system::role { 'cephadm::storage':
-        description => 'Cephadm-managed storage server',
-    }
-
     include profile::base::production
     include profile::firewall
     include profile::cephadm::target
