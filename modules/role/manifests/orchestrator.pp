@@ -1,8 +1,4 @@
 class role::orchestrator {
-    system::role { 'orchestrator':
-        description => 'Orchestrator server'
-    }
-
     include profile::base::production
     include profile::firewall
     include profile::orchestrator::web

@@ -1,6 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
 class role::wmcs::openstack::codfw1dev::cinder_backups {
-    system::role { $name: }
 
     # README: we like backups to be offsite. The codfw1dev cinder backups
     # are in the eqiad DC. This requires us to override several hiera

@@ -49,3 +49,4 @@ profile::ncmonitor::ncredir::remote_url: 'ssh://ncmonitor@gerrit.wikimedia.org:2
 
 profile::puppet::agent::force_puppet7: true
 profile::contacts::role_contacts: ['Traffic']
+profile::base::production::role_description: 'Automated syncing of registered MarkMonitor DNS and downstream services'
