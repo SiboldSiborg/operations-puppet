@@ -471,7 +471,6 @@ kubernetes::clusters:
         - wikikube-worker2044.codfw.wmnet
         - wikikube-worker2045.codfw.wmnet
         - wikikube-worker2046.codfw.wmnet
-        - wikikube-worker2047.codfw.wmnet
         - wikikube-worker2048.codfw.wmnet
         - wikikube-worker2049.codfw.wmnet
         - wikikube-worker2050.codfw.wmnet
@@ -490,7 +489,6 @@ kubernetes::clusters:
         - wikikube-worker2063.codfw.wmnet
         - wikikube-worker2064.codfw.wmnet
         - wikikube-worker2065.codfw.wmnet
-        - wikikube-worker2066.codfw.wmnet
         - wikikube-worker2067.codfw.wmnet
         - wikikube-worker2068.codfw.wmnet
         - wikikube-worker2069.codfw.wmnet
@@ -509,8 +507,6 @@ kubernetes::clusters:
         - wikikube-worker2082.codfw.wmnet
         - wikikube-worker2083.codfw.wmnet
         - wikikube-worker2084.codfw.wmnet
-        - wikikube-worker2085.codfw.wmnet
-        - wikikube-worker2086.codfw.wmnet
         - wikikube-worker2087.codfw.wmnet
         - wikikube-worker2088.codfw.wmnet
         - wikikube-worker2089.codfw.wmnet
@@ -608,6 +604,10 @@ kubernetes::clusters:
         - wikikube-worker2185.codfw.wmnet
         - wikikube-worker2186.codfw.wmnet
         - wikikube-worker2187.codfw.wmnet
+        - wikikube-worker2188.codfw.wmnet
+        - wikikube-worker2189.codfw.wmnet
+        - wikikube-worker2190.codfw.wmnet
+        - wikikube-worker2191.codfw.wmnet
       apparmor_profiles: *wikikube_apparmor_profiles
     staging-eqiad:
       # cluster_alias: staging makes this the "active" staging cluster.
