@@ -35,12 +35,14 @@ class profile::webperf::processors(
 
     $kafka_ssl_cafile = profile::base::certificates::get_trusted_ca_path()
 
-    # TODO: Point --dogstatsd to the local statsd_exporter on 127.0.0.1:9125
     class { '::webperf::statsv':
         kafka_brokers           => $kafka_main_brokers,
         kafka_security_protocol => 'SSL',
         statsd_host             => $statsd_host,
         statsd_port             => $statsd_port,
+        # Point --dogstatsd to Prometheus via statsd_exporter (T355837)
+        dogstatsd_host          => '127.0.0.1',
+        dogstatsd_port          => 9125,
         kafka_ssl_cafile        => $kafka_ssl_cafile,
     }
     class { 'profile::prometheus::statsd_exporter':

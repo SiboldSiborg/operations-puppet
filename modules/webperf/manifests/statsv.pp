@@ -18,12 +18,20 @@
 # [*statsd_port*]
 #   port of statsd instance.  Default: 8125
 #
+# [*dogstatsd_host*]
+#   host name of dogstatsd instance.  Default: undef
+#
+# [*dogstatsd_port*]
+#   port of dogstatsd instance.  Default: 8125
+#
 class webperf::statsv(
     String                     $kafka_brokers,
     Optional[String]           $kafka_security_protocol = 'PLAINTEXT',
     String                     $topics                  = 'statsv',
     Stdlib::Fqdn               $statsd_host             = 'localhost',
     Integer                    $statsd_port             = 8125,
+    Stdlib::Fqdn               $dogstatsd_host          = undef,
+    Integer                    $dogstatsd_port          = 8125,
     Optional[Stdlib::Unixpath] $kafka_ssl_cafile        = undef,
 ) {
     include ::webperf
@@ -35,7 +43,7 @@ class webperf::statsv(
         deploy_user  => 'deploy-service',
     }
 
-    # Uses $kafka_brokers, $kafka_security_protocol, $kafka_ssl_cafile, and $statsd
+    # Uses $kafka_brokers, $kafka_security_protocol, $kafka_ssl_cafile, $statsd_host, and $dogstatsd_port
     systemd::service { 'statsv':
         content => template('webperf/statsv.service.erb'),
         restart => true,
