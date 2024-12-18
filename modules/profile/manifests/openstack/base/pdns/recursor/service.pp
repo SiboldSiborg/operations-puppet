@@ -93,6 +93,7 @@ class profile::openstack::base::pdns::recursor::service(
         enable_webserver         => debian::codename::ge('bullseye'),
         api_allow_from           => $pdns_api_allow_from,
         query_local_address      => dnsquery::lookup($query_local_address, true),
+        threads                  => 12,
     }
 
     class { '::dnsrecursor::labsaliaser':
