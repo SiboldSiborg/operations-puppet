@@ -4298,6 +4298,7 @@ service::catalog:
     probes:
       - type: http
         path: /_info
+        timeout: 10s
     port: *k8s-ingress-wikikube_port
     sites:
       - eqiad
