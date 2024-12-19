@@ -66,6 +66,7 @@ class base::kernel(
     # File systems not in use, blacklist as additional bandaid
     kmod::blacklist { 'wmf-filesystems':
         modules => [
+            'btrfs',
             'erofs',
             'exfat',
             'f2fs',
