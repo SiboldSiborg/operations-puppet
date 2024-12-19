@@ -2617,6 +2617,11 @@ node /^cloudvirt10(3[1-9]|4[0-9]|5[0-9]|6[0-7])\.eqiad\./ {
     role(wmcs::openstack::eqiad1::virt_ceph)
 }
 
+# new cloudvirts T382492
+node /^cloudvirt10(6[8-9]|7[0-6])\.eqiad\./ {
+    role(insetup::wmcs)
+}
+
 node /^wcqs100[123]\.eqiad\./ {
     role(wcqs::public)
 }
