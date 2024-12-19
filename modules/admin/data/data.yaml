@@ -209,7 +209,7 @@ groups:
               dr0ptp4kt, dani, aqu, sfaci, damilare, dreamyjazz, wfan219,
               tjones, jsn, ecarg, amastilovic, ebysans, daphnesmit, toyofuku,
               mszabo, ihurbain, zoe, bpirkle, cicalese, daniel, gmodena, hokwelum,
-              tchin, xcollazo, sg912, aude, dbrant, jly
+              tchin, xcollazo, sg912, aude, dbrant, jly, ammarpad
     ]
     system_members: [mwbuilder, mwpresync]
     privileges: ['ALL = (www-data,mwdeploy,scap,mwpresync) NOPASSWD: ALL',
@@ -6533,6 +6533,14 @@ users:
     realname: Suzanne Wood
     email: suzanne.wood@wikimedia.de
     ssh_keys: []  # Added with no SSH access, for membership in analytics-privatedata-users.
+  ammarpad:
+    ensure: present
+    gid: 500
+    uid: 19725
+    realname: Ammarpad
+    email: ammarpad@yahoo.com
+    ssh_keys:
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEUsjsFllP6LCfrNJ2dWH+Mpb0xtCMhMpXJrgzqc+d7Q ammarpad@wmf_prod
 
 ldap_only_users:
   adavenport:
@@ -6545,10 +6553,6 @@ ldap_only_users:
     ensure: absent
     realname: Aleksey Bekh-Ivanov
     email: aleksey.bekh-ivanov@wikimedia.de
-  ammarpad:
-    ensure: present
-    realname: (known to legal)
-    email: ammarpad@yahoo.com
   amy-wmde:
     ensure: absent
     realname: Amrutha Varshini Chandra
