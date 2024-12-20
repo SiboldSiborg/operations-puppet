@@ -1208,9 +1208,9 @@ hadoop_clusters:
       yarn.acl.enable: true
 
     hdfs_site_extra_properties:
-      # Double the maximum number of items that a directory may contain. The default value is 1048576.
+      # Quadruple the maximum number of items that a directory may contain. The default value is 1048576.
       # If configured, this must be between 1 and  6400000. See #T380674 for more details.
-      dfs.namenode.fs-limits.max-directory-items: 2097152
+      dfs.namenode.fs-limits.max-directory-items: 4194304
 
     # The datanode daemon by default begins the shutdown procedure as soon as
     # on volume/disk failure is registered. In our use case we want to keep the
