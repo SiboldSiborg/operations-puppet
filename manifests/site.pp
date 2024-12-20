@@ -966,8 +966,8 @@ node /^dbproxy10(12|13|14|15|16|20|21|22|23|24|25|26|27|28|29)\.eqiad\./ {
     role(mariadb::proxy::master)
 }
 
-# New databases T373579 & T379757
-node /^db22(26|28|31|32|33|34|41|42)\.codfw\./ {
+# New databases T373579, T382425 & T379757
+node /^db22(26|28|31|32|33|34|41|42|43)\.codfw\./ {
     role(insetup::data_persistence)
 }
 
