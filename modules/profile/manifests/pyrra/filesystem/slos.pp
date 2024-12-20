@@ -12,9 +12,12 @@ class profile::pyrra::filesystem::slos (
     # workaround grouping exported metrics limitation by setting site/datacenter via puppet
     $datacenters.each |$datacenter| {
 
+
+    # liftwing SLOs are temporarily disabled due to resource consumption please see T368953 & T302995
     # liftwing is in eqiad/codfw only
     if $datacenter in [ 'eqiad', 'codfw' ] {
         pyrra::filesystem::config { "liftwing-articlequality-requests-${datacenter}.yaml":
+          ensure => absent,
           content => to_yaml({
             'apiVersion' => 'pyrra.dev/v1alpha1',
             'kind' => 'ServiceLevelObjective',
@@ -47,6 +50,7 @@ class profile::pyrra::filesystem::slos (
 
     if $datacenter in [ 'eqiad', 'codfw' ] {
         pyrra::filesystem::config { "liftwing-articlequality-latency-${datacenter}.yaml":
+          ensure => absent,
           content => to_yaml({
             'apiVersion' => 'pyrra.dev/v1alpha1',
             'kind' => 'ServiceLevelObjective',
@@ -82,6 +86,7 @@ class profile::pyrra::filesystem::slos (
     # limited to primary sites only
     if $datacenter in ['eqiad', 'codfw'] {
         pyrra::filesystem::config { "liftwing-api-ng-latency-${datacenter}.yaml":
+          ensure => absent,
           content => to_yaml({
             'apiVersion' => 'pyrra.dev/v1alpha1',
             'kind' => 'ServiceLevelObjective',
@@ -117,6 +122,7 @@ class profile::pyrra::filesystem::slos (
     # liftwing is in eqiad/codfw only
     if $datacenter in [ 'eqiad', 'codfw' ] {
         pyrra::filesystem::config { "liftwing-api-ng-availability-${datacenter}.yaml":
+          ensure => absent,
           content => to_yaml({
             'apiVersion' => 'pyrra.dev/v1alpha1',
             'kind' => 'ServiceLevelObjective',
@@ -153,6 +159,7 @@ class profile::pyrra::filesystem::slos (
     # limited to primary sites only
     if $datacenter in ['eqiad', 'codfw'] {
         pyrra::filesystem::config { "liftwing-revscoring-latency-${datacenter}.yaml":
+          ensure => absent,
           content => to_yaml({
             'apiVersion' => 'pyrra.dev/v1alpha1',
             'kind' => 'ServiceLevelObjective',
@@ -188,6 +195,7 @@ class profile::pyrra::filesystem::slos (
     # liftwing is in eqiad/codfw only
     if $datacenter in [ 'eqiad', 'codfw' ] {
         pyrra::filesystem::config { "liftwing-revscoring-availability-${datacenter}.yaml":
+          ensure => absent,
           content => to_yaml({
             'apiVersion' => 'pyrra.dev/v1alpha1',
             'kind' => 'ServiceLevelObjective',
@@ -224,6 +232,7 @@ class profile::pyrra::filesystem::slos (
     # limited to primary sites only
     if $datacenter in ['eqiad', 'codfw'] {
         pyrra::filesystem::config { "liftwing-revert-risk-lang-agnostic-latency-${datacenter}.yaml":
+          ensure => absent,
           content => to_yaml({
             'apiVersion' => 'pyrra.dev/v1alpha1',
             'kind' => 'ServiceLevelObjective',
@@ -259,6 +268,7 @@ class profile::pyrra::filesystem::slos (
     # liftwing is in eqiad/codfw only
     if $datacenter in [ 'eqiad', 'codfw' ] {
         pyrra::filesystem::config { "liftwing-revert-risk-lang-agnostic-availability-${datacenter}.yaml":
+          ensure => absent,
           content => to_yaml({
             'apiVersion' => 'pyrra.dev/v1alpha1',
             'kind' => 'ServiceLevelObjective',
@@ -295,6 +305,7 @@ class profile::pyrra::filesystem::slos (
     # limited to primary sites only
     if $datacenter in ['eqiad', 'codfw'] {
         pyrra::filesystem::config { "liftwing-revert-risk-multilingual-latency-${datacenter}.yaml":
+          ensure => absent,
           content => to_yaml({
             'apiVersion' => 'pyrra.dev/v1alpha1',
             'kind' => 'ServiceLevelObjective',
@@ -330,6 +341,7 @@ class profile::pyrra::filesystem::slos (
     # liftwing is in eqiad/codfw only
     if $datacenter in [ 'eqiad', 'codfw' ] {
         pyrra::filesystem::config { "liftwing-revert-risk-multilingual-availability-${datacenter}.yaml":
+          ensure => absent,
           content => to_yaml({
             'apiVersion' => 'pyrra.dev/v1alpha1',
             'kind' => 'ServiceLevelObjective',
@@ -366,6 +378,7 @@ class profile::pyrra::filesystem::slos (
     # limited to primary sites only
     if $datacenter in ['eqiad', 'codfw'] {
         pyrra::filesystem::config { "liftwing-articletopic-outlink-latency-${datacenter}.yaml":
+          ensure => absent,
           content => to_yaml({
             'apiVersion' => 'pyrra.dev/v1alpha1',
             'kind' => 'ServiceLevelObjective',
@@ -401,6 +414,7 @@ class profile::pyrra::filesystem::slos (
     # liftwing is in eqiad/codfw only
     if $datacenter in [ 'eqiad', 'codfw' ] {
         pyrra::filesystem::config { "liftwing-articletopic-outlink-availability-${datacenter}.yaml":
+          ensure => absent,
           content => to_yaml({
             'apiVersion' => 'pyrra.dev/v1alpha1',
             'kind' => 'ServiceLevelObjective',
@@ -432,48 +446,48 @@ class profile::pyrra::filesystem::slos (
     }
 
 
-    # disabled pending review as SLO budget currently sits at -1900% 
-    #
     # "Lift Wing Readability service latency - 95% of successful requests (2xx status code) are answered within 5000ms.
     #
     # limited to primary sites only
-    #    if $datacenter in ['eqiad', 'codfw'] {
-    #        pyrra::filesystem::config { "liftwing-readability-latency-${datacenter}.yaml":
-    #          content => to_yaml({
-    #            'apiVersion' => 'pyrra.dev/v1alpha1',
-    #            'kind' => 'ServiceLevelObjective',
-    #            'metadata' => {
-    #                'name' => 'liftwing-readability-latency',
-    #                'namespace' => 'pyrra-o11y',
-    #                'labels' => {
-    #                    'pyrra.dev/team' => 'ml',
-    #                    'pyrra.dev/service' => 'liftwing',
-    #                    'pyrra.dev/site' => "${datacenter}",  #lint:ignore:only_variable_string
-    #                },
-    #            },
-    #            'spec' => {
-    #                'target' => '95',
-    #                'window' => '12w',
-    #                'indicator' => {
-    #                    'latency' => {
-    #                        'success' => {
-    #                            'metric' => "istio_request_duration_milliseconds_bucket{site=~\"${datacenter}\",  le=\"5000\", response_code=~\"2..\", destination_service_namespace=\"readability\", destination_canonical_service=\"readability-predictor-default\"}",
-    #                        },
-    #                        'total' => {
-    #                            'metric' => "istio_request_duration_milliseconds_count{site=~\"${datacenter}\",  response_code=~\"2..\", destination_service_namespace=\"readability\", destination_canonical_service=\"readability-predictor-default\"}",
-    #                        },
-    #                    },
-    #                },
-    #            },
-    #          })
-    #        }
-    #    }
+        if $datacenter in ['eqiad', 'codfw'] {
+            pyrra::filesystem::config { "liftwing-readability-latency-${datacenter}.yaml":
+              ensure => absent,
+              content => to_yaml({
+                'apiVersion' => 'pyrra.dev/v1alpha1',
+                'kind' => 'ServiceLevelObjective',
+                'metadata' => {
+                    'name' => 'liftwing-readability-latency',
+                    'namespace' => 'pyrra-o11y',
+                    'labels' => {
+                        'pyrra.dev/team' => 'ml',
+                        'pyrra.dev/service' => 'liftwing',
+                        'pyrra.dev/site' => "${datacenter}",  #lint:ignore:only_variable_string
+                    },
+                },
+                'spec' => {
+                    'target' => '95',
+                    'window' => '12w',
+                    'indicator' => {
+                        'latency' => {
+                            'success' => {
+                                'metric' => "istio_request_duration_milliseconds_bucket{site=~\"${datacenter}\",  le=\"5000\", response_code=~\"2..\", destination_service_namespace=\"readability\", destination_canonical_service=\"readability-predictor-default\"}",
+                            },
+                            'total' => {
+                                'metric' => "istio_request_duration_milliseconds_count{site=~\"${datacenter}\",  response_code=~\"2..\", destination_service_namespace=\"readability\", destination_canonical_service=\"readability-predictor-default\"}",
+                            },
+                        },
+                    },
+                },
+              })
+            }
+        }
 
     # Lift Wing Readability service availability - 95% of requests are successful (2xx status code).
     #
     # liftwing is in eqiad/codfw only
     if $datacenter in [ 'eqiad', 'codfw' ] {
         pyrra::filesystem::config { "liftwing-readability-availability-${datacenter}.yaml":
+          ensure => absent,
           content => to_yaml({
             'apiVersion' => 'pyrra.dev/v1alpha1',
             'kind' => 'ServiceLevelObjective',
