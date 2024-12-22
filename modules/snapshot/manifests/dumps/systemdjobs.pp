@@ -1,18 +1,11 @@
 class snapshot::dumps::systemdjobs(
-    $enable = true,
+    Wmflib::Ensure $ensure = present,
     $user   = undef,
     $maxjobs = undef,
     $runtype = undef,
 ) {
-    if ($enable) {
-        $ensure = 'present'
-    }
-    else {
-        $ensure = 'absent'
-    }
 
     file { '/usr/local/bin/fulldumps.sh':
-        ensure => 'present',
         path   => '/usr/local/bin/fulldumps.sh',
         mode   => '0755',
         owner  => 'root',
@@ -31,7 +24,7 @@ class snapshot::dumps::systemdjobs(
     # wikidump.conf.dumps plus some stage files, make explicit
 
     systemd::timer::job { 'fulldumps-rest':
-        ensure             => present,
+        ensure             => $ensure,
         description        => 'snapshot - full dumps - rest',
         user               => $user,
         monitoring_enabled => false,
@@ -42,7 +35,7 @@ class snapshot::dumps::systemdjobs(
     }
 
     systemd::timer::job { 'partialdumps-rest':
-        ensure             => present,
+        ensure             => $ensure,
         description        => 'snapshot - partial dumps - rest',
         user               => $user,
         monitoring_enabled => false,
