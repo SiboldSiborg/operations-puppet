@@ -8,7 +8,7 @@ PyYAML==5.3.1
 # TypeError: Unicode-objects must be encoded before hashing
 # when trying to set the cookiesalt on init
 Werkzeug<0.11
-PyMySQL==1.0.2
+PyMySQL==1.1.1
 ldap3==2.8.1
 netifaces==0.10.9
 requests==2.25.1
